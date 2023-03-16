@@ -1,3 +1,27 @@
-service : {
-  greet: (text) -> (text);
-}
+type Nexai = 
+ service {
+   CheckPrincipal: () -> (principal);
+   createCompany: (text, text, text, text) -> ();
+   createQCard: (text, text) -> ();
+   getAllCompanies: () -> (vec record {
+                                 principal;
+                                 CompanyEntry;
+                               }) query;
+   getAnAnswer: (nat) -> (opt CardEntry);
+   greet: (text) -> (text);
+ };
+type CompanyEntry = 
+ record {
+   about: text;
+   createdAt: int;
+   founderName: text;
+   name: text;
+   username: text;
+ };
+type CardEntry = 
+ record {
+   answer: text;
+   question: text;
+   username: text;
+ };
+service : () -> Nexai

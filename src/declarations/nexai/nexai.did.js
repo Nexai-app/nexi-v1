@@ -1,4 +1,32 @@
 export const idlFactory = ({ IDL }) => {
-  return IDL.Service({ 'greet' : IDL.Func([IDL.Text], [IDL.Text], []) });
+  const CompanyEntry = IDL.Record({
+    'about' : IDL.Text,
+    'username' : IDL.Text,
+    'founderName' : IDL.Text,
+    'name' : IDL.Text,
+    'createdAt' : IDL.Int,
+  });
+  const CardEntry = IDL.Record({
+    'username' : IDL.Text,
+    'question' : IDL.Text,
+    'answer' : IDL.Text,
+  });
+  const Nexai = IDL.Service({
+    'CheckPrincipal' : IDL.Func([], [IDL.Principal], []),
+    'createCompany' : IDL.Func(
+        [IDL.Text, IDL.Text, IDL.Text, IDL.Text],
+        [],
+        [],
+      ),
+    'createQCard' : IDL.Func([IDL.Text, IDL.Text], [], []),
+    'getAllCompanies' : IDL.Func(
+        [],
+        [IDL.Vec(IDL.Tuple(IDL.Principal, CompanyEntry))],
+        ['query'],
+      ),
+    'getAnAnswer' : IDL.Func([IDL.Nat], [IDL.Opt(CardEntry)], []),
+    'greet' : IDL.Func([IDL.Text], [IDL.Text], []),
+  });
+  return Nexai;
 };
 export const init = ({ IDL }) => { return []; };

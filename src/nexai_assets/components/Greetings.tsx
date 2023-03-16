@@ -13,7 +13,7 @@ const Greetings = () => {
 	return (
 		<div style={{ fontSize: "30px" }}>
 			<div style={{ backgroundColor: "yellow" }}>
-				<p>Greetings, from DFINITY!</p>
+				<p>Greetings, from Samuel!</p>
 				<p>
 					{" "}
 					Type your message in the Name input field, then click{" "}
