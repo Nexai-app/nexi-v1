@@ -1,0 +1,88 @@
+.signup-form-container {
+	background-color: hsl(250, 24%, 9%);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 80vh;
+	color: white;
+}
+
+.signup-form {
+	background-color: hsla(251, 12%, 26%, 0.568);
+	padding: 30px;
+	border-radius: 10px;
+	width: 500px;
+	max-width: 600px;
+	min-height: 400px;
+}
+
+@media (max-width: 550px) {
+	.signup-form {
+		margin: 0 8px;
+	}
+}
+
+.field .form-input {
+	border-radius: 10px;
+	color: white;
+	background-color: hsl(250, 24%, 9%);
+	border-radius: 50px;
+	border: hsl(277, 14%, 25%) solid 3px;
+	height: 60px;
+	padding: 0 12px;
+	margin: 0px 0px 20px 0px;
+}
+
+.field .form-input:focus {
+	outline: 2px solid hsl(277, 14%, 25%);
+}
+
+.text-area .form-input {
+	height: 130px;
+	border-radius: 10px;
+	display: flex;
+	align-items: center;
+}
+
+.field .form-input:focus {
+	background-color: hsl(250, 24%, 9%);
+	/* color: white; */
+}
+
+.submit-button {
+	background-color: hsla(251, 34%, 23%, 0.767);
+	border-color: hsl(276, 43%, 30%);
+	border-radius: 50px;
+	height: 50px;
+	/* position: absolute;
+  bottom: 0; */
+	width: 100%;
+}
+
+.modal {
+	color: white;
+}
+
+.modal-header {
+	background-color: hsl(251, 12%, 26%);
+	border-bottom: none;
+}
+
+.modal-title {
+	font-weight: bold;
+}
+
+.modal-body {
+	background-color: hsl(251, 12%, 26%);
+	font-size: 16px;
+}
+
+.modal-footer {
+	background-color: hsl(251, 12%, 26%);
+	border-top: none;
+}
+
+.close-button {
+	background-color: hsl(250, 24%, 9%);
+	border-color: hsl(250, 24%, 9%);
+}

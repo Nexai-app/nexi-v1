@@ -17,14 +17,17 @@
 	},
 	"devDependencies": {
 		"@dfinity/agent": "0.15.4",
+		"@dfinity/auth-client": "^0.15.4",
 		"@dfinity/candid": "0.15.4",
 		"@dfinity/principal": "0.15.4",
 		"assert": "2.0.0",
 		"buffer": "6.0.3",
+		"css-loader": "^6.7.3",
 		"events": "3.3.0",
 		"html-webpack-plugin": "5.5.0",
 		"process": "0.11.10",
 		"stream-browserify": "3.0.0",
+		"style-loader": "^3.3.2",
 		"terser-webpack-plugin": "5.2.5",
 		"ts-loader": "^9.4.2",
 		"typescript": "^4.9.5",
@@ -40,8 +43,17 @@
 		"last 2 edge version"
 	],
 	"dependencies": {
+		"@chakra-ui/react": "^2.5.2",
+		"@dfinity/authentication": "^0.14.2",
+		"@dfinity/identity": "^0.15.4",
+		"@emotion/react": "^11.10.6",
+		"@emotion/styled": "^11.10.6",
+		"bootstrap": "^5.2.3",
+		"framer-motion": "^10.6.1",
 		"react": "^18.2.0",
+		"react-bootstrap": "^2.7.2",
 		"react-dom": "^18.2.0",
+		"react-hot-toast": "^2.4.0",
 		"react-router-dom": "^6.9.0"
 	}
 }

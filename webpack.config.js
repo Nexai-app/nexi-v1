@@ -3,6 +3,13 @@ const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 
+const LOCAL_II_CANISTER =
+	"http://localhost:8000/?canisterId=rrkah-fqaaa-aaaaa-aaaaq-cai";
+
+const network =
+	process.env.DFX_NETWORK ||
+	(process.env.NODE_ENV === "production" ? "ic" : "local");
+
 function initCanisterEnv() {
 	let localCanisters, prodCanisters;
 	try {
@@ -19,10 +26,6 @@ function initCanisterEnv() {
 	} catch (error) {
 		console.log("No production canister_ids.json found. Continuing with local");
 	}
-
-	const network =
-		process.env.DFX_NETWORK ||
-		(process.env.NODE_ENV === "production" ? "ic" : "local");
 
 	const canisterConfig = network === "local" ? localCanisters : prodCanisters;
 
@@ -47,7 +50,7 @@ module.exports = {
 	entry: {
 		// The frontend.entrypoint points to the HTML file for this build, so we need
 		// to replace the extension to `.js`.
-		index: path.join(__dirname, asset_entry).replace(/\.html$/, ".jsx"),
+		index: path.join(__dirname, asset_entry).replace(/\.html$/, ".tsx"),
 	},
 	devtool: isDevelopment ? "source-map" : false,
 	optimization: {
@@ -77,7 +80,7 @@ module.exports = {
 	module: {
 		rules: [
 			{ test: /\.(ts|tsx|jsx)$/, loader: "ts-loader" },
-			// { test: /\.css$/, use: ["style-loader", "css-loader"] },
+			{ test: /\.css$/, use: ["style-loader", "css-loader"] },
 		],
 	},
 	plugins: [
@@ -87,6 +90,8 @@ module.exports = {
 		}),
 		new webpack.EnvironmentPlugin({
 			NODE_ENV: "development",
+			LOCAL_II_CANISTER,
+			DFX_NETWORK: network,
 			...canisterEnvVariables,
 		}),
 		new webpack.ProvidePlugin({

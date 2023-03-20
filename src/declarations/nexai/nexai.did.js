@@ -15,7 +15,7 @@ export const idlFactory = ({ IDL }) => {
     'CheckPrincipal' : IDL.Func([], [IDL.Principal], []),
     'createCompany' : IDL.Func(
         [IDL.Text, IDL.Text, IDL.Text, IDL.Text],
-        [],
+        [IDL.Bool],
         [],
       ),
     'createQCard' : IDL.Func([IDL.Text, IDL.Text], [], []),

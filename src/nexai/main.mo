@@ -42,8 +42,21 @@ shared ({caller}) actor class Nexai() = {
     };
   };
 
-  public func createCompany(name:Text,username:Text, founderName:Text, about:Text) : async () {
-    CompanyHashMap.put(caller, _makeProfile(name, username, founderName, about, Time.now()));
+  public func createCompany(name:Text,username:Text, founderName:Text, about:Text) : async Bool {
+    var newUser:Bool = false;
+
+    for ((i, j) in CompanyHashMap.entries()){
+      if(j.username == username) {
+        // unique := true;
+        throw Error.reject("$ A user with that username exists, kindly pick another username. Thank you! # ");
+
+      }
+    };
+    if (newUser == false) {
+          CompanyHashMap.put(caller, _makeProfile(name, username, founderName, about, Time.now()));
+          newUser := true;
+    };
+    return newUser;
     // TODO: automatically make about of company, founder, and name of company as the entered values
   };
 
