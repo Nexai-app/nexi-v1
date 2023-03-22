@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./App.css";
-import { Routes, Route, Link, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import { AuthClient } from "@dfinity/auth-client";
 import toast from "react-hot-toast";
 import { AuthContext } from "../context/AuthContext";
@@ -8,8 +8,7 @@ import LandingPage from "../pages/LandingPage";
 import Signup from "../pages/Signup";
 
 const App = () => {
-	const { Auth, iiAuth, handleAuthenticated, setIIAuth } =
-		useContext(AuthContext);
+	const { handleAuthenticated, setIIAuth } = useContext(AuthContext);
 
 	const navigate = useNavigate();
 

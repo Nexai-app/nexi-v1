@@ -4,10 +4,11 @@ import { AuthContext } from "../../context/AuthContext";
 import "../../src/App.css";
 
 function Navbar() {
-	const { Auth, iiAuth } = useContext(AuthContext);
+	const { Auth, iiAuth, changeAuthStatus } = useContext(AuthContext);
 	const navigate = useNavigate();
 
 	if (iiAuth) {
+		changeAuthStatus();
 		navigate("/signup");
 		window.location.reload();
 	}
