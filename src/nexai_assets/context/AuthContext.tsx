@@ -16,6 +16,8 @@ export const AuthContext = React.createContext<{
 	setIIAuth: any;
 	changeAuthStatus: any;
 	handleAuthenticated: (arg0: any) => any;
+	loggedIn: boolean;
+	setLoggedIn: any
 }>({
 	Auth: undefined,
 	actor: undefined,
@@ -24,12 +26,15 @@ export const AuthContext = React.createContext<{
 	setIIAuth: false,
 	changeAuthStatus: undefined,
 	handleAuthenticated: undefined,
+	loggedIn: false,
+	setLoggedIn: undefined
 });
 
 export const AuthProvider = ({ children }) => {
 	// const tour_ = useContext(ShepherdTourContext);
 	const [actor, setActor] = useState<ActorSubclass<_SERVICE>>();
 	const [iiAuth, setIIAuth] = useState(false);
+	const [loggedIn, setLoggedIn] = useState(false);
 	const navigate = useNavigate();
 	const location = useLocation();
 
@@ -117,6 +122,8 @@ export const AuthProvider = ({ children }) => {
 				setIIAuth,
 				handleAuthenticated,
 				changeAuthStatus,
+				loggedIn,
+				setLoggedIn
 			}}
 		>
 			{children}

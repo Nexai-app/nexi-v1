@@ -9,6 +9,7 @@ type Nexai =
                                }) query;
    getAnAnswer: (nat) -> (opt CardEntry);
    greet: (text) -> (text);
+   logIn: () -> (bool);
  };
 type CompanyEntry = 
  record {

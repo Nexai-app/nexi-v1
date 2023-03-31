@@ -20,5 +20,6 @@ export interface Nexai {
   'getAllCompanies' : ActorMethod<[], Array<[Principal, CompanyEntry]>>,
   'getAnAnswer' : ActorMethod<[bigint], [] | [CardEntry]>,
   'greet' : ActorMethod<[string], string>,
+  'logIn' : ActorMethod<[], boolean>,
 }
 export interface _SERVICE extends Nexai {}

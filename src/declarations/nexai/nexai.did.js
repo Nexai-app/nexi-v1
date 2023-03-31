@@ -26,6 +26,7 @@ export const idlFactory = ({ IDL }) => {
       ),
     'getAnAnswer' : IDL.Func([IDL.Nat], [IDL.Opt(CardEntry)], []),
     'greet' : IDL.Func([IDL.Text], [IDL.Text], []),
+    'logIn' : IDL.Func([], [IDL.Bool], []),
   });
   return Nexai;
 };

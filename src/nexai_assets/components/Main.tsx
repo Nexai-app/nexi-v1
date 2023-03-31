@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -13,6 +13,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { AuthContext } from "../context/AuthContext";
+
 import "./Main.css";
 
 library.add(
@@ -70,6 +72,8 @@ function Main() {
 		},
 	];
 
+	const { Auth } = useContext(AuthContext);
+
 	return (
 		<div className="App">
 			<header className="hero">
@@ -99,7 +103,7 @@ function Main() {
 						</Col>
 					))}
 				</Row>
-				<button className="cta">Get Started</button>
+				<button className="cta" onClick={Auth}>Get Started</button>
 			</section>
 		</div>
 	);
