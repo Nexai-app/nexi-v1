@@ -59,7 +59,7 @@ shared ({ caller }) actor class Nexai() = {
     // TODO: automatically make about of company, founder, and name of company as the entered values
   };
 
-  public query func getAllCompanies() : async ([(Principal, Types.CompanyEntry)]) {
+  public func getAllCompanies() : async ([(Principal, Types.CompanyEntry)]) {
     Iter.toArray(CompanyHashMap.entries());
   };
 
