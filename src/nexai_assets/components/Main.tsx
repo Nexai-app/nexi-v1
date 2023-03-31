@@ -1,5 +1,4 @@
 import React from "react";
-import "./Main.css";
 import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -13,6 +12,8 @@ import {
 	faChartLine,
 } from "@fortawesome/free-solid-svg-icons";
 import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import "./Main.css";
 
 library.add(
 	faComments,

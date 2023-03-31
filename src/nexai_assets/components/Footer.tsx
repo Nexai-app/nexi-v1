@@ -8,7 +8,7 @@ function Footer() {
 		<footer className="footer">
 			<div className="footer-container">
 				<div className="powered-by">
-					Powered by: <span>Internet Computer</span>
+					Powered by: <img className="logo" alt="" src={`logo.png`} />
 				</div>
 				<div className="social-links">
 					<a

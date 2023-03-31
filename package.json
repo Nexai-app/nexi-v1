@@ -22,6 +22,7 @@
 		"@dfinity/principal": "0.15.4",
 		"assert": "2.0.0",
 		"buffer": "6.0.3",
+		"copy-webpack-plugin": "^11.0.0",
 		"css-loader": "^6.7.3",
 		"events": "3.3.0",
 		"html-webpack-plugin": "5.5.0",
@@ -54,11 +55,13 @@
 		"@fortawesome/free-solid-svg-icons": "^6.4.0",
 		"@fortawesome/react-fontawesome": "^0.2.0",
 		"bootstrap": "^5.2.3",
+		"file-loader": "^6.2.0",
 		"framer-motion": "^10.6.1",
 		"react": "^18.2.0",
 		"react-bootstrap": "^2.7.2",
 		"react-dom": "^18.2.0",
 		"react-hot-toast": "^2.4.0",
-		"react-router-dom": "^6.9.0"
+		"react-router-dom": "^6.9.0",
+		"url-loader": "^4.1.1"
 	}
 }

@@ -2,6 +2,8 @@ const path = require("path");
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
+const CopyPlugin = require("copy-webpack-plugin");
+
 
 const LOCAL_II_CANISTER =
 	"http://localhost:8000/?canisterId=rrkah-fqaaa-aaaaa-aaaaq-cai";
@@ -81,12 +83,40 @@ module.exports = {
 		rules: [
 			{ test: /\.(ts|tsx|jsx)$/, loader: "ts-loader" },
 			{ test: /\.css$/, use: ["style-loader", "css-loader"] },
+
+			{
+				test: /\.(png|jpe?g|gif)$/i,
+				use: [
+					{
+						loader: "file-loader",
+					},
+				],
+			},
+			{
+				test: /\.(png|jpg|gif)$/i,
+				use: [
+					{
+						loader: "url-loader",
+						options: {
+							limit: 8192,
+						},
+					},
+				],
+			},
 		],
 	},
 	plugins: [
 		new HtmlWebpackPlugin({
 			template: path.join(__dirname, asset_entry),
 			cache: false,
+		}),
+		new CopyPlugin({
+			patterns: [
+				{
+					from: path.join(__dirname, "src", frontendDirectory, "assets"),
+					to: path.join(__dirname, "dist", frontendDirectory),
+				},
+			],
 		}),
 		new webpack.EnvironmentPlugin({
 			NODE_ENV: "development",
