@@ -34,19 +34,20 @@ const App = () => {
 
 	const [actorRestated, setActorRestated] = useState<boolean>(false);
 
-	if (actorRestated) {
-		return (
-			<Routes>
-				<Route path='/signup' element={<Signup />} />
-			</Routes>
-		);
-	} else {
+	// if (actorRestated) {
+	// 	return (
+	// 		<Routes>
+	// 			<Route path='/signup' element={<Signup />} />
+	// 		</Routes>
+	// 	);
+	// } else {
 		return (
 			<Routes>
 				<Route path='/' element={<LandingPage />} />
+				<Route path='/signup' element={<Signup />} />
 			</Routes>
 		);
-	}
+	// }
 };
 
 export default App;

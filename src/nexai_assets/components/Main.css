@@ -1,5 +1,4 @@
 * {
-	font-family: "fira code";
 }
 
 .App {
@@ -7,38 +6,11 @@
 	color: white;
 }
 
-.hero {
-	background: linear-gradient(to bottom,
-			hsl(250, 24%, 9%) 30%,
-			hsl(286, 49%, 18%));
-	padding: 50px;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	border-bottom: 0;
-}
-
-.hero h1 {
-	font-size: 6rem;
-	font-family: "palatino Linotype";
-	font-weight: bold;
-	margin-bottom: 1rem;
-	text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.2);
-}
-
-.hero p {
-	font-size: 1.8rem;
-	/* font-family: "segoe script"; */
-	max-width: 800px;
-	margin-bottom: 2rem;
-	text-align: center;
-	text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.2);
-}
 
 .steps {
-	background: linear-gradient(to top,
+	/* background: linear-gradient(to top,
 			hsl(250, 24%, 9%) 70%,
-			hsl(286, 49%, 18%));
+			hsl(286, 49%, 18%)); */
 	padding: 50px;
 	display: flex;
 	flex-direction: column;

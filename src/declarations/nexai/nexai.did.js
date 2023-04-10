@@ -22,7 +22,7 @@ export const idlFactory = ({ IDL }) => {
     'getAllCompanies' : IDL.Func(
         [],
         [IDL.Vec(IDL.Tuple(IDL.Principal, CompanyEntry))],
-        ['query'],
+        [],
       ),
     'getAnAnswer' : IDL.Func([IDL.Nat], [IDL.Opt(CardEntry)], []),
     'greet' : IDL.Func([IDL.Text], [IDL.Text], []),

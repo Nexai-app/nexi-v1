@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import "../../src/App.css";
+import { Box, Button, Container, Flex, Heading, Spacer, Text } from "@chakra-ui/react";
 
 function Navbar() {
 	const { Auth, iiAuth, changeAuthStatus } = useContext(AuthContext);
@@ -14,17 +15,18 @@ function Navbar() {
 	}
 
 	return (
-		<header className='App-header'>
-			<div className='navbar'>
-				{/* <Link to='/'>
-					Nexai
-				 <img src={logo} className='App-logo' alt='logo' /> 
-				</Link> */}
-				<div onClick={Auth} className='sign-up-button'>
-					Sign up
-				</div>
-			</div>
-		</header>
+		<Box className='App-header' >
+			<Flex as="nav" py='50px' px='80px' alignItems='center' gap='30px' bg='transparent'>
+				<Heading>Nexai</Heading>
+			<Spacer/>
+				<Button onClick={Auth} colorScheme="tranarent">Sign in</Button>
+				<Button colorScheme='transparent' border='1px'>Sign up</Button>
+			</Flex>
+			<Container centerContent my='300px' >
+				<Heading as='h1' size='4xl' fontFamily='Optima'>Nexai</Heading>
+				<Text fontFamily='Public Sans' textAlign='center'>The first fully decentralized, autonomous, integrateable chatbot and assistant that runs on blockchain and artificial intelligence.</Text>
+			</Container>
+		</Box>
 	);
 }
 

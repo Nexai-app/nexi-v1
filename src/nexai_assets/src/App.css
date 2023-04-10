@@ -1,3 +1,9 @@
+*{
+	background-color: #341A41;
+	/* background-image: url('../assets/bg.svg'); */
+	/* opacity: 0.6; */
+}
+
 .App {
 	text-align: center;
 }
@@ -11,7 +17,7 @@
 	/* make the logo take up all available space in the navbar */
 }
 
-.logo-link .App-logo {
+/* .logo-link .App-logo {
 	height: 4vmin;
 	pointer-events: none;
 }
@@ -20,19 +26,20 @@
 	.logo-link .App-logo {
 		animation: App-logo-spin infinite 20s linear;
 	}
-}
+} */
 
 .App-header {
-	background-color: hsl(250, 24%, 9%);
-	display: flex;
-	flex-direction: column;
+	background-image: url('../assets/logo.png'); 
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size:cover;
 	/* align-items: center;
 	justify-content: center; */
 	font-size: calc(10px + 2vmin);
 	color: white;
 }
 
-.App-link {
+/* .App-link {
 	color: #61dafb;
 }
 
@@ -44,19 +51,18 @@
 	to {
 		transform: rotate(360deg);
 	}
-}
+} */
 
-.navbar {
+/* .navbar {
 	min-height: 5vh;
-	background-color: hsl(250, 24%, 9%);
-	border-bottom: rgb(41, 39, 39) solid 1px;
+	background-color: #341A41;
 	padding: 10px;
 	font-size: 1rem;
 	display: flex;
 	justify-content: end;
-	/* center the logo horizontally */
+	center the logo horizontally
 	align-items: flex-end;
-	/* center the logo vertically */
+	center the logo vertically
 }
 
 .navbar a {
@@ -66,13 +72,13 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-}
+} */
 
 .sign-up-button {
 	display: flex;
 	background-color: transparent;
 	color: white;
-	border: solid 1px rgb(41, 39, 39);
+	/* border: solid 1px rgb(41, 39, 39); */
 	border-radius: 5px;
 	padding: 10px 20px;
 	font-size: 16px;

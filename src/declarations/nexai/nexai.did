@@ -6,7 +6,7 @@ type Nexai =
    getAllCompanies: () -> (vec record {
                                  principal;
                                  CompanyEntry;
-                               }) query;
+                               });
    getAnAnswer: (nat) -> (opt CardEntry);
    greet: (text) -> (text);
    logIn: () -> (bool) query;
