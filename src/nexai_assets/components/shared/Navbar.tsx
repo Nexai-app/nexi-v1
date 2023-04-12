@@ -23,7 +23,7 @@ function Navbar() {
 				<Button colorScheme='transparent' border='1px'>Sign up</Button>
 			</Flex>
 			<Container centerContent my='300px' >
-				<Heading as='h1' size='4xl' fontFamily='Optima'>Nexai</Heading>
+				<Heading as='h1' size='4xl' fontFamily='Poppins'>Nexai</Heading>
 				<Text fontFamily='Public Sans' textAlign='center'>The first fully decentralized, autonomous, integrateable chatbot and assistant that runs on blockchain and artificial intelligence.</Text>
 			</Container>
 		</Box>

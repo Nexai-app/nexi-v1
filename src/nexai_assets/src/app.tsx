@@ -8,31 +8,31 @@ import LandingPage from "../pages/LandingPage";
 import Signup from "../pages/Signup";
 
 const App = () => {
-	const { handleAuthenticated, setIIAuth } = useContext(AuthContext);
+	// const { handleAuthenticated, setIIAuth } = useContext(AuthContext);
 
-	const navigate = useNavigate();
+	// const navigate = useNavigate();
 
-	useEffect(() => {
-		const runOnMounth = async () => {
-			const authClient = await AuthClient.create();
-			if (await authClient.isAuthenticated()) {
-				// setTour(tour_);
-				handleAuthenticated(authClient);
-				if (location.pathname === "/") {
-					navigate("/signup");
-				}
-				setIIAuth(true);
-				setActorRestated(true);
-			} else {
-				toast.error("you must log in");
-				navigate("/");
-			}
-		};
+	// useEffect(() => {
+	// 	const runOnMounth = async () => {
+	// 		const authClient = await AuthClient.create();
+	// 		if (await authClient.isAuthenticated()) {
+	// 			// setTour(tour_);
+	// 			handleAuthenticated(authClient);
+	// 			if (location.pathname === "/") {
+	// 				navigate("/signup");
+	// 			}
+	// 			setIIAuth(true);
+	// 			setActorRestated(true);
+	// 		} else {
+	// 			toast.error("you must log in");
+	// 			navigate("/");
+	// 		}
+	// 	};
 
-		runOnMounth();
-	}, []);
+	// 	runOnMounth();
+	// }, []);
 
-	const [actorRestated, setActorRestated] = useState<boolean>(false);
+	// const [actorRestated, setActorRestated] = useState<boolean>(false);
 
 	// if (actorRestated) {
 	// 	return (
@@ -44,7 +44,8 @@ const App = () => {
 		return (
 			<Routes>
 				<Route path='/' element={<LandingPage />} />
-				<Route path='/signup' element={<Signup />} />
+						<Route path='/signup' element={<Signup />} />
+
 			</Routes>
 		);
 	// }
