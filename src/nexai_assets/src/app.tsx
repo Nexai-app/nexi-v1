@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 import { AuthContext } from "../context/AuthContext";
 import LandingPage from "../pages/LandingPage";
 import Signup from "../pages/Signup";
+import Dashboard from "../pages/Dashboard";
 
 const App = () => {
 	const { handleAuthenticated, setIIAuth } = useContext(AuthContext);
@@ -45,6 +46,7 @@ const App = () => {
 			<Routes>
 				<Route path='/' element={<LandingPage />} />
 				<Route path='/signup' element={<Signup />} />
+				<Route path='/dashboard' element={<Dashboard />} />
 			</Routes>
 		);
 	// }
