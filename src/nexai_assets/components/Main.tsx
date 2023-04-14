@@ -7,50 +7,6 @@ import { Box, Button, ButtonGroup, Container, Flex, Heading, SimpleGrid, Spacer,
 import { Image } from "react-bootstrap";
 
 function Main() {
-	// const data = [
-	// 	{
-	// 		icon: faPenToSquare,
-	// 		title: "Tell us what your project is all about",
-	// 		description:
-	// 			"Let Nexai know what your project is about so it can assist you better.",
-	// 		image: "image1.jpg",
-	// 	},
-	// 	{
-	// 		icon: faComments,
-	// 		title: "Set some default messages or behavior you want from Nexai",
-	// 		description:
-	// 			"Customize Nexai to suit your needs by setting default messages and behavior.",
-	// 		image: "image2.jpg",
-	// 	},
-	// 	{
-	// 		icon: faMugHot,
-	// 		title: "Drink a cup of coffee while we finish up your personal assistant",
-	// 		description:
-	// 			"Relax and let Nexai do the work. Grab a cup of coffee and enjoy.",
-	// 		image: "image3.jpg",
-	// 	},
-	// 	{
-	// 		icon: faListCheck,
-	// 		title: "Integrate Nexai to your app with the detailed guide",
-	// 		description:
-	// 			"Follow our detailed guide to easily integrate Nexai to your app.",
-	// 		image: "image4.jpg",
-	// 	},
-	// 	{
-	// 		icon: faMapLocationDot,
-	// 		title: "Rest while Nexai shows new users the way around your new site",
-	// 		description:
-	// 			"Let Nexai take over the task of guiding new users around your site.",
-	// 		image: "image5.jpg",
-	// 	},
-	// 	{
-	// 		icon: faChartLine,
-	// 		title: "Check detailed analytics on your personalized dashboard",
-	// 		description:
-	// 			"Monitor and analyze the performance of Nexai with our personalized dashboard.",
-	// 		image: "image6.jpg",
-	// 	},
-	// ];
 
 	const { Auth } = useContext(AuthContext);
 	const [isSmallerThan1100] = useMediaQuery("(max-width: 1100px)");
@@ -59,7 +15,7 @@ function Main() {
 			<Container as='section' maxW='90vw' color='white'>
 			<Heading fontFamily='Optima'>How it works</Heading>
 			<Flex pb='26px' pos="relative" >
-				<Flex w={{ lg: '42%',['1100px']:'100%' }} minH='140' bg='#271732' p={`5`} flexDirection='column' justifyContent={`center`} borderRadius='6px'>
+				<Flex w={{ lg: '42%',md:'100%' }} minH='140' bg='#271732' p={`5`} flexDirection='column' justifyContent={`center`} borderRadius='6px'>
 					<Text mb={`5px`} bg={`transparent`} fontWeight={`medium`} fontSize={{ lg: "16.5px", md: "md" }}>Tell us what your project is all about</Text>
 					<Text bg={`transparent`} fontSize={{ lg: "14.5px", md: "md" }}>Let Nexai know what your project is about so it can assist you better.</Text>
 				</Flex>
@@ -105,9 +61,6 @@ function Main() {
 					<Text fontSize={{ lg: "16.5px", md: "md" }} mb={`5px`} bg={`transparent`} fontWeight={`medium`}>Rest while Nexai shows users the way around</Text>
 					<Text bg={`transparent`} fontSize={{ lg: "14.5px", md: "md" }}>Let Nexai take over the task of guiding new users around yor site</Text>
 				</Flex>
-			</Flex>
-			<Flex justifyContent={`center`} py={`20`}>
-			<button className="cta" onClick={Auth}>Get Started</button>
 			</Flex>
 			</Container>
 	);

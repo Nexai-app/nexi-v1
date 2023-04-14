@@ -1,0 +1,26 @@
+type CompanyEntry = 
+ record {
+   about: text;
+   createdAt: int;
+   founderName: text;
+   name: text;
+   username: text;
+ };
+type CardEntry = 
+ record {
+   answer: text;
+   question: text;
+   username: text;
+ };
+service : {
+  CheckPrincipal: () -> (principal);
+  createCompany: (text, text, text, text) -> (bool);
+  createQCard: (text, text) -> ();
+  getAllCompanies: () -> (vec record {
+                                principal;
+                                CompanyEntry;
+                              });
+  getAnAnswer: (nat) -> (opt CardEntry);
+  greet: (text) -> (text);
+  logIn: () -> (bool) query;
+}
