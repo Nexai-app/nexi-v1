@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import "../../src/App.css";
 import { Box, Button, Container, Flex, Heading, Spacer, Text } from "@chakra-ui/react";
@@ -17,7 +17,9 @@ function Navbar() {
 	return (
 		<Box className='App-header2' >
 			<Flex as="nav" py='50px' px='80px' alignItems='center' gap='30px' bg='transparent'>
-				<Heading>Nexai</Heading>
+				<NavLink to={`/`}>
+					<Heading bg={`transparent`}>Nexai</Heading>
+				</NavLink>
 			<Spacer/>
 			</Flex>
 		</Box>
