@@ -7,6 +7,7 @@ import { AuthContext } from "../context/AuthContext";
 import LandingPage from "../pages/LandingPage";
 import Signup from "../pages/Signup";
 import Signin from "../pages/Signin";
+import Dashboard from "../pages/Dashboard";
 
 const App = () => {
 	const { handleAuthenticated, setIIAuth } = useContext(AuthContext);
@@ -46,7 +47,6 @@ const App = () => {
 			<Routes>
 				<Route path='/' element={<LandingPage />} />
 				<Route path='/signup' element={<Signup />} />
-				<Route path='/signin' element={<Signin />} />
 			</Routes>
 		);
 	// }
