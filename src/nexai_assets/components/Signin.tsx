@@ -45,13 +45,7 @@ function SignUpForm() {
 	return (
 		<Flex height="75vh" alignItems="center">
 		<Container maxW='container.sm' alignItems={`center`} color={`white`} >
-			<Heading>Sign Up On Nexai</Heading>
-			<Box>
-				<FormControl isRequired mb={`40px`}>
-					<FormLabel>Company Name</FormLabel>
-					<Input name='name' placeholder='Enter company name' height='60px' px={`5`} />
-				</FormControl>
-			</Box>
+			<Heading>Sign In To Nexai</Heading>
 			<Box>
 				<FormControl isRequired mb={`40px`}>
 					<FormLabel>Email address</FormLabel>
@@ -71,7 +65,7 @@ function SignUpForm() {
 					</InputGroup>
 				</FormControl>
 			</Box>
-			<button className="ctb">Sign Up</button>
+			<button className="ctb">Sign In</button>
 			</Container>
 			</Flex>
 	);
