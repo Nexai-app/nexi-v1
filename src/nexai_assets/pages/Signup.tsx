@@ -6,9 +6,11 @@ import Navbar2 from "../components/shared/Navbar2";
 function Signup() {
 	return (
 		<div className=''>
-			<Navbar2 />
+			Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi quibusdam minus nisi obcaecati, 
+			laborum modi tenetur nihil natus explicabo corporis? Labore dolorem sit vel exercitationem dicta rem. Voluptate, totam repellat?
+			{/* <Navbar2 />
 			<Signup_ />
-			<Footer />
+			<Footer /> */}
 		</div>
 	);
 }
