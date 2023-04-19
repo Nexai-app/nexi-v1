@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useContext} from "react";
 import { 
     Textarea,
     FormControl,
@@ -9,11 +9,38 @@ import {
     Button,
     Stack
  } from "@chakra-ui/react";
-import { Box } from "@chakra-ui/react";
+import { Box , useToast} from "@chakra-ui/react";
+import { useNavigate , NavLink} from "react-router-dom";
 import Navbar from "../shared/Navbar2"
+import { AuthContext } from "../../context/AuthContext";
 
 const AddQuestions = ()=>{
+    const [question, setQuestion] = useState("");
+	const [ans, setAns] = useState("");
+	const [submitting, setSubmitting] = useState(false)
+	const navigate = useNavigate()
+	const toast = useToast()
+
+    const {actor} = useContext(AuthContext)
+    const handleSubmit = () => {
+         setSubmitting(true)
+         
+         actor.createQCard(question, ans).then(()=> {
+            setSubmitting(false)
+            navigate("/my-questions")
+         }).catch((err) => {
+            setSubmitting(false)
+            console.log(err)
+            toast({title:err})
+         })
+    }
+
+    const handleClear = () => {
+        setQuestion("")
+        setAns("")
+    }
     return(
+        
         <Box color="white">
             <Navbar/>
             <Box>
@@ -28,12 +55,12 @@ const AddQuestions = ()=>{
                         <Box>
                             <FormControl >
                                 <FormLabel>Question</FormLabel>
-                                <Input mb={2} />
+                                <Input value={question} onChange={(e)=> setQuestion(e.target.value)} mb={2} />
                                 <FormLabel>Answer</FormLabel>
-                                <Textarea placeholder='Type your answer here' width={{base:"350px", md:"600px"}} height={{base:"350px", md:"200px"}} />
+                                <Textarea value={ans} onChange={(e) => {setAns(e.target.value)}} placeholder='Type your answer here' width={{base:"350px", md:"600px"}} height={{base:"350px", md:"200px"}} />
                                 <Stack my={5} direction="row" justify="end">
-                                    <Button color="white" bgColor="#341A41">Cancel</Button>
-                                    <Button color="#341A41" >Save</Button>
+                                    <Button onClick={handleClear} color="white" bgColor="#341A41">Clear</Button>
+                                    <Button onClick={handleSubmit} color="#341A41" isLoading={submitting} isDisabled={submitting}>Save</Button>
                                 </Stack>
                             </FormControl>
                         </Box>

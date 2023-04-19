@@ -25,7 +25,7 @@ const BarChart = () => {
         labels: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL','AUG','SEPT','OCT','NOV','DEC' ],
         datasets: [{
             labels: 'Monthly Engagement Stat',
-            data: [ 200, 500,1500,2000,1000,100,500,1500,700,1200,1800,500 ],
+            data: [ 0, 0,0,40,0,0,0,0,0,0,0,0 ],
             fill: true,
             backgroundColor: 'rgba(255,255,255)',
             borderColor: 'rgba(255, 255, 255)',

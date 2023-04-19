@@ -1,0 +1,25 @@
+type CompanyEntry = 
+ record {
+   createdAt: int;
+   email: text;
+   name: text;
+ };
+type CardEntry = 
+ record {
+   answer: text;
+   email: text;
+   question: text;
+ };
+service : {
+  CheckPrincipal: () -> (principal);
+  createCompany: (text, text) -> (bool);
+  createQCard: (text, text) -> ();
+  getAllCompanies: () -> (vec record {
+                                principal;
+                                CompanyEntry;
+                              });
+  getAllQCards: (text) -> (opt vec CardEntry);
+  getAnAnswer: (nat) -> (opt CardEntry);
+  greet: (text) -> (text);
+  logIn: () -> (bool) query;
+}

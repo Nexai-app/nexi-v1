@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext, useEffect} from "react";
 import { 
     SimpleGrid,
     Card,
@@ -13,9 +13,22 @@ import {
  import { NavLink } from "react-router-dom";
 import { Box } from "@chakra-ui/react";
 import Navbar from "../shared/Navbar2"
+import { AuthContext } from "../../context/AuthContext";
 
 
 const AllQuestions = ()=>{
+    const {actor} = useContext(AuthContext)
+
+    //firstly make a call to get the email, 
+    // then pass the email into the function]
+    // then fitlter the result and display it
+
+    // useEffect(() => {
+    //     const callMe = () => {
+    //             actor.getAllQCards()
+    //     }
+    //         callMe()
+    // }, [])
     return(
         <Box color="white">
             <Navbar/>

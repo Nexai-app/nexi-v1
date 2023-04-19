@@ -10,6 +10,8 @@ import Nat "mo:base/Nat";
 import Principal "mo:base/Principal";
 import Text "mo:base/Text";
 import Time "mo:base/Time";
+import Buffer "mo:base/Buffer";
+
 import Types "./types";
 
 shared ({ caller }) actor class Nexai() = {
@@ -114,6 +116,22 @@ shared ({ caller }) actor class Nexai() = {
       };
     };
 
+  };
+
+  public func getAllQCards(email : Text) : async ?[CardEntry] {
+    do ? {
+      var buff = Buffer.Buffer<CardEntry>(0);
+      for ((i, j) in CardHashMap.entries()) {
+        if (j.email == email) {
+          buff.add(j);
+        };
+      };
+      buff.toArray();
+    };
+  };
+
+  public func getCompanyProfile() : async ?CompanyEntry {
+    CompanyHashMap.get(caller);
   };
 
 };

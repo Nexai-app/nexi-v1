@@ -5,11 +5,19 @@ type Nexai =
    createQCard: (text, text) -> ();
    getAllCompanies: () -> (vec record {
                                  principal;
-                                 CompanyEntry;
+                                 CompanyEntry__1;
                                });
+   getAllQCards: (text) -> (opt vec CardEntry);
    getAnAnswer: (nat) -> (opt CardEntry);
+   getCompanyProfile: () -> (opt CompanyEntry);
    greet: (text) -> (text);
    logIn: () -> (bool) query;
+ };
+type CompanyEntry__1 = 
+ record {
+   createdAt: int;
+   email: text;
+   name: text;
  };
 type CompanyEntry = 
  record {

@@ -27,7 +27,7 @@ const LineChart = () => {
         labels: ['MON', 'TUES', 'WED', 'THURS', 'FRI', 'SAT', 'SUN' ],
         datasets: [{
             labels: 'Daily Users Statistics',
-            data: [0, 200, 300,150,300,100,400 ],
+            data: [2, 0, 0,0,0,0,0 ],
             fill: true,
             backgroundColor: 'rgba(52, 26, 65, 1)',
             borderColor: 'rgba(255, 255, 255)',
