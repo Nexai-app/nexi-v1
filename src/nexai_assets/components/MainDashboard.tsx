@@ -15,7 +15,7 @@ const MainDashboard = () => {
                 Get access to your bot analytics and information here
             </Box>
             <Spacer/>
-            <Link to="/">
+            <Link to="/train-bot">
                 <Button color="#341A41" bg="white" >Train Your Bot</Button>
             </Link>
         </Flex>

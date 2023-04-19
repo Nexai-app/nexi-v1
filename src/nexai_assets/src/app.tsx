@@ -9,6 +9,8 @@ import Signup from "../pages/Signup";
 import Signin from "../pages/Signin";
 import Dashboard from "../pages/Dashboard";
 import TrainBot from "../pages/TrainBot";
+import AddQuestion from "../components/TrainBot/AddQuestion";
+import AllQuestion from "../components/TrainBot/AllQuestions";
 
 const App = () => {
 	const { handleAuthenticated, setIIAuth } = useContext(AuthContext);
@@ -50,7 +52,9 @@ const App = () => {
 			<Routes>
 				<Route path='/signup' element={<Signup />} />
 				<Route path='/dashboard' element={<Dashboard />} />
-				<Route path='/train-bot' element={<TrainBot />} />
+				<Route path='/train-bot' element={<AddQuestion />} />
+				<Route path='/my-questions' element={<AllQuestion />} />
+
 			</Routes>
 		);
 	} else {

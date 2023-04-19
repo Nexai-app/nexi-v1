@@ -2,8 +2,9 @@ import React, { useEffect, useState, useContext } from "react";
 import "./Signup.css";
 import { useLogIn } from "../functions";
 import { AuthContext } from "../context/AuthContext";
-import { Box, Container, useToast, FormControl, Heading, Input, FormLabel, Flex, Button } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
+import { Box, Container, Center,useToast, FormControl, Heading, Input, FormLabel, Flex, Button, Text } from "@chakra-ui/react";
+import { useNavigate , NavLink} from "react-router-dom";
+
 
 function SignUpForm() {
 	const [appName, setAppName] = useState("");
@@ -21,7 +22,9 @@ function SignUpForm() {
 	useEffect(() => {
 		handleLogIn()
 	}, [])
-
+if(loggedIn){
+	navigate("/dashboard")
+}
 
 	const handleSubmit = (e) => {
 		var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -46,15 +49,18 @@ function SignUpForm() {
 			setSubmitting(false)
 			console.log(err);
 		})
-		// do something with the form data, like sending it to a server
 
-	};
-  		const [show, setShow] = React.useState(false)
-		const handleClick = () => setShow(!show)
+	};		
 
 
 	return (
 		<Flex height="75vh" alignItems="center">
+			{loading ? (
+				<Center>
+				<Text>Authenticating...</Text>
+				</Center>
+			):(
+			
 		<Container maxW='container.sm' alignItems={`center`} color={`white`} >
 			<Heading>Sign Up On Nexai</Heading>
 			<Box>
@@ -69,21 +75,10 @@ function SignUpForm() {
 					<Input name='email' value={email} onChange={(e)=>{setEmail(e.target.value)} } placeholder='Enter email address' height='60px' px={`5`} />
 				</FormControl>
 			</Box>
-			{/* <Box >
-				<FormControl isRequired mb={`40px`}>
-					<FormLabel>Password</FormLabel>
-					<InputGroup>
-					<Input type={show ? 'text' : 'password'} name='name' placeholder='Enter password'  height='60px' px={`5`}/>
-					<InputRightElement width='4.5rem'h='100%' bg={`transparent`}>
-						<Button h='1.75rem' size='sm' colorScheme={`341A41`} onClick={handleClick}>
-						{show ? 'Hide' : 'Show'}
-						</Button>
-					</InputRightElement>
-					</InputGroup>
-				</FormControl>
-			</Box> */}
 			<Button width="full" onClick={handleSubmit} isLoading={submitting} isDisabled={submitting} borderRadius="5px" py={4} bgColor="white" color="#341A41">Sign Up</Button>
 			</Container>
+			
+			)}
 			</Flex>
 	);
 }
