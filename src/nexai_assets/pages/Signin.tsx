@@ -1,15 +1,15 @@
 import React from "react";
-import Signup_ from "../components/Signup";
+import Signin_ from "../components/Signin";
 import Footer from "../components/Footer";
 import Navbar from "../components/shared/Navbar2";
 
-function Signup() {
+function Signin() {
 	return (
 		<div className=''>
 			<Navbar />
-			<Signup_ />
+			<Signin_ />
 		</div>
 	);
 }
 
-export default Signup;
+export default Signin;
