@@ -31,28 +31,26 @@ shared ({ caller }) actor class Nexai() = {
 
   public shared ({ caller }) func CheckPrincipal() : async Principal { caller };
 
-  func _makeProfile(name : Text, username : Text, founderName : Text, about : Text, createdAt : Int) : Types.CompanyEntry {
+  func _makeCompany(name : Text, email : Text, createdAt : Int) : Types.CompanyEntry {
     {
       name : Text;
-      username : Text;
-      founderName : Text;
-      about : Text;
+      email : Text;
       createdAt : Int;
     };
   };
 
-  public func createCompany(name : Text, username : Text, founderName : Text, about : Text) : async Bool {
+  public func createCompany(name : Text, email : Text) : async Bool {
     var newUser : Bool = false;
 
     for ((i, j) in CompanyHashMap.entries()) {
-      if (j.username == username) {
+      if (j.email == email) {
         // unique := true;
         throw Error.reject("$ A user with that username exists, kindly pick another username. Thank you! # ");
 
       };
     };
     if (newUser == false) {
-      CompanyHashMap.put(caller, _makeProfile(name, username, founderName, about, Time.now()));
+      CompanyHashMap.put(caller, _makeCompany(name, email, Time.now()));
       newUser := true;
     };
     return newUser;
@@ -86,8 +84,8 @@ shared ({ caller }) actor class Nexai() = {
    * 
    */
 
-  func _createQCard(username : Text, question : Text, answer : Text) : CardEntry {
-    { username : Text; question : Text; answer : Text };
+  func _createQCard(email : Text, question : Text, answer : Text) : CardEntry {
+    { email : Text; question : Text; answer : Text };
   };
 
   public func createQCard(question : Text, answer : Text) : async () {
@@ -96,7 +94,7 @@ shared ({ caller }) actor class Nexai() = {
     for ((i, j) in CompanyHashMap.entries()) {
       if (i == caller) {
 
-        CardHashMap.put(cardId, _createQCard(j.username, question, answer));
+        CardHashMap.put(cardId, _createQCard(j.email, question, answer));
         cardId := cardId + 1;
 
       };

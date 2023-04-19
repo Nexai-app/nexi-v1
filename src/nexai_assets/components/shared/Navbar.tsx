@@ -23,7 +23,7 @@ function Navbar() {
 		<Box className='App-header' mb={`80px`}>
 			<Flex as="nav" py='50px' px='80px' alignItems='center' gap='30px' bg='transparent'>
 				<NavLink to={`/`}>
-					<Heading bg={`transparent`}>Nexai</Heading>
+					<Heading bg={`transparent`} fontFamily="Poppins">Nexai</Heading>
 				</NavLink>
 				<Spacer bg={`transparent`} />
 				<Box display={{ base: "block", md: "none" }} onClick={handleDrawerToggle} color="white">
@@ -36,18 +36,14 @@ function Navbar() {
 				<List display={{ base: "none", md: "flex" }}>
 					<ButtonGroup gap='2'>
 					<ListItem>
-						<NavLink to={`signin`}>
-							<Button colorScheme={`#341A41`}>
+							<Button onClick={Auth} colorScheme={`#341A41`}>
 								Sign In
 							</Button>
-						</NavLink>
 					</ListItem>
 					<ListItem>
-						<NavLink to={`signup`}>
-							<Button border='1px' colorScheme={`transparent`}>
+							<Button onClick={Auth} border='1px' colorScheme={`transparent`}>
 								Sign up
 							</Button>
-						</NavLink>
 					</ListItem>
 					</ButtonGroup>
 				</List>
@@ -56,29 +52,25 @@ function Navbar() {
 			<Drawer isOpen={isDrawerOpen} placement="right" onClose={handleDrawerToggle}>
 				<DrawerOverlay />
 				<DrawerContent>
-					<DrawerHeader color={`white`}>Nexai</DrawerHeader>
+					<DrawerHeader color={`white`} fontFamily="Poppins">Nexai</DrawerHeader>
 					<DrawerBody>
 						<List>
 							<ListItem>
-								<NavLink to={`signin`}>
-									<Button colorScheme="tranarent">
+									<Button onClick={Auth} colorScheme="tranarent">
 										Sign in
 									</Button>
-								</NavLink>
 							</ListItem>
 							<ListItem>
-								<NavLink to={`signup`}>
-									<Button colorScheme='transparent' border='1px'>
+									<Button onClick={Auth} colorScheme='transparent' border='1px'>
 										Sign up
 									</Button>
-								</NavLink>
 							</ListItem>
 						</List>
 					</DrawerBody>
 				</DrawerContent>
 			</Drawer>
 			<Container centerContent my='300px' bg={`transparent`}>
-				<Heading as='h1' size='4xl' fontFamily='Optima' bg={`transparent`}>Nexai</Heading>
+				<Heading as='h1' size='4xl' fontFamily='Poppins' bg={`transparent`}>Nexai</Heading>
 				<Text fontFamily='Public Sans' textAlign='center' bg={`transparent`}>The first fully decentralized, autonomous, integrateable chatbot and assistant that runs on blockchain and artificial intelligence.</Text>
 				<Text fontSize={`md`} pt={`18px`} className="powered-by" bg={`transparent`}>Powered by: <Image className="logo" alt="" src={`logo.png`} bg={`transparent`} /></Text>
 			</Container>

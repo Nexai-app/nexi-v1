@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Box, Button, ButtonGroup, Flex, Heading, Spacer,IconButton, Text } from '@chakra-ui/react';
+import { Box, Button, Flex, Heading, Spacer } from '@chakra-ui/react';
 import LineChart from './LineChart';
 import BarChart from './BarChart';
 

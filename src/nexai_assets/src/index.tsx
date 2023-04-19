@@ -27,9 +27,9 @@ const root = ReactDOM.createRoot(document.getElementById("app"));
 root.render(
 	<React.StrictMode>
 		<HashRouter>
-			<ChakraProvider>
+			<ChakraProvider toastOptions={{ defaultOptions: { position: 'top' } }}>
 				<AuthProvider>
-					<App />
+				<App />
 				</AuthProvider>
 			</ChakraProvider>
 		</HashRouter>

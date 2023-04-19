@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import "./App.css";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { AuthClient } from "@dfinity/auth-client";
-import toast from "react-hot-toast";
+import {useToast} from "@chakra-ui/react"
 import { AuthContext } from "../context/AuthContext";
 import LandingPage from "../pages/LandingPage";
 import Signup from "../pages/Signup";
@@ -12,6 +12,12 @@ import TrainBot from "../pages/TrainBot";
 
 const App = () => {
 	const { handleAuthenticated, setIIAuth } = useContext(AuthContext);
+	const [actorRestated, setActorRestated] = useState<boolean>(false);
+	const toast = useToast({
+		containerStyle: {
+			color: "green",
+		},
+	  })
 
 	const navigate = useNavigate();
 
@@ -26,21 +32,24 @@ const App = () => {
 				}
 				setIIAuth(true);
 				setActorRestated(true);
+				return;
 			} else {
-				toast.error("you must log in");
+				toast({title:"you must log in", variant:"subtle",});
 				navigate("/");
+				return;
+
 			}
 		};
 
 		runOnMounth();
 	}, []);
 
-	const [actorRestated, setActorRestated] = useState<boolean>(false);
 
 	if (actorRestated) {
 		return (
 			<Routes>
 				<Route path='/signup' element={<Signup />} />
+				<Route path='/dashboard' element={<Dashboard />} />
 				<Route path='/train-bot' element={<TrainBot />} />
 			</Routes>
 		);

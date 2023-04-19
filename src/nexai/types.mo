@@ -6,11 +6,9 @@ import Principal "mo:base/Principal"
 
 module {
 
-    public type  CompanyEntry = {
+    public type CompanyEntry = {
         name : Text;
-        username: Text;
-        founderName  : Text;
-        about  : Text;
+        email : Text;
         createdAt : Int;
         // onBoarding : Bool;
         // isAdmin : Bool;
@@ -19,9 +17,9 @@ module {
     // add cards(custom questions that the company can ask)
 
     public type CardEntry = {
-        username: Text;
-        question: Text; /*P how do i transfer my btc friom my wallet*/
-        answer: Text  /* just sleep and your btc would be transfered*/
-    }
+        email : Text;
+        question : Text; /*P how do i transfer my btc friom my wallet*/
+        answer : Text /* just sleep and your btc would be transfered*/;
+    };
 
-}
+};

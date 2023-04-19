@@ -1,19 +1,19 @@
-import React, { useContext } from "react";
+import React from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { AuthContext } from "../context/AuthContext";
 
 import "./Main.css";
-import { Box, Button, ButtonGroup, Container, Flex, Heading, SimpleGrid, Spacer, Text, useMediaQuery } from "@chakra-ui/react";
+import { Container, Flex, Heading, Spacer, Text, useMediaQuery } from "@chakra-ui/react";
 import { Image } from "react-bootstrap";
 
 function Main() {
 
-	const { Auth } = useContext(AuthContext);
+
 	const [isSmallerThan1100] = useMediaQuery("(max-width: 1100px)");
 
 	return (
 			<Container as='section' maxW='90vw' color='white'>
-			<Heading fontFamily='Optima'>How it works</Heading>
+			<Heading fontFamily='Poppins'>How it works</Heading>
 			<Flex p='26px' pos="relative" >
 				<Flex w={{ lg: '42%', md:'100%' }} minH='140' bg='#271732' p={`5`} flexDirection='column' justifyContent={`center`} borderRadius='6px'>
 					<Text mb={`5px`} bg={`transparent`} fontWeight={`medium`} fontSize={{ lg: "16.5px", md: "md" }}>Tell us what your project is all about</Text>
