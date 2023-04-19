@@ -52,6 +52,7 @@ function Navbar() {
 					</ButtonGroup>
 				</List>
 			</Flex>
+
 			<Drawer isOpen={isDrawerOpen} placement="right" onClose={handleDrawerToggle}>
 				<DrawerOverlay />
 				<DrawerContent>
