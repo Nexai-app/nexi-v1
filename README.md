@@ -1,6 +1,29 @@
-# nexai
+# Nexai
 
-Welcome to your new nexai project and to the internet computer development community. By default, creating a new project adds this README and some template files to your project directory. You can edit these template files to customize your project and to include your own code to speed up the development cycle.
+Nexai is the first fully decentralized, autonomous, and integratable chatbot and assistant that runs on blockchain and artificial intelligence. The main goal of Nexai is to provide a personalized user experience and assist with various tasks on different platforms, from e-commerce to social media.
+
+## Stage
+
+Currently, the Nexai project has completed the frontend of the app, which was written in JavaScript (React). The frontend includes the landing page, sign up, sign in, dashboard, and a few other pages. We are actively developing the backend and working on integrating the chatbot into various platforms.
+
+The Nexai project currently has five contributors: Dunsin, Ope, AJ, Bello, and myself. We are constantly seeking new contributors who are interested in joining our project and helping us bring our vision to life.
+
+We welcome any feedback, suggestions, or questions about Nexai and are excited to continue working on this innovative project.
+
+## Contributors
+
+- Abisuwa Dunsin: [Dunsin-cyber](https://github.com/Dunsin-cyber) (Developer)
+- Dare Onaopemipo: (Designer)
+- Akinade Anjola: [Anjyfade](https://github.com/anjyfade1) (Developer)
+- Bello Hadi: [Bello](https://github.com/Bello2609) (Developer)
+- Olatokunbo David: [dvdslab](https://github.com/dvdslab) (Developer)
+
+## Other Information
+
+Please feel free to reach out to any of the contributors for more information about Nexai. 
+
+This project is licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
 
 To get started, you might want to explore the project directory structure and the default configuration file. Working with this project in your development environment will not affect any production deployment or identity tokens.
 
