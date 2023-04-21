@@ -14,7 +14,7 @@ We welcome any feedback, suggestions, or questions about Nexai and are excited t
 ## Contributors
 
 - Abisuwa Dunsin: [Dunsin-cyber](https://github.com/Dunsin-cyber) (Developer)
-- Dare Onaopemipo: (Designer)
+- Dare Onaopemipo: [Horpemipor](https://github.com/Horpemipor) (Designer)
 - Akinade Anjola: [Anjyfade](https://github.com/anjyfade1) (Developer)
 - Bello Hadi: [Bello](https://github.com/Bello2609) (Developer)
 - Olatokunbo David: [dvdslab](https://github.com/dvdslab) (Developer)
