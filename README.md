@@ -6,7 +6,8 @@ Nexai is the first fully decentralized, autonomous, and integratable chatbot and
 
 Currently, the Nexai project has completed the frontend of the app, which was written in JavaScript (React). The frontend includes the landing page, sign up, sign in, dashboard, and a few other pages. We are actively developing the backend and working on integrating the chatbot into various platforms.
 
-The Nexai project currently has five contributors: Dunsin, Ope, AJ, Bello, and myself. We are constantly seeking new contributors who are interested in joining our project and helping us bring our vision to life.
+The Nexai project currently has five contributors: Abisuwa Dunsin, Dare Onaopemipo, Bello Hadi, Bello, and Olatokunbo David. 
+<!--We are constantly seeking new contributors who are interested in joining our project and helping us bring our vision to life.-->
 
 We welcome any feedback, suggestions, or questions about Nexai and are excited to continue working on this innovative project.
 
