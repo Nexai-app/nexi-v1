@@ -6,13 +6,11 @@ import { faTwitter, faDiscord } from "@fortawesome/free-brands-svg-icons";
 function Footer() {
 	return (
 		<footer className="footer">
+			<div className="copy">Copyright &#169; 2023 Nexai. All right reserved</div>
 			<div className="footer-container">
-				<div className="powered-by">
-					Powered by: <img className="logo" alt="" src={`logo.png`} />
-				</div>
 				<div className="social-links">
 					<a
-						href="https://twitter.com/"
+						href="https://twitter.com/nexaifoundation"
 						target="_blank"
 						rel="noopener noreferrer"
 					>
@@ -26,7 +24,6 @@ function Footer() {
 						<FontAwesomeIcon icon={faDiscord} />
 					</a>
 				</div>
-				<div className="copy">&copy; 2023 Nexai</div>
 			</div>
 		</footer>
 	);

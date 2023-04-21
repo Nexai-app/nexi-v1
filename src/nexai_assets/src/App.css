@@ -1,7 +1,6 @@
 *{
 	background-color: #341A41;
-	/* background-image: url('../assets/bg.svg'); */
-	/* opacity: 0.6; */
+	/* background-image: url('../assets/pbg.svg'); */
 }
 
 .App {
@@ -29,12 +28,18 @@
 } */
 
 .App-header {
-	background-image: url('../assets/logo.png'); 
+	background-image: url('../assets/pbg.svg'); 
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size:cover;
 	/* align-items: center;
 	justify-content: center; */
+	font-size: calc(10px + 2vmin);
+	color: white;
+	height: 1200px;
+}
+
+.App-header2 {
 	font-size: calc(10px + 2vmin);
 	color: white;
 }
