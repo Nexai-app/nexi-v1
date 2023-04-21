@@ -15,16 +15,23 @@ function SignUpForm() {
 
 
 	//CHECK IS USER EXIST BEFORE
-	const { actor, loggedIn } = useContext(AuthContext)
+	const { actor, loggedIn , iiAuth} = useContext(AuthContext)
 
 	const { loading, handleLogIn } = useLogIn()
 
 	useEffect(() => {
+		if(iiAuth) {	
 		handleLogIn()
+	}
 	}, [])
-if(loggedIn){
+	// if(loggedIn){
+	// 	navigate("/dashboard")
+	// }
+
+	useEffect(() => {
 	navigate("/dashboard")
-}
+	},[])
+
 
 	const handleSubmit = (e) => {
 		var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
