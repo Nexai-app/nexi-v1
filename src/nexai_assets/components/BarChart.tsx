@@ -8,7 +8,7 @@ import {
     Tooltip
 
 } from 'chart.js';
-import { Box, Text } from '@chakra-ui/react';
+import { Box, Text, useMediaQuery } from '@chakra-ui/react';
 
 
 ChartJS.register(
@@ -80,12 +80,35 @@ const BarChart = () => {
         }
     }
 
-
+    const [isLargerThan960] = useMediaQuery("(max-width: 960px)");
+    const [isLargerThan750] = useMediaQuery("(max-width: 750px)");
 
   return (
-    <Box p="30px" mt="30px" border='1px' borderColor='rgba(255, 255, 255, 0.3)' borderRadius="md" w={650} h={400} >
-        <Text fontWeight="bold"  fontSize="lg" >Monthly Engagement Stat</Text>
-        <Bar data={data} options={options} />
+    <Box>
+        {
+            isLargerThan750 ?
+            (
+                <Box p="15px" mt="30px" border='1px' borderColor='rgba(255, 255, 255, 0.3)' borderRadius="md" w="100%" >
+                    <Text fontWeight="bold"  fontSize="lg" >Monthly Engagement Stat</Text>
+                    <Bar data={data} options={options} />
+                </Box>
+            ) :
+            (isLargerThan960 ? 
+                (
+                    <Box p="30px" mt="30px" border='1px' borderColor='rgba(255, 255, 255, 0.3)' borderRadius="md" w="100%" >
+                        <Text fontWeight="bold"  fontSize="lg" >Monthly Engagement Stat</Text>
+                        <Bar data={data} options={options} />
+                    </Box>
+                ) :
+                (
+
+                    <Box p="30px" mt="30px" border='1px' borderColor='rgba(255, 255, 255, 0.3)' borderRadius="md" w={650} h={400} >
+                        <Text fontWeight="bold"  fontSize="lg" >Monthly Engagement Stat</Text>
+                        <Bar data={data} options={options} />
+                    </Box>
+                )
+            )
+        }
     </Box>
   )
 }
