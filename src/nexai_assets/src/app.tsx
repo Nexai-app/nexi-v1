@@ -37,7 +37,9 @@ const App = () => {
 				return;
 			} else {
 				// toast({title:"you must log in",});
-				navigate("/");
+				setActorRestated(true);
+				navigate("/dashboard");
+				// navigate("/");
 				return;
 
 			}
