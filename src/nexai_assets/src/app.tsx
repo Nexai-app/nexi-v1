@@ -30,7 +30,7 @@ const App = () => {
 				// setTour(tour_);
 				handleAuthenticated(authClient);
 				if (location.pathname === "/") {
-					navigate("/signup");
+					navigate("/dashboard");
 				}
 				setIIAuth(true);
 				setActorRestated(true);
@@ -51,21 +51,26 @@ const App = () => {
 
 	if (actorRestated) {
 		return (
+			<React.Fragment>
 			<Routes>
-				<Route path='/signup' element={<Signup />} />
-				<Route path='/dashboard' element={<Dashboard />} />
-				<Route path='/train-bot' element={<AddQuestion />} />
-				<Route path='/my-questions' element={<AllQuestion />} />
+				<Route path='/' element={<LandingPage />} />
+				<Route path='dashboard' element={<Dashboard />} />
+				<Route path='signup' element={<Signup />} />
+				<Route path='train-bot' element={<AddQuestion />} />
+				<Route path='my-questions' element={<AllQuestion />} />
 
 			</Routes>
+			</React.Fragment>
 		);
 	} else {
 		return (
+			<React.Fragment>
 			<Routes>
 				<Route path='/' element={<LandingPage />} />
 						{/* <Route path='/signup' element={<Signup />} /> */}
 
 			</Routes>
+			</React.Fragment>
 		);
 	}
 };

@@ -15,22 +15,10 @@ function SignUpForm() {
 
 
 	//CHECK IS USER EXIST BEFORE
-	const { actor, loggedIn , iiAuth} = useContext(AuthContext)
+	const { actor} = useContext(AuthContext)
 
-	const { loading, handleLogIn } = useLogIn()
 
-	useEffect(() => {
-		if(iiAuth) {	
-		handleLogIn()
-	}
-	}, [])
-	// if(loggedIn){
-	// 	navigate("/dashboard")
-	// }
 
-	useEffect(() => {
-	navigate("/dashboard")
-	},[])
 
 
 	const handleSubmit = (e) => {
@@ -62,11 +50,6 @@ function SignUpForm() {
 
 	return (
 		<Flex height="75vh" alignItems="center">
-			{loading ? (
-				<Center>
-				<Text>Authenticating...</Text>
-				</Center>
-			):(
 			
 		<Container maxW='container.sm' alignItems={`center`} color={`white`} >
 			<Heading>Sign Up On Nexai</Heading>
@@ -85,7 +68,7 @@ function SignUpForm() {
 			<Button width="full" onClick={handleSubmit} isLoading={submitting} isDisabled={submitting} borderRadius="5px" py={4} bgColor="white" color="#341A41">Sign Up</Button>
 			</Container>
 			
-			)}
+		
 			</Flex>
 	);
 }

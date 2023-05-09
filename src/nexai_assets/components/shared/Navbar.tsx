@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
+
 import { Box, Button, Container, Flex, Heading, Image, List, ListItem, Spacer, Text, Drawer, DrawerOverlay, DrawerContent, DrawerHeader, DrawerBody, ButtonGroup } from "@chakra-ui/react";
 import "../../src/App.css";
 
@@ -8,11 +9,30 @@ function Navbar() {
 	const { Auth, iiAuth, changeAuthStatus } = useContext(AuthContext);
 	const navigate = useNavigate();
 	const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+	const { actor, setLoggedIn } = useContext(AuthContext);
 
-	if (iiAuth) {
-		changeAuthStatus();
-		navigate("/signup");
-		window.location.reload();
+			const handleLogIn = () => {
+				actor.logIn().then((data: boolean) => {
+					setLoggedIn(data)
+					if( data === true ) {
+							changeAuthStatus();
+						navigate("/dashboard");
+						navigate(0);
+					}
+						changeAuthStatus();
+						navigate("/signup");
+					
+				}).catch((err) => {
+					
+					console.log(err)
+				})
+	
+			}
+		
+	
+
+	if(iiAuth) {
+		handleLogIn();
 	}
 
 	const handleDrawerToggle = () => {
