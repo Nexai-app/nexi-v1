@@ -23,7 +23,7 @@ function Navbar() {
 		<Box className='App-header' mb={`80px`}>
 			<Flex as="nav" py='50px' px='80px' alignItems='center' gap='30px' bg='transparent'>
 				<NavLink to={`/`}>
-					<Heading bg={`transparent`} fontFamily="Poppins">Nexai</Heading>
+					<Image  w="80px" h="75px" src={`nexai-logo.jpg`}/>
 				</NavLink>
 				<Spacer bg={`transparent`} />
 				<Box display={{ base: "block", md: "none" }} onClick={handleDrawerToggle} color="white">
@@ -42,7 +42,7 @@ function Navbar() {
 					</ListItem>
 					<ListItem>
 							<Button onClick={Auth} border='1px' colorScheme={`transparent`}>
-								Sign up
+								Try our Assistant
 							</Button>
 					</ListItem>
 					</ButtonGroup>
@@ -57,12 +57,7 @@ function Navbar() {
 						<List>
 							<ListItem>
 									<Button onClick={Auth} colorScheme="tranarent">
-										Sign in
-									</Button>
-							</ListItem>
-							<ListItem>
-									<Button onClick={Auth} colorScheme='transparent' border='1px'>
-										Sign up
+										Try our Assistant
 									</Button>
 							</ListItem>
 						</List>

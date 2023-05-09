@@ -38,7 +38,7 @@ function Main() {
 			<Flex p='30px' pos='relative'>
 				<Spacer />
 				<Flex w={{ lg: '42%', md:'100%' }} minH='140' bg='#271732' p={`5`} flexDirection='column' justifyContent={`center`} borderRadius='6px'>
-					<Text fontSize={{ lg: "16.5px", md: "md" }} mb={`5px`} bg={`transparent`} fontWeight={`medium`}>Settings up your personal assistant</Text>
+					<Text fontSize={{ lg: "16.5px", md: "md" }} mb={`5px`} bg={`transparent`} fontWeight={`medium`}>Setting up your personal assistant</Text>
 					<Text bg={`transparent`} fontSize={{ lg: "14.5px", md: "md" }}>Relax while we set up you personal assistant and your personalized dashboard.</Text>
 				</Flex>
 				<Flex pos="absolute" right={`42.3%`} top={`50.7%`} bg={`red`} zIndex={`2`} display={{ base: 'none', lg: 'flex' }}>
@@ -49,7 +49,7 @@ function Main() {
 				<Spacer />
 				<Flex w={{ lg: '42%', md:'100%' }} minH='140' bg='#271732' p={`5`} flexDirection='column' justifyContent={`center`} borderRadius='6px'>
 					<Text fontSize={{ lg: "16.5px", md: "md" }} mb={`5px`} bg={`transparent`} fontWeight={`medium`}>Integrate Nexai to your app</Text>
-					<Text bg={`transparent`} fontSize={{ lg: "14.5px", md: "md" }}>Follow a detailed on how to easily integrate Nexai to your app.</Text>
+					<Text bg={`transparent`} fontSize={{ lg: "14.5px", md: "md" }}>Follow a detailed documentation on how to easily integrate Nexai to your app.</Text>
 				</Flex>
 				<Flex pos="absolute" right={`70.3%`} top={`49%`} bg={`red`} zIndex={`2`} display={{ base: 'none', lg: 'flex' }}>
 				<Image src={`lt.svg`}/>
@@ -59,7 +59,7 @@ function Main() {
 			<Flex p='30px' pos='relative'>
 				<Flex w={{ lg: '42%', md:'100%' }} minH='140' bg='#271732' p={`5`} flexDirection='column' justifyContent={`center`} borderRadius='6px'>
 					<Text fontSize={{ lg: "16.5px", md: "md" }} mb={`5px`} bg={`transparent`} fontWeight={`medium`}>Rest while Nexai shows users the way around</Text>
-					<Text bg={`transparent`} fontSize={{ lg: "14.5px", md: "md" }}>Let Nexai take over the task of guiding new users around yor site</Text>
+					<Text bg={`transparent`} fontSize={{ lg: "14.5px", md: "md" }}>Let Nexai take over the task of guiding new users around your site</Text>
 				</Flex>
 			</Flex>
 			</Container>
