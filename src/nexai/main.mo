@@ -41,7 +41,7 @@ shared ({ caller }) actor class Nexai() = {
     };
   };
 
-  public func createCompany(name : Text, email : Text) : async Bool {
+  public shared ({ caller }) func createCompany(name : Text, email : Text) : async Bool {
     var newUser : Bool = false;
 
     for ((i, j) in CompanyHashMap.entries()) {
@@ -83,7 +83,7 @@ shared ({ caller }) actor class Nexai() = {
   /**
    * Create card and answers
    * Link them to the comapany or principal
-   * 
+   *
    */
 
   func _createQCard(email : Text, question : Text, answer : Text) : CardEntry {
