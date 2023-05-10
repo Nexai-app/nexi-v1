@@ -13,7 +13,7 @@ import AddQuestion from "../components/TrainBot/AddQuestion";
 import AllQuestion from "../components/TrainBot/AllQuestions";
 
 const App = () => {
-	const { handleAuthenticated, setIIAuth } = useContext(AuthContext);
+	const { handleAuthenticated, setIIAuth,actor } = useContext(AuthContext);
 	const [actorRestated, setActorRestated] = useState<boolean>(false);
 	const toast = useToast({
 		containerStyle: {
@@ -29,16 +29,20 @@ const App = () => {
 			if (await authClient.isAuthenticated()) {
 				// setTour(tour_);
 				handleAuthenticated(authClient);
-				if (location.pathname === "/") {
-					navigate("/dashboard");
-				}
+				// if (location.hash === "#/signup") {
+				// 	console.log(actor);
+				// 	actor.logIn().then((d)=> {
+				// 		if(d === true)
+				// 			navigate('/dashboard');
+				// 			return
+				// 	}).catch((err) => {
+				// 		console.log("eerrr",err)
+				// 	})
+				// }
 				setIIAuth(true);
 				setActorRestated(true);
 				return;
 			} else {
-				// toast({title:"you must log in",});
-				// setActorRestated(true);
-				// navigate("/dashboard");
 				navigate("/");
 				return;
 

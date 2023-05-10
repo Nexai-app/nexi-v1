@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 
@@ -17,11 +17,14 @@ function Navbar() {
 					if( data === true ) {
 							changeAuthStatus();
 						navigate("/dashboard");
+						window.location.reload();
 						navigate(0);
+						return;
 					}
 						changeAuthStatus();
 						navigate("/signup");
-					
+						window.location.reload()
+					return;
 				}).catch((err) => {
 					
 					console.log(err)
@@ -34,6 +37,11 @@ function Navbar() {
 	if(iiAuth) {
 		handleLogIn();
 	}
+
+	// useEffect(() => {
+
+	// 	handleLogIn();
+	// }, [])
 
 	const handleDrawerToggle = () => {
 		setIsDrawerOpen(!isDrawerOpen);
