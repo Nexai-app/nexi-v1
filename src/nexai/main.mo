@@ -10,6 +10,8 @@ import Nat "mo:base/Nat";
 import Principal "mo:base/Principal";
 import Text "mo:base/Text";
 import Time "mo:base/Time";
+import Buffer "mo:base/Buffer";
+
 import Types "./types";
 
 shared ({ caller }) actor class Nexai() = {
@@ -31,28 +33,26 @@ shared ({ caller }) actor class Nexai() = {
 
   public shared ({ caller }) func CheckPrincipal() : async Principal { caller };
 
-  func _makeProfile(name : Text, username : Text, founderName : Text, about : Text, createdAt : Int) : Types.CompanyEntry {
+  func _makeCompany(name : Text, email : Text, createdAt : Int) : Types.CompanyEntry {
     {
       name : Text;
-      username : Text;
-      founderName : Text;
-      about : Text;
+      email : Text;
       createdAt : Int;
     };
   };
 
-  public func createCompany(name : Text, username : Text, founderName : Text, about : Text) : async Bool {
+  public shared ({ caller }) func createCompany(name : Text, email : Text) : async Bool {
     var newUser : Bool = false;
 
     for ((i, j) in CompanyHashMap.entries()) {
-      if (j.username == username) {
+      if (j.email == email) {
         // unique := true;
         throw Error.reject("$ A user with that username exists, kindly pick another username. Thank you! # ");
 
       };
     };
     if (newUser == false) {
-      CompanyHashMap.put(caller, _makeProfile(name, username, founderName, about, Time.now()));
+      CompanyHashMap.put(caller, _makeCompany(name, email, Time.now()));
       newUser := true;
     };
     return newUser;
@@ -83,11 +83,11 @@ shared ({ caller }) actor class Nexai() = {
   /**
    * Create card and answers
    * Link them to the comapany or principal
-   * 
+   *
    */
 
-  func _createQCard(username : Text, question : Text, answer : Text) : CardEntry {
-    { username : Text; question : Text; answer : Text };
+  func _createQCard(email : Text, question : Text, answer : Text) : CardEntry {
+    { email : Text; question : Text; answer : Text };
   };
 
   public func createQCard(question : Text, answer : Text) : async () {
@@ -96,7 +96,7 @@ shared ({ caller }) actor class Nexai() = {
     for ((i, j) in CompanyHashMap.entries()) {
       if (i == caller) {
 
-        CardHashMap.put(cardId, _createQCard(j.username, question, answer));
+        CardHashMap.put(cardId, _createQCard(j.email, question, answer));
         cardId := cardId + 1;
 
       };
@@ -116,6 +116,22 @@ shared ({ caller }) actor class Nexai() = {
       };
     };
 
+  };
+
+  public func getAllQCards(email : Text) : async ?[CardEntry] {
+    do ? {
+      var buff = Buffer.Buffer<CardEntry>(0);
+      for ((i, j) in CardHashMap.entries()) {
+        if (j.email == email) {
+          buff.add(j);
+        };
+      };
+      buff.toArray();
+    };
+  };
+
+  public func getCompanyProfile() : async ?CompanyEntry {
+    CompanyHashMap.get(caller);
   };
 
 };

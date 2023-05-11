@@ -6,7 +6,7 @@ const CopyPlugin = require("copy-webpack-plugin");
 
 
 const LOCAL_II_CANISTER =
-	"http://localhost:8000/?canisterId=rrkah-fqaaa-aaaaa-aaaaq-cai";
+	"http://127.0.0.1:4943/?canisterId=bkyz2-fmaaa-aaaaa-qaaaq-cai";
 
 const network =
 	process.env.DFX_NETWORK ||
@@ -110,14 +110,14 @@ module.exports = {
 			template: path.join(__dirname, asset_entry),
 			cache: false,
 		}),
-		new CopyPlugin({
-			patterns: [
+			new CopyPlugin({
+				patterns: [
 				{
 					from: path.join(__dirname, "src", frontendDirectory, "assets"),
 					to: path.join(__dirname, "dist", frontendDirectory),
 				},
-			],
-		}),
+				],
+			}),
 		new webpack.EnvironmentPlugin({
 			NODE_ENV: "development",
 			LOCAL_II_CANISTER,
@@ -133,7 +133,8 @@ module.exports = {
 	devServer: {
 		proxy: {
 			"/api": {
-				target: "http://127.0.0.1:8000",
+				// target: "http://127.0.0.1:8000",
+				target: "http://127.0.0.1:4943",
 				changeOrigin: true,
 				pathRewrite: {
 					"^/api": "/api",

@@ -54,6 +54,8 @@
 		"@dfinity/identity": "^0.15.4",
 		"@emotion/react": "^11.10.6",
 		"@emotion/styled": "^11.10.6",
+		"@fontsource/poppins": "^4.5.10",
+		"@fontsource/public-sans": "^4.5.12",
 		"@fortawesome/fontawesome-svg-core": "^6.4.0",
 		"@fortawesome/free-brands-svg-icons": "^6.4.0",
 		"@fortawesome/free-regular-svg-icons": "^6.4.0",
@@ -68,7 +70,6 @@
 		"react-bootstrap": "^2.7.2",
 		"react-chartjs-2": "^5.2.0",
 		"react-dom": "^18.2.0",
-		"react-hot-toast": "^2.4.0",
 		"react-icons": "^4.8.0",
 		"react-router-dom": "^6.9.0",
 		"url-loader": "^4.1.1"

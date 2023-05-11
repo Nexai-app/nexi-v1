@@ -9,7 +9,7 @@
 			"frontend": {
 				"entrypoint": "src/nexai_assets/src/index.html"
 			},
-			"source": ["src/nexai_assets/assets", "dist/nexai_assets/"],
+			"source": [ "dist/nexai_assets/"],
 			"type": "assets"
 		}
 	},
@@ -19,12 +19,7 @@
 			"packtool": ""
 		}
 	},
-	"dfx": "0.10.1",
-	"networks": {
-		"local": {
-			"bind": "127.0.0.1:8000",
-			"type": "ephemeral"
-		}
-	},
+	"dfx": "0.14.0",
+	
 	"version": 1
 }

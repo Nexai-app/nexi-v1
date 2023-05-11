@@ -1,28 +1,34 @@
 type Nexai = 
  service {
    CheckPrincipal: () -> (principal);
-   createCompany: (text, text, text, text) -> (bool);
+   createCompany: (text, text) -> (bool);
    createQCard: (text, text) -> ();
    getAllCompanies: () -> (vec record {
                                  principal;
-                                 CompanyEntry;
+                                 CompanyEntry__1;
                                });
+   getAllQCards: (text) -> (opt vec CardEntry);
    getAnAnswer: (nat) -> (opt CardEntry);
+   getCompanyProfile: () -> (opt CompanyEntry);
    greet: (text) -> (text);
    logIn: () -> (bool) query;
  };
+type CompanyEntry__1 = 
+ record {
+   createdAt: int;
+   email: text;
+   name: text;
+ };
 type CompanyEntry = 
  record {
-   about: text;
    createdAt: int;
-   founderName: text;
+   email: text;
    name: text;
-   username: text;
  };
 type CardEntry = 
  record {
    answer: text;
+   email: text;
    question: text;
-   username: text;
  };
 service : () -> Nexai

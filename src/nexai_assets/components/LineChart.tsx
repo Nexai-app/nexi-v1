@@ -9,7 +9,7 @@ import {
     Tooltip
 
 } from 'chart.js';
-import { Box, Text } from '@chakra-ui/react';
+import { Box, Text, useMediaQuery } from '@chakra-ui/react';
 
 
 ChartJS.register(
@@ -27,7 +27,7 @@ const LineChart = () => {
         labels: ['MON', 'TUES', 'WED', 'THURS', 'FRI', 'SAT', 'SUN' ],
         datasets: [{
             labels: 'Daily Users Statistics',
-            data: [0, 200, 300,150,300,100,400 ],
+            data: [2, 0, 0,0,0,0,0 ],
             fill: true,
             backgroundColor: 'rgba(52, 26, 65, 1)',
             borderColor: 'rgba(255, 255, 255)',
@@ -80,10 +80,35 @@ const LineChart = () => {
         }
     }
 
+    const [isLargerThan960] = useMediaQuery("(max-width: 960px)");
+    const [isLargerThan750] = useMediaQuery("(max-width: 750px)");
+
   return (
-    <Box p="30px" mt="10px" border='1px' borderColor='rgba(255, 255, 255, 0.3)' borderRadius="md" w={800} h={480} >
-        <Text fontWeight="bold"  fontSize="lg" >Daily Users Statistics</Text>
-        <Line data={data} options={options} />
+    <Box>
+        {
+            isLargerThan750 ? 
+            (
+                <Box p="15px" mt="10px" border='1px' borderColor='rgba(255, 255, 255, 0.3)' borderRadius="md" w="100%"  >
+                    <Text fontWeight="bold"  fontSize="lg" >Daily Users Statistics</Text>
+                    <Line data={data} options={options} />
+                </Box>
+            ) :
+            (isLargerThan960 ? 
+            (
+                <Box p="30px" mt="10px" border='1px' borderColor='rgba(255, 255, 255, 0.3)' borderRadius="md" w="100%"  >
+                    <Text fontWeight="bold"  fontSize="lg" >Daily Users Statistics</Text>
+                    <Line data={data} options={options} />
+                </Box>
+            ) :
+            (
+
+                <Box p="30px" mt="10px" border='1px' borderColor='rgba(255, 255, 255, 0.3)' borderRadius="md" w={800} h={480} >
+                    <Text fontWeight="bold"  fontSize="lg" >Daily Users Statistics</Text>
+                    <Line data={data} options={options} />
+                </Box>
+            ))
+        }
+
     </Box>
   )
 }
