@@ -70,7 +70,7 @@ shared ({ caller }) actor class Nexai() = {
   //Edit company details
 
   //LogIn
-  public query func logIn() : async Bool {
+  public shared query ({ caller }) func logIn() : async Bool {
     var logIn = false;
     for ((i, j) in CompanyHashMap.entries()) {
       if (i == caller) {
@@ -90,7 +90,7 @@ shared ({ caller }) actor class Nexai() = {
     { email : Text; question : Text; answer : Text };
   };
 
-  public func createQCard(question : Text, answer : Text) : async () {
+  public shared ({ caller }) func createQCard(question : Text, answer : Text) : async () {
 
     //find the CompanyEntry by the caller == companyEntry.principal
     for ((i, j) in CompanyHashMap.entries()) {
@@ -130,7 +130,7 @@ shared ({ caller }) actor class Nexai() = {
     };
   };
 
-  public func getCompanyProfile() : async ?CompanyEntry {
+  public shared ({ caller }) func getCompanyProfile() : async ?CompanyEntry {
     CompanyHashMap.get(caller);
   };
 

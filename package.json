@@ -1,19 +1,18 @@
 {
 	"name": "nexai_assets",
 	"version": "0.1.0",
-	"description": "Internet Computer starter application",
+	"description": "Flow starter application",
 	"keywords": [
-		"Internet Computer",
-		"Motoko",
+		"Blockchain",
+		"Cadence",
 		"JavaScript",
-		"Canister"
+		"Smart Contract"
 	],
 	"scripts": {
-		"build": "webpack",
-		"prebuild": "npm run copy:types",
-		"start": "webpack serve --mode development --env development",
-		"prestart": "npm run copy:types",
-		"copy:types": "rsync -avr .dfx/$(echo ${DFX_NETWORK:-'**'})/canisters/** --exclude='assets/' --exclude='idl/' --exclude='*.wasm' --exclude='*.most' --delete src/declarations"
+		"start": "react-scripts start",
+		"build": "react-scripts build",
+		"test": "react-scripts test",
+		"eject": "react-scripts eject"
 	},
 	"devDependencies": {
 		"@dfinity/agent": "0.15.4",
@@ -61,6 +60,8 @@
 		"@fortawesome/free-regular-svg-icons": "^6.4.0",
 		"@fortawesome/free-solid-svg-icons": "^6.4.0",
 		"@fortawesome/react-fontawesome": "^0.2.0",
+		"@onflow/fcl": "^1.4.0",
+		"@onflow/types": "^1.1.0",
 		"@reach/router": "^1.3.4",
 		"bootstrap": "^5.2.3",
 		"chart.js": "^4.2.1",
@@ -72,6 +73,7 @@
 		"react-dom": "^18.2.0",
 		"react-icons": "^4.8.0",
 		"react-router-dom": "^6.9.0",
+		"react-scripts": "^5.0.1",
 		"url-loader": "^4.1.1"
 	}
 }

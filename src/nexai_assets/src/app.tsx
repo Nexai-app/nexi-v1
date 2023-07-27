@@ -12,6 +12,7 @@ import TrainBot from "../pages/TrainBot";
 import AddQuestion from "../components/TrainBot/AddQuestion";
 import AllQuestion from "../components/TrainBot/AllQuestions";
 
+
 const App = () => {
 	const { handleAuthenticated, setIIAuth,actor } = useContext(AuthContext);
 	const [actorRestated, setActorRestated] = useState<boolean>(false);

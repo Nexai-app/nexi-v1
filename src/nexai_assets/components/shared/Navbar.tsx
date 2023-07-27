@@ -5,48 +5,66 @@ import { AuthContext } from "../../context/AuthContext";
 import { Box, Button, Container, Flex, Heading, Image, List, ListItem, Spacer, Text, Drawer, DrawerOverlay, DrawerContent, DrawerHeader, DrawerBody, ButtonGroup } from "@chakra-ui/react";
 import "../../src/App.css";
 
-function Navbar() {
-	const { Auth, iiAuth, changeAuthStatus } = useContext(AuthContext);
-	const navigate = useNavigate();
-	const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-	const { actor, setLoggedIn } = useContext(AuthContext);
+//SET UP FLOW
+import * as fcl from "@onflow/fcl"
+import * as t from "@onflow/types"
 
-			const handleLogIn = () => {
-				actor.logIn().then((data: boolean) => {
-					setLoggedIn(data)
-					if( data === true ) {
-							changeAuthStatus();
-						navigate("/dashboard");
-						window.location.reload();
-						navigate(0);
-						return;
-					}
-						changeAuthStatus();
-						navigate("/signup");
-						window.location.reload()
-					return;
-				}).catch((err) => {
+
+fcl.config({
+	"accessNode.api": "http://localhost:8080",
+	"discovery.wallet": "http://localhost:8781/fcl/authn" //dev wallet
+})
+
+function Navbar() {
+	// const { Auth, iiAuth, changeAuthStatus } = useContext(AuthContext);
+	// const { actor, setLoggedIn } = useContext(AuthContext);
+
+	// 		const handleLogIn = () => {
+	// 			actor.logIn().then((data: boolean) => {
+	// 				setLoggedIn(data)
+	// 				if( data === true ) {
+	// 						changeAuthStatus();
+	// 					navigate("/dashboard");
+	// 					window.location.reload();
+	// 					navigate(0);
+	// 					return;
+	// 				}
+	// 					changeAuthStatus();
+	// 					navigate("/signup");
+	// 					window.location.reload()
+	// 				return;
+	// 			}).catch((err) => {
 					
-					console.log(err)
-				})
+	// 				console.log(err)
+	// 			})
 	
-			}
+	// 		}
 		
 	
 
-	if(iiAuth) {
-		handleLogIn();
+	// if(iiAuth) {
+	// 	handleLogIn();
+	// }
+
+
+	//FLOW
+	const navigate = useNavigate();
+	const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+	const [add, setAdd] = useState({val:""})
+
+	useEffect(() => {
+		fcl.currentUser.subscribe(setAdd)
+	},[])
+
+	const Auth = () => {
+		fcl.authenticate()
 	}
 
-	// useEffect(() => {
-
-	// 	handleLogIn();
-	// }, [])
 
 	const handleDrawerToggle = () => {
 		setIsDrawerOpen(!isDrawerOpen);
 	};
-
+console.log("add",add)
 	return (
 		<Box className='App-header' mb={`80px`}>
 			<Flex as="nav" py='50px' px='80px' alignItems='center' gap='30px' bg='transparent'>
