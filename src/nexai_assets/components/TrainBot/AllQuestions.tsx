@@ -32,8 +32,8 @@ const AllQuestions = ()=>{
     useEffect(() => {
         const callMe = () => {
             actor.getCompanyProfile().then((d) => {
-                // console.log(d[0].email)
                 actor.getAllQCards(d[0].email).then((v) => {
+                    console.log(v)
                    setArr(v[0])
                 }).catch((err) => {
                     console.log(err)

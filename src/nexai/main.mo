@@ -59,7 +59,7 @@ shared ({ caller }) actor class Nexai() = {
     // TODO: automatically make about of company, founder, and name of company as the entered values
   };
 
-  public func getAllCompanies() : async ([(Principal, Types.CompanyEntry)]) {
+  public shared ({ caller }) func getAllCompanies() : async ([(Principal, Types.CompanyEntry)]) {
     Iter.toArray(CompanyHashMap.entries());
   };
 
@@ -70,7 +70,7 @@ shared ({ caller }) actor class Nexai() = {
   //Edit company details
 
   //LogIn
-  public query func logIn() : async Bool {
+  public shared query ({ caller }) func logIn() : async Bool {
     var logIn = false;
     for ((i, j) in CompanyHashMap.entries()) {
       if (i == caller) {
@@ -90,20 +90,24 @@ shared ({ caller }) actor class Nexai() = {
     { email : Text; question : Text; answer : Text };
   };
 
-  public func createQCard(question : Text, answer : Text) : async () {
+  public shared ({ caller }) func createQCard(question : Text, answer : Text) : async () {
 
+    // var res: CardEntry = {};
     //find the CompanyEntry by the caller == companyEntry.principal
     for ((i, j) in CompanyHashMap.entries()) {
       if (i == caller) {
 
-        CardHashMap.put(cardId, _createQCard(j.email, question, answer));
+        var res_ = CardHashMap.put(cardId, _createQCard(j.email, question, answer));
         cardId := cardId + 1;
 
+        Debug.print(debug_show (res_));
+
       };
+      // return res;
     };
   };
 
-  public func getAnAnswer(id : Nat) : async ?CardEntry {
+  public shared ({ caller }) func getAnAnswer(id : Nat) : async ?CardEntry {
 
     var res = CardHashMap.get(id);
 
@@ -118,7 +122,7 @@ shared ({ caller }) actor class Nexai() = {
 
   };
 
-  public func getAllQCards(email : Text) : async ?[CardEntry] {
+  public shared ({ caller }) func getAllQCards(email : Text) : async ?[CardEntry] {
     do ? {
       var buff = Buffer.Buffer<CardEntry>(0);
       for ((i, j) in CardHashMap.entries()) {
@@ -127,10 +131,11 @@ shared ({ caller }) actor class Nexai() = {
         };
       };
       buff.toArray();
+
     };
   };
 
-  public func getCompanyProfile() : async ?CompanyEntry {
+  public shared ({ caller }) func getCompanyProfile() : async ?CompanyEntry {
     CompanyHashMap.get(caller);
   };
 
