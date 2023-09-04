@@ -4147,6 +4147,11 @@ react-router@6.9.0:
   dependencies:
     "@remix-run/router" "1.4.0"
 
+react-spinners@^0.13.8:
+  version "0.13.8"
+  resolved "https://registry.yarnpkg.com/react-spinners/-/react-spinners-0.13.8.tgz#5262571be0f745d86bbd49a1e6b49f9f9cb19acc"
+  integrity sha512-3e+k56lUkPj0vb5NDXPVFAOkPC//XyhKPJjvcGjyMNPWsBKpplfeyialP74G7H7+It7KzhtET+MvGqbKgAqpZA==
+
 react-style-singleton@^2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/react-style-singleton/-/react-style-singleton-2.2.1.tgz#f99e420492b2d8f34d38308ff660b60d0b1205b4"
@@ -4165,6 +4170,11 @@ react-transition-group@^4.4.2:
     dom-helpers "^5.0.1"
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
+
+react-type-animation@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/react-type-animation/-/react-type-animation-3.1.0.tgz#7bc3d5e73d8f4677a7808365beaa12f0fee3e033"
+  integrity sha512-Ju74SpUFpSINqlGU8UeFAF+AnAn0nZcc8MB0Ho6QvRkh8uDKkOzAiMD3l9xEmkbKXnSYsljfVgIDM/zwqEImpQ==
 
 react@^18.2.0:
   version "18.2.0"

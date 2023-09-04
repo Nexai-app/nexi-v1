@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Box, Button, Flex, Heading, Spacer, useMediaQuery } from '@chakra-ui/react';
+import { Box, Button, Flex, Heading, Spacer, useMediaQuery, MenuButton, Menu } from '@chakra-ui/react';
 import LineChart from './LineChart';
 import BarChart from './BarChart';
+import { ChevronDownIcon } from '@chakra-ui/icons';
 
 
 
@@ -25,10 +26,14 @@ const MainDashboard = () => {
                         <Spacer/>
                         <Box display="flex" flexDirection="column" gap={4}>
                         <Link to="/train-bot">
-                            <Button color="#341A41" bg="white" fontSize="14px" >Train Your Bot</Button>
+                            <Button colorScheme='white' variant='outline'  _hover={{ backgroundColor: 'white', color: '#341A41' }}>
+							Train your bot
+						    </Button>
                         </Link>
                         <Link to="/my-questions">
-                            <Button color="#341A41" bg="white" fontSize="14px" >My Trainings</Button>
+                            <Button bg='white' color={`#341A41`} border={`1px white solid`} _hover={{ backgroundColor: 'transparent', color: 'white' }}>
+							My Trainings
+							</Button>
                         </Link>
                         </Box>
                     </Flex>
@@ -50,12 +55,16 @@ const MainDashboard = () => {
                             Get access to your bot analytics and information here
                         </Box>
                         <Spacer/>
-                        <Box display="flex" flexDirection="column" gap={4}>
+                        <Box display="flex" flexDirection="row" gap={4}>
                         <Link to="/train-bot">
-                            <Button color="#341A41" bg="white" >Train Your Bot</Button>
+                            <Button colorScheme='white' variant='outline'  _hover={{ backgroundColor: 'white', color: '#341A41' }} >
+							    Train your bot
+						    </Button>
                         </Link>
                         <Link to="/my-questions">
-                            <Button color="#341A41" bg="white" >My Trainings</Button>
+                            <Button bg='white' color={`#341A41`} border={`1px white solid`} _hover={{ backgroundColor: 'transparent', color: 'white' }}>
+							    My Trainings
+						    </Button>
                         </Link>
                         </Box>
                     </Flex>

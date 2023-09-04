@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
+import { TypeAnimation } from 'react-type-animation';
 
 import { Box, Button, Container, Flex, Heading, Image, List, ListItem, Spacer, Text, Drawer, DrawerOverlay, DrawerContent, DrawerHeader, DrawerBody, ButtonGroup } from "@chakra-ui/react";
 import "../../src/App.css";
@@ -64,14 +65,14 @@ function Navbar() {
 				<List display={{ base: "none", md: "flex" }}>
 					<ButtonGroup gap='2'>
 					<ListItem>
-							<Button onClick={Auth} colorScheme={`#341A41`}>
-								Sign In
+							<Button onClick={Auth} bg='white' color={`#341A41`} border={`1px white solid`} _hover={{ backgroundColor: 'transparent', color: 'white' }}>
+							Sign In
 							</Button>
 					</ListItem>
 					<ListItem>
-							<Button onClick={Auth} border='1px' colorScheme={`transparent`}>
-								Try our Assistant
-							</Button>
+						<Button onClick={Auth} colorScheme='white' variant='outline'  _hover={{ backgroundColor: 'white', color: '#341A41' }}>
+							Try our Assistant
+						</Button>
 					</ListItem>
 					</ButtonGroup>
 				</List>
@@ -80,20 +81,47 @@ function Navbar() {
 			<Drawer isOpen={isDrawerOpen} placement="right" onClose={handleDrawerToggle}>
 				<DrawerOverlay />
 				<DrawerContent>
-					<DrawerHeader color={`white`} fontFamily="Poppins">Nexai</DrawerHeader>
+					<DrawerHeader color={`white`} fontFamily="Poppins">
+						<TypeAnimation
+						preRenderFirstString={true}
+						sequence={[
+							'Nexai',
+							1500,
+							'',
+						]}
+						wrapper="span"
+						speed={{type: 'keyStrokeDelayInMs', value: 250}}
+						style={{ display: 'inline-block' }}
+						repeat={Infinity}
+						/>
+					</DrawerHeader>
 					<DrawerBody>
 						<List>
 							<ListItem>
-									<Button onClick={Auth} colorScheme="tranarent">
-										Try our Assistant
-									</Button>
+								<Button onClick={Auth} border={`1px white solid`} color={`white`} variant='outline' _hover={{ backgroundColor: 'white', color: '#341A41' }}>
+									Try our Assistant
+								</Button>
 							</ListItem>
 						</List>
 					</DrawerBody>
 				</DrawerContent>
 			</Drawer>
 			<Container centerContent my='300px' bg={`transparent`}>
-				<Heading as='h1' size='4xl' fontFamily='Poppins' bg={`transparent`}>Nexai</Heading>
+				<Heading as='h1' size='4xl' fontFamily='Poppins' bg={`transparent`}>
+					<TypeAnimation
+						preRenderFirstString={true}
+						sequence={[
+							'Nexai',
+							1500,
+							'',
+						]}
+						wrapper="span"
+						style={{ display: 'inline-block' }}
+						speed={{type: 'keyStrokeDelayInMs', value: 250}}
+						cursor={false}
+						repeat={Infinity}
+						/>
+				</Heading>
 				<Text fontFamily='Public Sans' textAlign='center' bg={`transparent`}>The first fully decentralized, autonomous, integrateable chatbot and assistant that runs on blockchain and artificial intelligence.</Text>
 				<Text fontSize={`md`} pt={`18px`} className="powered-by" bg={`transparent`}>Powered by: <Image className="logo" alt="" src={`logo.png`} bg={`transparent`} /></Text>
 			</Container>

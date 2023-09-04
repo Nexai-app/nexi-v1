@@ -5,11 +5,15 @@
 			"type": "motoko"
 		},
 		"nexai_assets": {
-			"dependencies": ["nexai"],
+			"dependencies": [
+				"nexai"
+			],
 			"frontend": {
 				"entrypoint": "src/nexai_assets/src/index.html"
 			},
-			"source": [ "dist/nexai_assets/"],
+			"source": [
+				"dist/nexai_assets/"
+			],
 			"type": "assets"
 		}
 	},
@@ -19,7 +23,6 @@
 			"packtool": ""
 		}
 	},
-	"dfx": "0.14.0",
-	
+	"dfx": "0.13.1",
 	"version": 1
 }
