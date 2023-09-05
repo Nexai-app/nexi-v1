@@ -9,6 +9,31 @@ export type BatchOperationKind = { 'CreateAsset' : CreateAssetArguments } |
   { 'Clear' : ClearArguments };
 export type ChunkId = bigint;
 export type ClearArguments = {};
+<<<<<<< HEAD:src/declarations/nexai_assets/nexai_assets.did.d.ts
+=======
+export interface CommitBatchArguments {
+  'batch_id' : BatchId,
+  'operations' : Array<BatchOperationKind>,
+}
+export interface CommitProposedBatchArguments {
+  'batch_id' : BatchId,
+  'evidence' : Uint8Array | number[],
+}
+export interface ComputeEvidenceArguments {
+  'batch_id' : BatchId,
+  'max_iterations' : [] | [number],
+}
+export interface ConfigurationResponse {
+  'max_batches' : [] | [bigint],
+  'max_bytes' : [] | [bigint],
+  'max_chunks' : [] | [bigint],
+}
+export interface ConfigureArguments {
+  'max_batches' : [] | [[] | [bigint]],
+  'max_bytes' : [] | [[] | [bigint]],
+  'max_chunks' : [] | [[] | [bigint]],
+}
+>>>>>>> 749c460 (debugging dfx v 0.14.3):src/declarations/nexai_assets/service.did.d.ts
 export interface CreateAssetArguments {
   'key' : Key,
   'content_type' : string,
@@ -90,6 +115,14 @@ export interface _SERVICE {
     [{ 'batch_id' : BatchId, 'operations' : Array<BatchOperationKind> }],
     undefined
   >,
+<<<<<<< HEAD:src/declarations/nexai_assets/nexai_assets.did.d.ts
+=======
+  'compute_evidence' : ActorMethod<
+    [ComputeEvidenceArguments],
+    [] | [Uint8Array | number[]]
+  >,
+  'configure' : ActorMethod<[ConfigureArguments], undefined>,
+>>>>>>> 749c460 (debugging dfx v 0.14.3):src/declarations/nexai_assets/service.did.d.ts
   'create_asset' : ActorMethod<[CreateAssetArguments], undefined>,
   'create_batch' : ActorMethod<[{}], { 'batch_id' : BatchId }>,
   'create_chunk' : ActorMethod<
@@ -127,6 +160,7 @@ export interface _SERVICE {
     ],
     { 'content' : Uint8Array | number[] }
   >,
+  'get_configuration' : ActorMethod<[], ConfigurationResponse>,
   'grant_permission' : ActorMethod<[GrantPermission], undefined>,
   'http_request' : ActorMethod<[HttpRequest], HttpResponse>,
   'http_request_streaming_callback' : ActorMethod<
@@ -172,6 +206,14 @@ export interface _SERVICE {
   >,
   'take_ownership' : ActorMethod<[], undefined>,
   'unset_asset_content' : ActorMethod<[UnsetAssetContentArguments], undefined>,
+<<<<<<< HEAD:src/declarations/nexai_assets/nexai_assets.did.d.ts
+=======
+  'validate_commit_proposed_batch' : ActorMethod<
+    [CommitProposedBatchArguments],
+    ValidationResult
+  >,
+  'validate_configure' : ActorMethod<[ConfigureArguments], ValidationResult>,
+>>>>>>> 749c460 (debugging dfx v 0.14.3):src/declarations/nexai_assets/service.did.d.ts
   'validate_grant_permission' : ActorMethod<
     [GrantPermission],
     ValidationResult

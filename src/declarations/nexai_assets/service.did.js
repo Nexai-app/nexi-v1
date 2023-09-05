@@ -30,6 +30,32 @@ export const idlFactory = ({ IDL }) => {
     'SetAssetContent' : SetAssetContentArguments,
     'Clear' : ClearArguments,
   });
+<<<<<<< HEAD:src/declarations/nexai_assets/nexai_assets.did.js
+=======
+  const CommitBatchArguments = IDL.Record({
+    'batch_id' : BatchId,
+    'operations' : IDL.Vec(BatchOperationKind),
+  });
+  const CommitProposedBatchArguments = IDL.Record({
+    'batch_id' : BatchId,
+    'evidence' : IDL.Vec(IDL.Nat8),
+  });
+  const ComputeEvidenceArguments = IDL.Record({
+    'batch_id' : BatchId,
+    'max_iterations' : IDL.Opt(IDL.Nat16),
+  });
+  const ConfigureArguments = IDL.Record({
+    'max_batches' : IDL.Opt(IDL.Opt(IDL.Nat64)),
+    'max_bytes' : IDL.Opt(IDL.Opt(IDL.Nat64)),
+    'max_chunks' : IDL.Opt(IDL.Opt(IDL.Nat64)),
+  });
+  const DeleteBatchArguments = IDL.Record({ 'batch_id' : BatchId });
+  const ConfigurationResponse = IDL.Record({
+    'max_batches' : IDL.Opt(IDL.Nat64),
+    'max_bytes' : IDL.Opt(IDL.Nat64),
+    'max_chunks' : IDL.Opt(IDL.Nat64),
+  });
+>>>>>>> 749c460 (debugging dfx v 0.14.3):src/declarations/nexai_assets/service.did.js
   const Permission = IDL.Variant({
     'Prepare' : IDL.Null,
     'ManagePermissions' : IDL.Null,
@@ -107,6 +133,7 @@ export const idlFactory = ({ IDL }) => {
         [],
         [],
       ),
+    'configure' : IDL.Func([ConfigureArguments], [], []),
     'create_asset' : IDL.Func([CreateAssetArguments], [], []),
     'create_batch' : IDL.Func(
         [IDL.Record({})],
@@ -156,6 +183,7 @@ export const idlFactory = ({ IDL }) => {
         [IDL.Record({ 'content' : IDL.Vec(IDL.Nat8) })],
         ['query'],
       ),
+    'get_configuration' : IDL.Func([], [ConfigurationResponse], []),
     'grant_permission' : IDL.Func([GrantPermission], [], []),
     'http_request' : IDL.Func([HttpRequest], [HttpResponse], ['query']),
     'http_request_streaming_callback' : IDL.Func(
@@ -207,6 +235,19 @@ export const idlFactory = ({ IDL }) => {
       ),
     'take_ownership' : IDL.Func([], [], []),
     'unset_asset_content' : IDL.Func([UnsetAssetContentArguments], [], []),
+<<<<<<< HEAD:src/declarations/nexai_assets/nexai_assets.did.js
+=======
+    'validate_commit_proposed_batch' : IDL.Func(
+        [CommitProposedBatchArguments],
+        [ValidationResult],
+        [],
+      ),
+    'validate_configure' : IDL.Func(
+        [ConfigureArguments],
+        [ValidationResult],
+        [],
+      ),
+>>>>>>> 749c460 (debugging dfx v 0.14.3):src/declarations/nexai_assets/service.did.js
     'validate_grant_permission' : IDL.Func(
         [GrantPermission],
         [ValidationResult],
