@@ -86,21 +86,6 @@ type SetAssetPropertiesArguments = record {
   allow_raw_access: opt opt bool;
 };
 
-<<<<<<< HEAD
-type ConfigurationResponse = record {
-  max_batches: opt nat64;
-  max_chunks: opt nat64;
-  max_bytes: opt nat64;
-};
-
-type ConfigureArguments = record {
-  max_batches: opt opt nat64;
-  max_chunks: opt opt nat64;
-  max_bytes: opt opt nat64;
-};
-
-=======
->>>>>>> 10feffa ([fix] debugging dfx 0.14.3)
 type Permission = variant {
   Commit;
   ManagePermissions;
@@ -198,20 +183,6 @@ service: {
     allow_raw_access: opt bool; } ) query;
   set_asset_properties: (SetAssetPropertiesArguments) -> ();
 
-<<<<<<< HEAD
-  get_configuration: () -> (ConfigurationResponse);
-  configure: (ConfigureArguments) -> ();
-
   validate_grant_permission: (GrantPermission) -> (ValidationResult);
   validate_revoke_permission: (RevokePermission) -> (ValidationResult);
-<<<<<<< HEAD
-=======
-  validate_take_ownership: () -> (ValidationResult);
-  validate_commit_proposed_batch: (CommitProposedBatchArguments) -> (ValidationResult);
-  validate_configure: (ConfigureArguments) -> (ValidationResult);
->>>>>>> 749c460 (debugging dfx v 0.14.3)
-=======
-  validate_grant_permission: (GrantPermission) -> (ValidationResult);
-  validate_revoke_permission: (RevokePermission) -> (ValidationResult);
->>>>>>> 10feffa ([fix] debugging dfx 0.14.3)
 }
