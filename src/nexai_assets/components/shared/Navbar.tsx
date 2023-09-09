@@ -49,7 +49,7 @@ function Navbar() {
 	};
 
 	return (
-		<Box className='App-header' mb={`80px`}>
+		<Box className='App-header'>
 			<Flex as="nav" py='50px' px='80px' alignItems='center' gap='30px' bg='transparent'>
 				<NavLink to={`/`}>
 					<Image  w="80px" h="75px" src={`nexai-logo.jpg`}/>

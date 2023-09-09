@@ -6,8 +6,7 @@ import MainDashboard from '../components/MainDashboard';
 const Dashboard = () => {
   return (
     <Box>
-        <DashNavbar/>
-        <MainDashboard/>
+      <MainDashboard />
     </Box>
   )
 }

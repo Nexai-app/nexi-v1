@@ -49,7 +49,7 @@ function SignUpForm() {
 
 
 	return (
-		<Flex height="75vh" alignItems="center">
+		<Flex alignItems="center" className="signup">
 			
 		<Container maxW='container.sm' alignItems={`center`} color={`white`} >
 			<Heading>Sign Up On Nexai</Heading>
@@ -65,7 +65,7 @@ function SignUpForm() {
 					<Input name='email' value={email} onChange={(e)=>{setEmail(e.target.value)} } placeholder='Enter email address' height='60px' px={`5`} />
 				</FormControl>
 			</Box>
-			<Button width="full" onClick={handleSubmit} isLoading={submitting} isDisabled={submitting} borderRadius="5px" py={4} bgColor="white" color="#341A41">Sign Up</Button>
+			<Button width="full" onClick={handleSubmit} isLoading={submitting} isDisabled={submitting}  bg={'white'} color={`#341A41`} border={`1px white solid`} _hover={{ backgroundColor: 'transparent', color: 'white' }}>Sign Up</Button>
 			</Container>
 			
 		

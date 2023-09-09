@@ -23,6 +23,16 @@ const AddQuestions = ()=>{
 
     const {actor} = useContext(AuthContext)
     const handleSubmit = () => {
+        if(!question.length) {
+			toast({title: "No question provided"});
+			return
+		}
+		if (!ans.length) 
+		{
+			toast({title: "No answer provided"});
+			return
+		}
+
          setSubmitting(true)
          
          actor.createQCard(question, ans).then(()=> {
@@ -39,9 +49,11 @@ const AddQuestions = ()=>{
         setQuestion("")
         setAns("")
     }
+
+
     return(
         
-        <Box color="white">
+        <Box color="white"  bg={`#341A41`} h={`100vh`}>
             <Navbar/>
             <Box>
                 <Flex  justify="center" direction="column" align="center"> 
@@ -55,7 +67,7 @@ const AddQuestions = ()=>{
                         <Box>
                             <FormControl >
                                 <FormLabel>Question</FormLabel>
-                                <Input value={question} onChange={(e)=> setQuestion(e.target.value)} mb={2} />
+                                <Input value={question} onChange={(e)=> setQuestion(e.target.value)} mb={2} placeholder="Type your question" />
                                 <FormLabel>Answer</FormLabel>
                                 <Textarea value={ans} onChange={(e) => {setAns(e.target.value)}} placeholder='Type your answer here' width={{base:"350px", md:"600px"}} height={{base:"350px", md:"200px"}} />
                                 <Stack my={5} direction="row" justify="end">

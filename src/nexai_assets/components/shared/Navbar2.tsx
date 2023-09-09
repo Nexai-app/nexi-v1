@@ -6,8 +6,8 @@ import { Box,  Flex, Heading, Spacer,Image } from "@chakra-ui/react";
 function Navbar() {
 	
 	return (
-		<Box className='App-header2' >
-			<Flex as="nav" py='50px' px='80px' alignItems='center' gap='30px' bg='transparent'>
+		<Box className='App-header2' bg={'#341A41'}>
+			<Flex as="nav" py='30px' px='80px' alignItems='center' gap='30px' bg='transparent'>
 				<NavLink to={`/dashboard`}>
 					<Image  w="80px" h="75px" src={`nexai-logo.jpg`}/>
 				</NavLink>

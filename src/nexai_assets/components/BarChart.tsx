@@ -102,7 +102,7 @@ const BarChart = () => {
                 ) :
                 (
 
-                    <Box p="30px" mt="30px" border='1px' borderColor='rgba(255, 255, 255, 0.3)' borderRadius="md" w={650} h={400} >
+                    <Box p="30px" mt="30px" border='1px' borderColor='rgba(255, 255, 255, 0.3)' borderRadius="md" w='100%' h='100%' >
                         <Text fontWeight="bold"  fontSize="lg" >Monthly Engagement Stat</Text>
                         <Bar data={data} options={options} />
                     </Box>

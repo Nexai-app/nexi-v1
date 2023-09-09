@@ -47,7 +47,7 @@ const AllQuestions = ()=>{
             callMe()
     }, [])
     return(
-        <Box color="white">
+        <Box color="white"  bg={`#341A41`} minH={`100vh`}>
             <Navbar/>
             <Box >
                 <Flex justify="center" direction="column" align="center"> 
@@ -75,7 +75,7 @@ const AllQuestions = ()=>{
                         <>
                 <SimpleGrid m={8} spacing="20px" minChildWidth='290px'>
                     {arr.map((entry:ArrayT, index:number) => (   
-                    <Card key={index} variant="outline" border="1px solid #FFFFFF" h="280px" color="#fff"  maxW='sm'>
+                    <Card key={index} variant="outline" border="1px solid #FFFFFF" h="280px" color="#fff"  maxW='sm' bg={`#341A41`}>
                         <CardHeader>
                         <Heading size='md' fontFamily="Poppins">{entry.question}</Heading>
                         </CardHeader>
@@ -94,7 +94,7 @@ const AllQuestions = ()=>{
                     </NavLink>
                 </SimpleGrid>
                 </>
-                 )}
+                )}
 
                 </Box>
                 <Box m={8} display="flex" justifyContent="end">
