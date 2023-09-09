@@ -1,7 +1,6 @@
-import React from 'react';
-// import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
 import { Link as ReactRouterLink } from 'react-router-dom'
-import { Box, Button, Flex, Heading, Spacer, useMediaQuery, MenuButton, Menu, Icon, Link as Chakralink, Image, Center } from '@chakra-ui/react';
+import { Box, Button, Flex, Heading, Spacer, useMediaQuery, MenuButton, Menu, Icon, Link as Chakralink, Image, Center, ModalOverlay, useDisclosure, Modal, ModalHeader, ModalContent, ModalCloseButton, ModalBody, ModalFooter, Text, MenuList, MenuItem, InputRightElement, Input, InputGroup } from '@chakra-ui/react';
 import LineChart from './LineChart';
 import BarChart from './BarChart';
 import { ArrowForwardIcon, ChatIcon, ChevronDownIcon, SettingsIcon } from '@chakra-ui/icons';
@@ -10,12 +9,44 @@ import { BsJournalCode, BsPeopleFill } from 'react-icons/bs'
 import { IoPersonCircleSharp } from 'react-icons/io5'
 import { RiChat2Fill } from 'react-icons/ri'
 import DashNavbar from './shared/Navbar3';
+import FirstModal from './TestBot/FirstModal';
+import SecondModal from './TestBot/SecondModal';
 
 
 
 const MainDashboard = () => {
 
     const [isLargerThan991] = useMediaQuery("(max-width: 991px)");
+
+
+    const OverlayOne = () => (
+        <ModalOverlay
+            bg='#341A41.300'
+            backdropFilter='blur(1px) hue-rotate(0deg)'
+        />
+    )
+
+    const { isOpen, onOpen, onClose } = useDisclosure()
+    const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
+    const [isFirstModalOpen, setIsFirstModalOpen] = useState(false);
+
+    const onCloseFirstModal = () => {
+        setIsFirstModalOpen(false);
+    };
+
+    const onOpenFirstModal = () => {
+        setIsFirstModalOpen(true);
+    };
+
+    const onCloseSecondModal = () => {
+        setIsSecondModalOpen(false);
+    };
+
+    const onOpenSecondModal = () => {
+        setIsSecondModalOpen(true);
+    };
+
+    const [overlay, setOverlay] = React.useState(<OverlayOne />)
 
     return (
         <Flex>
@@ -82,11 +113,10 @@ const MainDashboard = () => {
                                                     Train Bot
                                                 </Button>
                                             </Chakralink>
-                                            <Chakralink as={ReactRouterLink} to="/my-questions">
-                                                <Button bg='white' color={`#341A41`} border={`1px white solid`} _hover={{ backgroundColor: 'transparent', color: 'white' }} rightIcon={<Icon as={AiOutlineBook} boxSize={4} />}>
-                                                    Test Bot
-                                                </Button>
-                                            </Chakralink>
+                                            <Button bg='white' color={`#341A41`} border={`1px white solid`} _hover={{ backgroundColor: 'transparent', color: 'white' }} rightIcon={<Icon as={AiOutlineBook} boxSize={4} />} onClick={onOpenFirstModal}>
+                                                Test Bot
+                                            </Button>
+                                            <FirstModal isOpen={isFirstModalOpen} onClose={onCloseFirstModal} />
                                         </Box>
                                     </Flex>
                                     <Box>
@@ -115,11 +145,10 @@ const MainDashboard = () => {
                                                     Train Bot
                                                 </Button>
                                             </Chakralink>
-                                            <Chakralink as={ReactRouterLink} to="/my-questions">
-                                                <Button bg='white' color={`#341A41`} border={`1px white solid`} _hover={{ backgroundColor: 'transparent', color: 'white' }} rightIcon={<Icon as={AiOutlineBook} boxSize={4} />}>
-                                                    Test Bot
-                                                </Button>
-                                            </Chakralink>
+                                            <Button bg='white' color={`#341A41`} border={`1px white solid`} _hover={{ backgroundColor: 'transparent', color: 'white' }} rightIcon={<Icon as={AiOutlineBook} boxSize={4} />} onClick={onOpenFirstModal}>
+                                                Test Bot
+                                            </Button>
+                                            <FirstModal isOpen={isFirstModalOpen} onClose={onCloseFirstModal} />
                                         </Box>
                                     </Flex>
                                     <Box>
@@ -133,9 +162,9 @@ const MainDashboard = () => {
 
                 }
 
-            </Box>
+            </Box >
 
-        </Flex>
+        </Flex >
 
 
     )
