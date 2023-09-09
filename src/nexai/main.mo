@@ -14,7 +14,7 @@ import Buffer "mo:base/Buffer";
 
 import Types "./types";
 
-shared ({ caller }) actor class Nexai() = {
+shared ({ caller }) actor class Nexai() =  {
 
   // Debug.print(debug_show(caller));
 
