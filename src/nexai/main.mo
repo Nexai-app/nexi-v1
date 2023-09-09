@@ -12,6 +12,8 @@ import Text "mo:base/Text";
 import Time "mo:base/Time";
 import Buffer "mo:base/Buffer";
 
+// import External "canister:external";
+
 import Types "./types";
 
 shared ({ caller }) actor class Nexai() =  {
@@ -63,10 +65,15 @@ shared ({ caller }) actor class Nexai() =  {
     Iter.toArray(CompanyHashMap.entries());
   };
 
+  public func Test() : async Nat {
+    let external  = actor("bd3sg-teaaa-aaaaa-qaaba-cai"): actor { test : (Nat) -> async Nat };
+    return await external.test(32);
+  };
+
   public func greet(name : Text) : async Text {
     return "Hello, " # name # "!";
   };
-
+  
   //Edit company details
 
   //LogIn
