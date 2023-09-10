@@ -5,11 +5,11 @@ import Main from "../components/Main";
 
 function LandingPage() {
   return (
-    <div className="">
+    <>
       <LandingPageNavbar />
       <Main />
       <Footer />
-    </div>
+    </>
   );
 }
 

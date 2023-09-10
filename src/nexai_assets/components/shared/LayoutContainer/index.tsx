@@ -1,6 +1,6 @@
 /* eslint-disable react/require-default-props */
 import React, { createContext, Dispatch, FC, ReactNode, useState } from "react";
-import { Box } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 import Sidebar from "../Sidebar";
 //   import LayoutHeader from "@components/shared/layout/LayoutHeader";
 import MobileSlider from "../MobileSlider";
@@ -20,7 +20,7 @@ export const LayoutContext = createContext<LayoutContextProps>({
   setShowSidebar: () => {},
 });
 //  const base = ['/home']
-const LayoutContainer: FC<Props> = ({ children, px = 3 }) => {
+const LayoutContainer: FC<Props> = ({ children }) => {
   const [showSidebar, setShowSidebar] = useState(false);
 
   return (
@@ -31,21 +31,21 @@ const LayoutContainer: FC<Props> = ({ children, px = 3 }) => {
         setShowSidebar,
       }}
     >
-      <Box pos="relative" h="100%">
+      <Box pos="relative" bg="#341A41" h="100%">
         <Sidebar />
-        {/* <LayoutHeader /> */}
+        <MobileSlider />
         <Box
+          pt={10}
           ml={{ md: "15%" }}
           w={{ md: "85%" }}
-          px={px}
-          bg="341A41"
+          px={{ base: "30px", md: "80px" }}
+          bg="#341A41"
           h={{ base: "500px", sm: "100%" }}
-          pb={{ base: 10, smx2: 0 }}
+          pb="30px"
           pos="relative"
         >
           {children}
         </Box>
-        <MobileSlider />
       </Box>
     </LayoutContext.Provider>
   );

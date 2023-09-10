@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import { TypeAnimation } from "react-type-animation";
+import "./landingPageNavbar.css";
 
 import {
   Box,
@@ -21,7 +22,6 @@ import {
   DrawerBody,
   ButtonGroup,
 } from "@chakra-ui/react";
-import "../../src/App.css";
 
 function Navbar() {
   const { Auth, iiAuth, changeAuthStatus } = useContext(AuthContext);
@@ -60,7 +60,13 @@ function Navbar() {
   };
 
   return (
-    <Box className="App-header" mb={`80px`}>
+    <Box
+      className="background"
+      bg="#341A41"
+      // h="100vh"
+      color="white"
+      mb={`80px`}
+    >
       <Flex
         as="nav"
         py="50px"

@@ -1,6 +1,5 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import "../../src/App.css";
 import { Box, Flex, Heading, Spacer, Image } from "@chakra-ui/react";
 
 type Params = {
@@ -10,7 +9,7 @@ type Params = {
 
 function Navbar({ w, h }: Params) {
   return (
-    <Box className="App-header2">
+    <Box color="white" height="15vh">
       <Flex as="nav" px="80px" alignItems="center" gap="30px" bg="transparent">
         <NavLink to={`/dashboard`}>
           <Image w={w ? w : "80px"} h={h ? h : "75px"} src={`nexai-logo.jpg`} />
