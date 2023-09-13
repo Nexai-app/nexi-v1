@@ -18,6 +18,7 @@ export interface CompanyEntry__1 {
 }
 export interface Nexai {
   'CheckPrincipal' : ActorMethod<[], Principal>,
+  'Test' : ActorMethod<[bigint], bigint>,
   'createCompany' : ActorMethod<[string, string], boolean>,
   'createQCard' : ActorMethod<[string, string], undefined>,
   'getAllCompanies' : ActorMethod<[], Array<[Principal, CompanyEntry__1]>>,

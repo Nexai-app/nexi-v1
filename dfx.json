@@ -4,13 +4,15 @@
 			"main": "src/nexai/main.mo",
 			"type": "motoko"
 		},
-		"external" : {
+		"external": {
 			"main": "src/external/main.mo",
 			"type": "motoko"
 		},
+
 		"nexai_assets": {
 			"dependencies": [
-				"nexai"
+				"nexai",
+				"external"
 			],
 			"frontend": {
 				"entrypoint": "src/nexai_assets/src/index.html"

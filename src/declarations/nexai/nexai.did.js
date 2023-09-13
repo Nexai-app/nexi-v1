@@ -16,6 +16,7 @@ export const idlFactory = ({ IDL }) => {
   });
   const Nexai = IDL.Service({
     'CheckPrincipal' : IDL.Func([], [IDL.Principal], []),
+    'Test' : IDL.Func([IDL.Nat], [IDL.Nat], []),
     'createCompany' : IDL.Func([IDL.Text, IDL.Text], [IDL.Bool], []),
     'createQCard' : IDL.Func([IDL.Text, IDL.Text], [], []),
     'getAllCompanies' : IDL.Func(

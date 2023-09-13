@@ -1,0 +1,3 @@
+service : {
+  test: (nat) -> (nat);
+}
