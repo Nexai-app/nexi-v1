@@ -100,3 +100,39 @@
 	opacity: 0.8;
 }
 
+.landing{
+	position: relative;
+}
+
+.spot{
+	position: fixed; 
+	bottom: 30px;
+	right: 20px; 
+	width: 50px;
+	height: 50px;
+	border-radius:  50%;
+	background-color: #331A41;
+	/* border: 1px solid #ccc; */
+	box-shadow: 0 0 10px rgba(255, 255, 255, 0.707);
+	z-index: 1000;
+}
+
+.chat{
+	position: fixed;
+	bottom: 50px;
+	right: 75px;
+	/* left: 40px; */
+	width: 400px;
+	min-width: 280px;
+	height: 300px;
+	/* margin-left: 50px; */
+	/* background-color: #fff; */
+	border: 0.1px solid #ccc;
+	border-radius: 5px;
+	/* box-shadow: 0 0 10px rgba(255, 255, 255, 0.707); */
+	z-index: 1000;
+}
+
+.chat-header{
+	width: 100%;
+}
