@@ -1,34 +1,61 @@
+type Result_2 = 
+ variant {
+   Err: text;
+   Ok: nat32;
+ };
+type Result_1 = 
+ variant {
+   Err: text;
+   Ok: vec record {
+             nat;
+             text;
+           };
+ };
+type Result = 
+ variant {
+   Err: text;
+   Ok;
+ };
 type Nexai = 
  service {
    CheckPrincipal: () -> (principal);
-   createCompany: (text, text) -> (bool);
-   createQCard: (text, text) -> ();
+   VDBAddQandA: (nat32, vec nat64, vec text) -> (Result);
+   VDBBuildIndex: (vec nat) -> (Result);
+   VDBGetSimilar: (nat, vec nat64, nat32) -> (Result_1);
+   VDBRegister: (text) -> (Result_2);
+   createCompany: (text, text, text, nat32) -> (opt CompanyEntry);
+   createQCard: (text, text, vec nat64, vec text) -> ();
    getAllCompanies: () -> (vec record {
                                  principal;
                                  CompanyEntry__1;
                                });
-   getAllQCards: (text) -> (opt vec CardEntry);
+   getAllQCards: (nat32) -> (opt vec CardEntry);
    getAnAnswer: (nat) -> (opt CardEntry);
-   getCompanyProfile: () -> (opt CompanyEntry);
+   getCompanyProfile: () -> (opt CompanyEntry) query;
    greet: (text) -> (text);
    logIn: () -> (bool) query;
+   makeManager: () -> (bool);
  };
 type CompanyEntry__1 = 
  record {
    createdAt: int;
+   description: text;
    email: text;
    name: text;
+   vdbId: nat32;
  };
 type CompanyEntry = 
  record {
    createdAt: int;
+   description: text;
    email: text;
    name: text;
+   vdbId: nat32;
  };
 type CardEntry = 
  record {
    answer: text;
-   email: text;
    question: text;
+   vdbId: nat32;
  };
 service : () -> Nexai

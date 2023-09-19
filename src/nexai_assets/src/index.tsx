@@ -5,8 +5,9 @@ import App from "./app";
 import { HashRouter } from "react-router-dom";
 import { ChakraProvider } from "@chakra-ui/react";
 import { AuthProvider } from "../context/AuthContext";
+import { Provider } from "react-redux";
 import theme from "../theme/index";
-
+import store from "../redux-toolkit/store";
 import "@fontsource/public-sans/100.css";
 import "@fontsource/public-sans/200.css";
 import "@fontsource/public-sans/300.css";
@@ -27,14 +28,16 @@ const root = ReactDOM.createRoot(document.getElementById("app"));
 root.render(
   <React.StrictMode>
     <HashRouter>
-      <ChakraProvider
-        theme={theme}
-        toastOptions={{ defaultOptions: { position: "top" } }}
-      >
-        <AuthProvider>
-          <App />
-        </AuthProvider>
-      </ChakraProvider>
+      <Provider store={store}>
+        <ChakraProvider
+          theme={theme}
+          toastOptions={{ defaultOptions: { position: "top" } }}
+        >
+          <AuthProvider>
+            <App />
+          </AuthProvider>
+        </ChakraProvider>
+      </Provider>
     </HashRouter>
   </React.StrictMode>
 );

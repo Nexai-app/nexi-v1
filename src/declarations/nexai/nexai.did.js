@@ -1,33 +1,64 @@
 export const idlFactory = ({ IDL }) => {
-  const CompanyEntry__1 = IDL.Record({
+  const Result = IDL.Variant({ 'Ok' : IDL.Null, 'Err' : IDL.Text });
+  const Result_1 = IDL.Variant({
+    'Ok' : IDL.Vec(IDL.Tuple(IDL.Nat, IDL.Text)),
+    'Err' : IDL.Text,
+  });
+  const Result_2 = IDL.Variant({ 'Ok' : IDL.Nat32, 'Err' : IDL.Text });
+  const CompanyEntry = IDL.Record({
+    'vdbId' : IDL.Nat32,
     'name' : IDL.Text,
     'createdAt' : IDL.Int,
+    'description' : IDL.Text,
+    'email' : IDL.Text,
+  });
+  const CompanyEntry__1 = IDL.Record({
+    'vdbId' : IDL.Nat32,
+    'name' : IDL.Text,
+    'createdAt' : IDL.Int,
+    'description' : IDL.Text,
     'email' : IDL.Text,
   });
   const CardEntry = IDL.Record({
     'question' : IDL.Text,
+    'vdbId' : IDL.Nat32,
     'answer' : IDL.Text,
-    'email' : IDL.Text,
-  });
-  const CompanyEntry = IDL.Record({
-    'name' : IDL.Text,
-    'createdAt' : IDL.Int,
-    'email' : IDL.Text,
   });
   const Nexai = IDL.Service({
     'CheckPrincipal' : IDL.Func([], [IDL.Principal], []),
-    'createCompany' : IDL.Func([IDL.Text, IDL.Text], [IDL.Bool], []),
-    'createQCard' : IDL.Func([IDL.Text, IDL.Text], [], []),
+    'VDBAddQandA' : IDL.Func(
+        [IDL.Nat32, IDL.Vec(IDL.Nat64), IDL.Vec(IDL.Text)],
+        [Result],
+        [],
+      ),
+    'VDBBuildIndex' : IDL.Func([IDL.Vec(IDL.Nat)], [Result], []),
+    'VDBGetSimilar' : IDL.Func(
+        [IDL.Nat, IDL.Vec(IDL.Nat64), IDL.Nat32],
+        [Result_1],
+        [],
+      ),
+    'VDBRegister' : IDL.Func([IDL.Text], [Result_2], []),
+    'createCompany' : IDL.Func(
+        [IDL.Text, IDL.Text, IDL.Text, IDL.Nat32],
+        [IDL.Opt(CompanyEntry)],
+        [],
+      ),
+    'createQCard' : IDL.Func(
+        [IDL.Text, IDL.Text, IDL.Vec(IDL.Nat64), IDL.Vec(IDL.Text)],
+        [],
+        [],
+      ),
     'getAllCompanies' : IDL.Func(
         [],
         [IDL.Vec(IDL.Tuple(IDL.Principal, CompanyEntry__1))],
         [],
       ),
-    'getAllQCards' : IDL.Func([IDL.Text], [IDL.Opt(IDL.Vec(CardEntry))], []),
+    'getAllQCards' : IDL.Func([IDL.Nat32], [IDL.Opt(IDL.Vec(CardEntry))], []),
     'getAnAnswer' : IDL.Func([IDL.Nat], [IDL.Opt(CardEntry)], []),
-    'getCompanyProfile' : IDL.Func([], [IDL.Opt(CompanyEntry)], []),
+    'getCompanyProfile' : IDL.Func([], [IDL.Opt(CompanyEntry)], ['query']),
     'greet' : IDL.Func([IDL.Text], [IDL.Text], []),
     'logIn' : IDL.Func([], [IDL.Bool], ['query']),
+    'makeManager' : IDL.Func([], [IDL.Bool], []),
   });
   return Nexai;
 };

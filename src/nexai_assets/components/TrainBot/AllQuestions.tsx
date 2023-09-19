@@ -15,7 +15,11 @@ import { Box, Spinner } from "@chakra-ui/react";
 import Navbar from "../shared/Navbar";
 import { AuthContext } from "../../context/AuthContext";
 import ClipLoader from "react-spinners/ClipLoader";
-import { BarLoader, ClimbingBoxLoader, PacmanLoader } from "react-spinners";
+import {
+  BarLoader,
+  ClimbingBoxLoader,
+  PacmanLoader,
+} from "react-spinners";
 
 type ArrayT = {
   answer: string;
@@ -32,32 +36,37 @@ const AllQuestions = () => {
   // then fitlter the result and display it
 
   useEffect(() => {
-    const callMe = () => {
-      actor
-        .getCompanyProfile()
-        .then((d) => {
-          actor
-            .getAllQCards(d[0].email)
-            .then((v) => {
-              console.log(v);
-              setArr(v[0]);
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    };
-    callMe();
+    // const callMe = () => {
+    //   actor
+    //     .getCompanyProfile()
+    //     .then((d) => {
+    //       actor
+    //         .getAllQCards(d[0].email)
+    //         .then((v) => {
+    //           console.log(v);
+    //           setArr(v[0]);
+    //         })
+    //         .catch((err) => {
+    //           console.log(err);
+    //         });
+    //     })
+    //     .catch((err) => {
+    //       console.log(err);
+    //     });
+    // };
+    // callMe();
   }, []);
   return (
     <Box color="white">
       <Navbar />
       <Box>
         <Flex justify="center" direction="column" align="center">
-          <Flex align="center" justify="center" direction="column" w="full">
+          <Flex
+            align="center"
+            justify="center"
+            direction="column"
+            w="full"
+          >
             <Text
               mb={4}
               fontSize={{ base: "24px", md: "40px" }}
@@ -77,7 +86,8 @@ const AllQuestions = () => {
                 fontWeight="400"
                 fontFamily="Public Sans"
               >
-                Set and provide answers to questions you would like to train{" "}
+                Set and provide answers to questions you would like to
+                train{" "}
               </Text>
               <Text
                 fontSize={{ base: "12px", md: "18px" }}
@@ -92,7 +102,12 @@ const AllQuestions = () => {
         {/* card */}
         <Box>
           {!arr ? (
-            <Flex color="green" justify="center" align="center" mt={8}>
+            <Flex
+              color="green"
+              justify="center"
+              align="center"
+              mt={8}
+            >
               <BarLoader
                 color={`white`}
                 loading={true}
@@ -137,8 +152,16 @@ const AllQuestions = () => {
                     bgColor="white"
                     maxW="sm"
                   >
-                    <AddIcon boxSize={16} color="#341A41" bgColor="white" />
-                    <Text color="#341A41" fontSize="18px" bgColor="white">
+                    <AddIcon
+                      boxSize={16}
+                      color="#341A41"
+                      bgColor="white"
+                    />
+                    <Text
+                      color="#341A41"
+                      fontSize="18px"
+                      bgColor="white"
+                    >
                       Add Question
                     </Text>
                   </Card>
@@ -153,7 +176,10 @@ const AllQuestions = () => {
               bg="white"
               color={`#341A41`}
               border={`1px white solid`}
-              _hover={{ backgroundColor: "transparent", color: "white" }}
+              _hover={{
+                backgroundColor: "transparent",
+                color: "white",
+              }}
             >
               Continue To Dashboard
             </Button>

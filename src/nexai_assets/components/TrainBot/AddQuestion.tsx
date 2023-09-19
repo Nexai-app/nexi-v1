@@ -25,17 +25,17 @@ const AddQuestions = () => {
   const handleSubmit = () => {
     setSubmitting(true);
 
-    actor
-      .createQCard(question, ans)
-      .then(() => {
-        setSubmitting(false);
-        navigate("/my-questions");
-      })
-      .catch((err) => {
-        setSubmitting(false);
-        console.log(err);
-        toast({ title: err });
-      });
+    // actor
+    //   .createQCard(question, ans)
+    //   .then(() => {
+    //     setSubmitting(false);
+    //     navigate("/my-questions");
+    //   })
+    //   .catch((err) => {
+    //     setSubmitting(false);
+    //     console.log(err);
+    //     toast({ title: err });
+    //   });
   };
 
   const handleClear = () => {
@@ -45,7 +45,12 @@ const AddQuestions = () => {
   return (
     <Box mt={8} color="white">
       <Flex justify="center" direction="column" align="center">
-        <Flex align="center" justify="center" direction="column" w="full">
+        <Flex
+          align="center"
+          justify="center"
+          direction="column"
+          w="full"
+        >
           <Text
             mb={4}
             fontSize={{ base: "24px", md: "40px" }}
@@ -65,7 +70,8 @@ const AddQuestions = () => {
               fontWeight="400"
               fontFamily="Public Sans"
             >
-              Set and provide answers to questions you would like to train{" "}
+              Set and provide answers to questions you would like to
+              train{" "}
             </Text>
             <Text
               fontSize={{ base: "12px", md: "18px" }}
@@ -99,7 +105,10 @@ const AddQuestions = () => {
                 onClick={handleClear}
                 colorScheme="white"
                 variant="outline"
-                _hover={{ backgroundColor: "white", color: "#341A41" }}
+                _hover={{
+                  backgroundColor: "white",
+                  color: "#341A41",
+                }}
               >
                 Clear
               </Button>
@@ -108,7 +117,10 @@ const AddQuestions = () => {
                 bg="white"
                 color={`#341A41`}
                 border={`1px white solid`}
-                _hover={{ backgroundColor: "transparent", color: "white" }}
+                _hover={{
+                  backgroundColor: "transparent",
+                  color: "white",
+                }}
                 isLoading={submitting}
                 isDisabled={submitting}
               >
