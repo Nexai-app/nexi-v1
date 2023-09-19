@@ -6,13 +6,13 @@
 		},
 		"external": {
 			"main": "src/external/main.mo",
-			"type": "motoko"
+			"type": "motoko",
+			"dependencies": ["nexai"]
 		},
 
 		"nexai_assets": {
 			"dependencies": [
-				"nexai",
-				"external"
+				"nexai"
 			],
 			"frontend": {
 				"entrypoint": "src/nexai_assets/src/index.html"
