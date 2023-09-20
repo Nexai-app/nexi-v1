@@ -1,5 +1,5 @@
 export type ProfileT = {
-  vdbId: number;
+  vdbId: number | undefined;
   email: string;
   name: string;
   description: string;

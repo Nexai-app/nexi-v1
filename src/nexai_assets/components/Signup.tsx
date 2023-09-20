@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
 import "./Signup.css";
-import { useLogIn } from "../functions";
 import { AuthContext } from "../context/AuthContext";
 import {
   Box,
@@ -16,6 +15,8 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { useNavigate, NavLink } from "react-router-dom";
+import { useAppDispatch } from "../redux-toolkit/hooks";
+import { addProfile } from "../redux-toolkit/slice/ProfileSlice";
 
 function SignUpForm() {
   const [appName, setAppName] = useState("");
@@ -24,6 +25,14 @@ function SignUpForm() {
   const [submitting, setSubmitting] = useState(false);
   const navigate = useNavigate();
   const toast = useToast();
+  const dispatch = useAppDispatch();
+
+  // dispatch({
+  //   vdbId:id,
+  //   email,
+  //   name:appName,
+  //   description
+  // })yarn start
 
   //CHECK IS USER EXIST BEFORE
   const { actor } = useContext(AuthContext);
@@ -40,25 +49,44 @@ function SignUpForm() {
       toast({ title: "Email Invalid" });
       return;
     }
+
+    if (desc.length < 10) {
+      toast({ title: "Describe your company with more words" });
+      return;
+    }
     setSubmitting(true);
     actor
       .VDBRegister(desc)
-      .then((data) => {
-        console.log(data);
-        // actor
-        //   .createCompany(appName, email, desc, )
-        //   .then(() => {
-        //     console.log("got here");
-        //     setSubmitting(false);
-        //     navigate("/dashboard");
-        //   })
-        //   .catch((err) => {
-        //     setSubmitting(false);
-        //     console.log(err);
-        //   });
+      .then((data: any) => {
+        let companyId = data.Ok;
+        actor
+          .createCompany(appName, email, desc, data.Ok)
+          .then(() => {
+            console.log("got here");
+
+            const send = {
+              vdbId: companyId,
+              email,
+              name: appName,
+              description: desc,
+            };
+            dispatch(addProfile(send));
+            toast({ title: "Account created!", status: "success" });
+            setSubmitting(false);
+            navigate("/train-bot");
+          })
+          .catch((err) => {
+            setSubmitting(false);
+            toast({
+              title: "Email might have been taken, try another",
+              status: "error",
+            });
+            console.log(err);
+          });
       })
       .catch((err) => {
         setSubmitting(false);
+        toast({ title: "something went wrong!", status: "error" });
         console.log(err);
       });
   };
@@ -109,7 +137,7 @@ function SignUpForm() {
               onChange={(e) => {
                 setDesc(e.target.value);
               }}
-              placeholder="Let your personal assistant understand what your comapany is all about..."
+              placeholder="Let your custom-made assistant understand what your company is all about..."
             />
           </FormControl>
         </Box>

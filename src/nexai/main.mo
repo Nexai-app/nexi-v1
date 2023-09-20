@@ -113,7 +113,7 @@ public shared ({ caller }) func CheckPrincipal() : async Principal {caller};
 
     for ((i, j) in CompanyHashMap.entries()) {
       if (j.email == email) {
-        throw Error.reject("$ A user with that username exists, kindly pick another username. Thank you! # ");
+        throw Error.reject("$ A user with that email exists # ");
         newUser := false;
       };
     };

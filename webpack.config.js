@@ -5,7 +5,7 @@ const TerserPlugin = require("terser-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 
 const LOCAL_II_CANISTER =
-  "http://127.0.0.1:4943/?canisterId=ryjl3-tyaaa-aaaaa-aaaba-cai";
+  "http://127.0.0.1:4943/?canisterId=rkp4c-7iaaa-aaaaa-aaaca-cai";
 
 const network =
   process.env.DFX_NETWORK ||

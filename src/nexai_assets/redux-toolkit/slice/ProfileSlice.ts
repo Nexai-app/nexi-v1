@@ -3,7 +3,12 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import { ProfileT } from "../types";
 
 // Define the initial state using that type
-const initialState: ProfileT = null;
+const initialState: ProfileT = {
+  vdbId: null,
+  email: "",
+  name: "",
+  description: "",
+};
 
 export const profileSlice = createSlice({
   name: "profile",
