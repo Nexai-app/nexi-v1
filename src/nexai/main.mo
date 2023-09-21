@@ -22,9 +22,6 @@ import Int32 "mo:base/Int32";
 import Types "./types";
 import VDBTypes "./vdbTypes";
 
-
-import Types "./types";
-
 shared ({ caller }) actor class Nexai() = {
 
 type FloatVector = [Float];
