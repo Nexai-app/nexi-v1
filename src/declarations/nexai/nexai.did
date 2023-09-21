@@ -1,7 +1,6 @@
 type Nexai = 
  service {
    CheckPrincipal: () -> (principal);
-   Test: (nat) -> (nat);
    createCompany: (text, text) -> (bool);
    createQCard: (text, text) -> ();
    getAllCompanies: () -> (vec record {
