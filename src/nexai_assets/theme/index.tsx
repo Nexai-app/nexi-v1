@@ -1,11 +1,21 @@
-import { extendTheme } from "@chakra-ui/react"
-
+import { extendTheme } from "@chakra-ui/react";
 
 const theme = extendTheme({
-    fonts: {
-      body: "Public Sans, Poppins, Open Sans",
-      heading: "Public Sans, Open Sans",
+  styles: {
+    global: {
+      body: {
+        bg: "#341A41",
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center",
+        color: "white",
+      },
     },
-  })
+  },
+  fonts: {
+    body: "Public Sans, Poppins, Open Sans",
+    heading: "Public Sans, Open Sans",
+  },
+});
 
-  export default theme
+export default theme;

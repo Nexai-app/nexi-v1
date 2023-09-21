@@ -1,21 +1,30 @@
 Arguments: 
-  /home/dave/.nvm/versions/node/v16.18.0/bin/node /mnt/c/Users/Dave/AppData/Roaming/npm/node_modules/yarn/bin/yarn.js
+  /home/dunsin/.nvm/versions/node/v16.19.0/bin/node /mnt/c/Users/Hp/AppData/Roaming/npm/node_modules/yarn/bin/yarn.js add @redux/toolkit react-redux
 
 PATH: 
-  /home/dave/.vscode-server/bin/704ed70d4fd1c6bd6342c436f1ede30d1cff4710/bin/remote-cli:/home/dave/bin:/home/dave/.nvm/versions/node/v16.18.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Python311/Scripts/:/mnt/c/Python311/:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files/Git/cmd:/mnt/c/ProgramData/chocolatey/bin:/mnt/c/Program Files/nodejs/:/mnt/c/Users/Dave/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/Dave/AppData/Local/Programs/Microsoft VS Code/bin:/mnt/c/Users/Dave/AppData/Roaming/npm:/snap/bin
+  /home/dunsin/.nvm/versions/node/v16.19.0/bin:/home/dunsin/.vscode-server/bin/6509174151d557a81c9d0b5f8a5a1e9274db5585/bin/remote-cli:/home/linuxbrew/.linuxbrew/opt/node@16/bin:/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:/home/dunsin/.local/bin:/home/dunsin/bin:/home/dunsin/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Python27:/mnt/c/Python27/Scripts:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files/nodejs/:/mnt/c/ProgramData/chocolatey/bin:/mnt/c/Program Files/Git/cmd:/mnt/c/Program Files/Docker/Docker/resources/bin:/mnt/c/ProgramData/DockerDesktop/version-bin:/mnt/c/Program Files/PostgreSQL/13:/mnt/c/Program Files/PostgreSQL/13/scripts:/mnt/c/Users/Hp/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/Hp/AppData/Roaming/npm:/mnt/c/Users/Hp/AppData/Local/Programs/Microsoft VS Code/bin:/mnt/c/Users/Hp/AppData/Roaming/Flow:/snap/bin
 
 Yarn version: 
   1.22.19
 
 Node version: 
-  16.18.0
+  16.19.0
 
 Platform: 
   linux x64
 
 Trace: 
-  Error: getaddrinfo EAI_AGAIN registry.yarnpkg.com
-      at GetAddrInfoReqWrap.onlookup [as oncomplete] (node:dns:109:26)
+  Error: https://registry.npmjs.org/@redux%2ftoolkit: Not found
+      at Request.params.callback [as _callback] (/mnt/c/Users/Hp/AppData/Roaming/npm/node_modules/yarn/lib/cli.js:66145:18)
+      at Request.self.callback (/mnt/c/Users/Hp/AppData/Roaming/npm/node_modules/yarn/lib/cli.js:140890:22)
+      at Request.emit (node:events:513:28)
+      at Request.<anonymous> (/mnt/c/Users/Hp/AppData/Roaming/npm/node_modules/yarn/lib/cli.js:141862:10)
+      at Request.emit (node:events:513:28)
+      at IncomingMessage.<anonymous> (/mnt/c/Users/Hp/AppData/Roaming/npm/node_modules/yarn/lib/cli.js:141784:12)
+      at Object.onceWrapper (node:events:627:28)
+      at IncomingMessage.emit (node:events:525:35)
+      at endReadableNT (node:internal/streams/readable:1358:12)
+      at processTicksAndRejections (node:internal/process/task_queues:83:21)
 
 npm manifest: 
   {
@@ -74,6 +83,8 @@ npm manifest:
   		"@dfinity/identity": "^0.15.4",
   		"@emotion/react": "^11.10.6",
   		"@emotion/styled": "^11.10.6",
+  		"@fontsource/poppins": "^4.5.10",
+  		"@fontsource/public-sans": "^4.5.12",
   		"@fortawesome/fontawesome-svg-core": "^6.4.0",
   		"@fortawesome/free-brands-svg-icons": "^6.4.0",
   		"@fortawesome/free-regular-svg-icons": "^6.4.0",
@@ -88,9 +99,10 @@ npm manifest:
   		"react-bootstrap": "^2.7.2",
   		"react-chartjs-2": "^5.2.0",
   		"react-dom": "^18.2.0",
-  		"react-hot-toast": "^2.4.0",
   		"react-icons": "^4.8.0",
   		"react-router-dom": "^6.9.0",
+  		"react-spinners": "^0.13.8",
+  		"react-type-animation": "^3.1.0",
   		"url-loader": "^4.1.1"
   	}
   }
@@ -1427,6 +1439,16 @@ Lockfile:
     version "0.17.15"
     resolved "https://registry.yarnpkg.com/@esbuild/win32-x64/-/win32-x64-0.17.15.tgz#c2e737f3a201ebff8e2ac2b8e9f246b397ad19b8"
     integrity sha512-DjDa9ywLUUmjhV2Y9wUTIF+1XsmuFGvZoCmOWkli1XcNAh5t25cc7fgsCx4Zi/Uurep3TTLyDiKATgGEg61pkA==
+  
+  "@fontsource/poppins@^4.5.10":
+    version "4.5.10"
+    resolved "https://registry.yarnpkg.com/@fontsource/poppins/-/poppins-4.5.10.tgz#44dbfeacb5d89efca5ad7ad6cc941b2ac1ee424b"
+    integrity sha512-oYZVHsnlwV3VWM1SE/m6SUxVh0QLk5+2wB+lBiXcI7N/0KVQWmV9YykaPqfJHBLvmdya+MAOnv+BQHeLU1vOOw==
+  
+  "@fontsource/public-sans@^4.5.12":
+    version "4.5.12"
+    resolved "https://registry.yarnpkg.com/@fontsource/public-sans/-/public-sans-4.5.12.tgz#bfb08b2e1424fa7a82a31e23b561846d5936b56e"
+    integrity sha512-sa6lr+lQQB1Iif2xyWZmcCbReV3dj6m0CNXw5xbDwKO4BPeZxz+G+Vy9zWdzhaKpjmK6Ap2wIn1x79XVcvMRtQ==
   
   "@fortawesome/fontawesome-common-types@6.4.0":
     version "6.4.0"
@@ -3154,11 +3176,6 @@ Lockfile:
       merge2 "^1.4.1"
       slash "^4.0.0"
   
-  goober@^2.1.10:
-    version "2.1.12"
-    resolved "https://registry.yarnpkg.com/goober/-/goober-2.1.12.tgz#6c1645314ac9a68fe76408e1f502c63df8a39042"
-    integrity sha512-yXHAvO08FU1JgTXX6Zn6sYCUFfB/OJSX8HHjDSgerZHZmFKAb08cykp5LBw5QnmyMcZyPRMqkdyHUSSzge788Q==
-  
   gopd@^1.0.1:
     version "1.0.1"
     resolved "https://registry.yarnpkg.com/gopd/-/gopd-1.0.1.tgz#29ff76de69dac7489b7c0918a5788e56477c332c"
@@ -4189,13 +4206,6 @@ Lockfile:
       use-callback-ref "^1.3.0"
       use-sidecar "^1.1.2"
   
-  react-hot-toast@^2.4.0:
-    version "2.4.0"
-    resolved "https://registry.yarnpkg.com/react-hot-toast/-/react-hot-toast-2.4.0.tgz#b91e7a4c1b6e3068fc599d3d83b4fb48668ae51d"
-    integrity sha512-qnnVbXropKuwUpriVVosgo8QrB+IaPJCpL8oBI6Ov84uvHZ5QQcTp2qg6ku2wNfgJl6rlQXJIQU5q+5lmPOutA==
-    dependencies:
-      goober "^2.1.10"
-  
   react-icons@^4.8.0:
     version "4.8.0"
     resolved "https://registry.yarnpkg.com/react-icons/-/react-icons-4.8.0.tgz#621e900caa23b912f737e41be57f27f6b2bff445"
@@ -4250,6 +4260,11 @@ Lockfile:
     dependencies:
       "@remix-run/router" "1.4.0"
   
+  react-spinners@^0.13.8:
+    version "0.13.8"
+    resolved "https://registry.yarnpkg.com/react-spinners/-/react-spinners-0.13.8.tgz#5262571be0f745d86bbd49a1e6b49f9f9cb19acc"
+    integrity sha512-3e+k56lUkPj0vb5NDXPVFAOkPC//XyhKPJjvcGjyMNPWsBKpplfeyialP74G7H7+It7KzhtET+MvGqbKgAqpZA==
+  
   react-style-singleton@^2.2.1:
     version "2.2.1"
     resolved "https://registry.yarnpkg.com/react-style-singleton/-/react-style-singleton-2.2.1.tgz#f99e420492b2d8f34d38308ff660b60d0b1205b4"
@@ -4268,6 +4283,11 @@ Lockfile:
       dom-helpers "^5.0.1"
       loose-envify "^1.4.0"
       prop-types "^15.6.2"
+  
+  react-type-animation@^3.1.0:
+    version "3.1.0"
+    resolved "https://registry.yarnpkg.com/react-type-animation/-/react-type-animation-3.1.0.tgz#7bc3d5e73d8f4677a7808365beaa12f0fee3e033"
+    integrity sha512-Ju74SpUFpSINqlGU8UeFAF+AnAn0nZcc8MB0Ho6QvRkh8uDKkOzAiMD3l9xEmkbKXnSYsljfVgIDM/zwqEImpQ==
   
   react@^18.2.0:
     version "18.2.0"

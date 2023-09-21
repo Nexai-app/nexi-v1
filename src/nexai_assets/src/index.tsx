@@ -5,35 +5,43 @@ import App from "./app";
 import { HashRouter } from "react-router-dom";
 import { ChakraProvider } from "@chakra-ui/react";
 import { AuthProvider } from "../context/AuthContext";
+import { Provider } from "react-redux";
+import { Toaster } from "react-hot-toast";
+import theme from "../theme/index";
+import store from "../redux-toolkit/store";
+import "@fontsource/public-sans/100.css";
+import "@fontsource/public-sans/200.css";
+import "@fontsource/public-sans/300.css";
+import "@fontsource/public-sans/400.css";
+import "@fontsource/public-sans/500.css";
+import "@fontsource/public-sans/600.css";
+import "@fontsource/public-sans/700.css";
 
-
-import '@fontsource/public-sans/100.css'
-import '@fontsource/public-sans/200.css'
-import '@fontsource/public-sans/300.css'
-import '@fontsource/public-sans/400.css'
-import '@fontsource/public-sans/500.css'
-import '@fontsource/public-sans/600.css'
-import '@fontsource/public-sans/700.css'
-
-import '@fontsource/poppins/100.css'
-import '@fontsource/poppins/200.css'
-import '@fontsource/poppins/300.css'
-import '@fontsource/poppins/400.css'
-import '@fontsource/poppins/500.css'
-import '@fontsource/poppins/600.css'
-import '@fontsource/poppins/700.css'
+import "@fontsource/poppins/100.css";
+import "@fontsource/poppins/200.css";
+import "@fontsource/poppins/300.css";
+import "@fontsource/poppins/400.css";
+import "@fontsource/poppins/500.css";
+import "@fontsource/poppins/600.css";
+import "@fontsource/poppins/700.css";
 
 const root = ReactDOM.createRoot(document.getElementById("app"));
 root.render(
-	<React.StrictMode>
-		<HashRouter>
-			<ChakraProvider toastOptions={{ defaultOptions: { position: 'top' } }}>
-				<AuthProvider>
-				<App />
-				</AuthProvider>
-			</ChakraProvider>
-		</HashRouter>
-	</React.StrictMode>
+  <React.StrictMode>
+    <HashRouter>
+      <Provider store={store}>
+        <Toaster />
+        <ChakraProvider
+          theme={theme}
+          toastOptions={{ defaultOptions: { position: "top" } }}
+        >
+          <AuthProvider>
+            <App />
+          </AuthProvider>
+        </ChakraProvider>
+      </Provider>
+    </HashRouter>
+  </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

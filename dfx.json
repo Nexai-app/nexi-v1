@@ -4,6 +4,12 @@
 			"main": "src/nexai/main.mo",
 			"type": "motoko"
 		},
+		"external": {
+			"main": "src/external/main.mo",
+			"type": "motoko",
+			"dependencies": ["nexai"]
+		},
+
 		"nexai_assets": {
 			"dependencies": [
 				"nexai"
@@ -26,3 +32,4 @@
 	"dfx": "0.14.0",
 	"version": 1
 }
+
