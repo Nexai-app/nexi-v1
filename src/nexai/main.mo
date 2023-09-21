@@ -23,6 +23,7 @@ import Types "./types";
 import VDBTypes "./vdbTypes";
 
 
+import Types "./types";
 
 shared ({ caller }) actor class Nexai() = {
 
@@ -145,10 +146,15 @@ public shared ({ caller }) func CheckPrincipal() : async Principal {caller};
     Iter.toArray(CompanyHashMap.entries());
   };
 
+  // public func Test(value : Nat) : async Nat {
+  //   let external  = actor("bd3sg-teaaa-aaaaa-qaaba-cai"): actor { test : (Nat) -> async Nat };
+  //   return await external.test(value);
+  // };
+
   public func greet(name : Text) : async Text {
     return "Hello, " # name # "!";
   };
-
+  
   //Edit company details
 
   //LogIn
