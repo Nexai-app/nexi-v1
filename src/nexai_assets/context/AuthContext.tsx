@@ -49,7 +49,7 @@ export const AuthProvider = ({ children }) => {
       handleAuthenticated(authClient);
       // setTour(tour_);
       if (location.pathname === "/") {
-        navigate("/signup");
+        navigate("/");
       }
       setIIAuth(true);
     }
@@ -93,7 +93,8 @@ export const AuthProvider = ({ children }) => {
   }
 
   async function handleAuthenticated(authClient: AuthClient) {
-    const identity = (await authClient.getIdentity()) as unknown as Identity;
+    const identity =
+      (await authClient.getIdentity()) as unknown as Identity;
 
     const whoami_actor = createActor(canisterId as string, {
       agentOptions: {

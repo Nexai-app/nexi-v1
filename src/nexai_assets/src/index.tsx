@@ -6,6 +6,7 @@ import { HashRouter } from "react-router-dom";
 import { ChakraProvider } from "@chakra-ui/react";
 import { AuthProvider } from "../context/AuthContext";
 import { Provider } from "react-redux";
+import { Toaster } from "react-hot-toast";
 import theme from "../theme/index";
 import store from "../redux-toolkit/store";
 import "@fontsource/public-sans/100.css";
@@ -29,6 +30,7 @@ root.render(
   <React.StrictMode>
     <HashRouter>
       <Provider store={store}>
+        <Toaster />
         <ChakraProvider
           theme={theme}
           toastOptions={{ defaultOptions: { position: "top" } }}

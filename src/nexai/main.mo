@@ -15,14 +15,20 @@ import Result "mo:base/Result";
 import Nat32 "mo:base/Nat32";
 import Array "mo:base/Array";
 import Nat64 "mo:base/Nat64";
+import Blob "mo:base/Blob";
+import Float "mo:base/Float";
+import Int32 "mo:base/Int32";
 
 import Types "./types";
 import VDBTypes "./vdbTypes";
 
 
+
 shared ({ caller }) actor class Nexai() = {
 
+type FloatVector = [Float];
 
+type FloatMatrix = [FloatVector];
 
   // types from types.mo file
   public type CompanyEntry = Types.CompanyEntry;
@@ -47,9 +53,9 @@ shared ({ caller }) actor class Nexai() = {
         add_accesser: (Principal) ->  async Bool;
         remove_accesser: (Principal) -> async Bool;
         register: (Text) -> async  VDBTypes.Result_2;
-        build_index: ([Nat]) -> async  VDBTypes.Result;
-        get_similar: (Nat, [Nat64], Nat32) -> async (VDBTypes.Result_1);
-        append_keys_values: (Nat32,[Nat64],  [Text]) -> async VDBTypes.Result;
+        build_index: (Nat32) -> async  VDBTypes.Result;
+        get_similar: (Nat32, FloatVector, Int32) -> async (VDBTypes.Result_1);
+        append_keys_values: (Nat32,FloatMatrix,  [Text]) -> async VDBTypes.Result;
        }; 
 
 // SPECIAL FUNCS TO THE VDB
@@ -77,19 +83,25 @@ public func VDBRegister (description:Text): async VDBTypes.Result_2 {
 
 //   };
 
-public func VDBAddQandA (companyId:Nat32, keys:[Nat64], values:[Text]): async VDBTypes.Result {
-  let qa = await vdb.append_keys_values(companyId, keys, values);
+public func VDBAddQandA (companyId:Nat32, keys:FloatMatrix, values:[Text]): async VDBTypes.Result {
+  // try {
+ let qa = await vdb.append_keys_values(companyId, keys, values);
+ Debug.print(debug_show(qa));
   return qa;
+  //  } catch (err) {
+  //   throw Error.reject("Error communicating with the VDB");
+  //  }
 };
 
-public func VDBBuildIndex (companyId: [Nat]): async VDBTypes.Result {
+public func VDBBuildIndex (companyId: Nat32): async VDBTypes.Result {
   let build = await vdb.build_index(companyId);
   return build;
 } ;
 
 
-public func VDBGetSimilar (companyId:Nat, question: [Nat64], limit:Nat32): async VDBTypes.Result_1{
+public func VDBGetSimilar (companyId:Nat32, question: FloatVector, limit:Int32): async VDBTypes.Result_1{
 let similar = await vdb.get_similar(companyId, question, limit);
+  Debug.print(debug_show(similar));
 return similar;
 };
 
@@ -115,6 +127,9 @@ public shared ({ caller }) func CheckPrincipal() : async Principal {caller};
       if (j.email == email) {
         throw Error.reject("$ A user with that email exists # ");
         newUser := false;
+      };
+      if (i == caller) {
+        throw Error.reject("$Opps! You can't create another account with the same identity :( # ");
       };
     };
     //This basically means there is a new user
@@ -157,15 +172,16 @@ public shared ({ caller }) func CheckPrincipal() : async Principal {caller};
     { vdbId : Nat32; question : Text; answer : Text };
   };
 
-  public shared ({ caller }) func createQCard(question : Text, answer : Text,keys:[Nat64], values:[Text]) : async () {
+  public shared ({ caller }) func createQCard(question : Text, answer : Text,keys:FloatMatrix, values:[Text]) : async () {
 
     // var res: CardEntry = {};
     //find the CompanyEntry by the caller == companyEntry.principal
     for ((i, j) in CompanyHashMap.entries()) {
       if (i == caller) {
 
-        var res_ = CardHashMap.put(cardId, _createQCard(j.vdbId, question, answer));
+        
         var savetovdb =  await VDBAddQandA(j.vdbId, keys, values);
+        var res_ = CardHashMap.put(cardId, _createQCard(j.vdbId, question, answer));
         cardId := cardId + 1;
 
         Debug.print(debug_show(savetovdb));
@@ -190,7 +206,7 @@ public shared ({ caller }) func CheckPrincipal() : async Principal {caller};
 
   };
 
-  public shared ({ caller }) func getAllQCards(id : Nat32) : async ?[CardEntry] {
+  public shared query ({ caller }) func getAllQCards(id : Nat32) : async ?[CardEntry] {
     do ? {
       var buff = Buffer.Buffer<CardEntry>(0);
       for ((i, j) in CardHashMap.entries()) {

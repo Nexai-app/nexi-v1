@@ -25,10 +25,20 @@ export const MenuNavigation = [
   {
     icon: {
       inactive: (
-        <Icon as={AiFillHome} boxSize={6} alignSelf={`center`} mr={`30px`} />
+        <Icon
+          as={AiFillHome}
+          boxSize={6}
+          alignSelf={`center`}
+          mr={`30px`}
+        />
       ),
       active: (
-        <Icon as={AiFillHome} boxSize={6} alignSelf={`center`} mr={`30px`} />
+        <Icon
+          as={AiFillHome}
+          boxSize={6}
+          alignSelf={`center`}
+          mr={`30px`}
+        />
       ),
     },
     title: "Home",
@@ -37,10 +47,20 @@ export const MenuNavigation = [
   {
     icon: {
       inactive: (
-        <Icon as={BsJournalCode} boxSize={6} alignSelf={`center`} mr={`15px`} />
+        <Icon
+          as={BsJournalCode}
+          boxSize={6}
+          alignSelf={`center`}
+          mr={`15px`}
+        />
       ),
       active: (
-        <Icon as={BsJournalCode} boxSize={6} alignSelf={`center`} mr={`15px`} />
+        <Icon
+          as={BsJournalCode}
+          boxSize={6}
+          alignSelf={`center`}
+          mr={`15px`}
+        />
       ),
     },
     title: "Integration",
@@ -49,10 +69,20 @@ export const MenuNavigation = [
   {
     icon: {
       inactive: (
-        <Icon as={BsPeopleFill} boxSize={6} alignSelf={`center`} mr={`15px`} />
+        <Icon
+          as={BsPeopleFill}
+          boxSize={6}
+          alignSelf={`center`}
+          mr={`15px`}
+        />
       ),
       active: (
-        <Icon as={BsPeopleFill} boxSize={6} alignSelf={`center`} mr={`15px`} />
+        <Icon
+          as={BsPeopleFill}
+          boxSize={6}
+          alignSelf={`center`}
+          mr={`15px`}
+        />
       ),
     },
     title: "Customer",
@@ -61,10 +91,20 @@ export const MenuNavigation = [
   {
     icon: {
       inactive: (
-        <Icon as={RiChat2Fill} boxSize={6} alignSelf={`center`} mr={`15px`} />
+        <Icon
+          as={RiChat2Fill}
+          boxSize={6}
+          alignSelf={`center`}
+          mr={`15px`}
+        />
       ),
       active: (
-        <Icon as={RiChat2Fill} boxSize={6} alignSelf={`center`} mr={`15px`} />
+        <Icon
+          as={RiChat2Fill}
+          boxSize={6}
+          alignSelf={`center`}
+          mr={`15px`}
+        />
       ),
     },
     title: "Train Assistant",
@@ -84,7 +124,8 @@ type NavType = {
 function index() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { showSidebar, setShowSidebar } = React.useContext(LayoutContext);
+  const { showSidebar, setShowSidebar } =
+    React.useContext(LayoutContext);
 
   return (
     <Hide below="md">
@@ -115,6 +156,7 @@ function index() {
         <Box pos="relative">
           {MenuNavigation.map(({ icon, title, route }) => (
             <Box
+              key={title}
               h={`45px`}
               my={5}
               ml={5}
@@ -124,7 +166,9 @@ function index() {
                 background: location.pathname.includes(route)
                   ? "white"
                   : "#341A41",
-                color: location.pathname.includes(route) ? "#341A41" : "white",
+                color: location.pathname.includes(route)
+                  ? "#341A41"
+                  : "white",
               }}
               _hover={{
                 backgroundColor: "white",

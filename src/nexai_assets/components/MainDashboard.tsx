@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link as ReactRouterLink } from "react-router-dom";
 import {
   Box,
@@ -17,6 +17,7 @@ import BarChart from "./BarChart";
 import { ChatIcon } from "@chakra-ui/icons";
 import { AiOutlineBook } from "react-icons/ai";
 import FirstModal from "./TestBot/FirstModal";
+import { useUpdateProfile } from "../functions";
 
 const MainDashboard = () => {
   const [isLargerThan991] = useMediaQuery("(max-width: 991px)");
@@ -31,6 +32,7 @@ const MainDashboard = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
   const [isFirstModalOpen, setIsFirstModalOpen] = useState(false);
+  const { updateProfile } = useUpdateProfile();
 
   const onCloseFirstModal = () => {
     setIsFirstModalOpen(false);
@@ -50,6 +52,10 @@ const MainDashboard = () => {
 
   const [overlay, setOverlay] = React.useState(<OverlayOne />);
 
+  useEffect(() => {
+    updateProfile();
+  });
+
   return (
     <Flex>
       <Box bg="#341A41" w={`100%`} minH={`100vh`}>
@@ -67,7 +73,10 @@ const MainDashboard = () => {
                   <Button
                     colorScheme="white"
                     variant="outline"
-                    _hover={{ backgroundColor: "white", color: "#341A41" }}
+                    _hover={{
+                      backgroundColor: "white",
+                      color: "#341A41",
+                    }}
                     leftIcon={<ChatIcon />}
                   >
                     Train Bot
@@ -77,7 +86,10 @@ const MainDashboard = () => {
                   bg="white"
                   color={`#341A41`}
                   border={`1px white solid`}
-                  _hover={{ backgroundColor: "transparent", color: "white" }}
+                  _hover={{
+                    backgroundColor: "transparent",
+                    color: "white",
+                  }}
                   rightIcon={<Icon as={AiOutlineBook} boxSize={4} />}
                   onClick={onOpenFirstModal}
                 >
@@ -99,14 +111,19 @@ const MainDashboard = () => {
             <Heading>Home</Heading>
 
             <Flex alignItems="center" py="10px">
-              <Box>Get access to your bot analytics and information here</Box>
+              <Box>
+                Get access to your bot analytics and information here
+              </Box>
               <Spacer />
               <Box display="flex" flexDirection="row" gap={4}>
                 <Chakralink as={ReactRouterLink} to="/train-bot">
                   <Button
                     colorScheme="white"
                     variant="outline"
-                    _hover={{ backgroundColor: "white", color: "#341A41" }}
+                    _hover={{
+                      backgroundColor: "white",
+                      color: "#341A41",
+                    }}
                     leftIcon={<ChatIcon />}
                   >
                     Train Bot
@@ -116,7 +133,10 @@ const MainDashboard = () => {
                   bg="white"
                   color={`#341A41`}
                   border={`1px white solid`}
-                  _hover={{ backgroundColor: "transparent", color: "white" }}
+                  _hover={{
+                    backgroundColor: "transparent",
+                    color: "white",
+                  }}
                   rightIcon={<Icon as={AiOutlineBook} boxSize={4} />}
                   onClick={onOpenFirstModal}
                 >

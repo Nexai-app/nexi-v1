@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import {
   Textarea,
   FormControl,
@@ -11,8 +11,11 @@ import {
 } from "@chakra-ui/react";
 import { Box, useToast } from "@chakra-ui/react";
 import { useNavigate, NavLink } from "react-router-dom";
-import Navbar from "../shared/Navbar";
 import { AuthContext } from "../../context/AuthContext";
+import {
+  useInitTransformers,
+  useEmbeddQuestion,
+} from "../../functions/ml";
 
 const AddQuestions = () => {
   const [question, setQuestion] = useState("");
@@ -20,22 +23,54 @@ const AddQuestions = () => {
   const [submitting, setSubmitting] = useState(false);
   const navigate = useNavigate();
   const toast = useToast();
+  const { init } = useInitTransformers();
+  const {
+    embedd,
+    embeddedText,
+    loading: mlLoading,
+    answer_arr,
+  } = useEmbeddQuestion();
+
+  //ML functions
+  // initializes the ml
+  useEffect(() => {
+    const call = async () => {
+      await init();
+    };
+    call();
+  }, []);
 
   const { actor } = useContext(AuthContext);
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    if (question.length < 10) {
+      toast({
+        title: "Your question must be more than 5 characters",
+        status: "error",
+      });
+      return;
+    }
+    if (ans.length < 2) {
+      toast({
+        title: "Your answer must me more then 10 characters",
+        status: "error",
+      });
+      return;
+    }
     setSubmitting(true);
-
-    // actor
-    //   .createQCard(question, ans)
-    //   .then(() => {
-    //     setSubmitting(false);
-    //     navigate("/my-questions");
-    //   })
-    //   .catch((err) => {
-    //     setSubmitting(false);
-    //     console.log(err);
-    //     toast({ title: err });
-    //   });
+    await embedd(question, ans);
+    if (!mlLoading) {
+      actor
+        .createQCard(question, ans, embeddedText, answer_arr)
+        .then(() => {
+          setSubmitting(false);
+          navigate("/my-questions");
+        })
+        .catch((err) => {
+          setSubmitting(false);
+          console.log(err);
+          toast({ title: err });
+        });
+    }
   };
 
   const handleClear = () => {

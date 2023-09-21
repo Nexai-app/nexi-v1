@@ -1,7 +1,9 @@
 export const idlFactory = ({ IDL }) => {
+  const FloatVector = IDL.Vec(IDL.Float64);
+  const FloatMatrix = IDL.Vec(FloatVector);
   const Result = IDL.Variant({ 'Ok' : IDL.Null, 'Err' : IDL.Text });
   const Result_1 = IDL.Variant({
-    'Ok' : IDL.Vec(IDL.Tuple(IDL.Nat, IDL.Text)),
+    'Ok' : IDL.Vec(IDL.Tuple(IDL.Float64, IDL.Text)),
     'Err' : IDL.Text,
   });
   const Result_2 = IDL.Variant({ 'Ok' : IDL.Nat32, 'Err' : IDL.Text });
@@ -27,13 +29,13 @@ export const idlFactory = ({ IDL }) => {
   const Nexai = IDL.Service({
     'CheckPrincipal' : IDL.Func([], [IDL.Principal], []),
     'VDBAddQandA' : IDL.Func(
-        [IDL.Nat32, IDL.Vec(IDL.Nat64), IDL.Vec(IDL.Text)],
+        [IDL.Nat32, FloatMatrix, IDL.Vec(IDL.Text)],
         [Result],
         [],
       ),
-    'VDBBuildIndex' : IDL.Func([IDL.Vec(IDL.Nat)], [Result], []),
+    'VDBBuildIndex' : IDL.Func([IDL.Nat32], [Result], []),
     'VDBGetSimilar' : IDL.Func(
-        [IDL.Nat, IDL.Vec(IDL.Nat64), IDL.Nat32],
+        [IDL.Nat32, FloatVector, IDL.Int32],
         [Result_1],
         [],
       ),
@@ -44,7 +46,7 @@ export const idlFactory = ({ IDL }) => {
         [],
       ),
     'createQCard' : IDL.Func(
-        [IDL.Text, IDL.Text, IDL.Vec(IDL.Nat64), IDL.Vec(IDL.Text)],
+        [IDL.Text, IDL.Text, FloatMatrix, IDL.Vec(IDL.Text)],
         [],
         [],
       ),
@@ -53,7 +55,11 @@ export const idlFactory = ({ IDL }) => {
         [IDL.Vec(IDL.Tuple(IDL.Principal, CompanyEntry__1))],
         [],
       ),
-    'getAllQCards' : IDL.Func([IDL.Nat32], [IDL.Opt(IDL.Vec(CardEntry))], []),
+    'getAllQCards' : IDL.Func(
+        [IDL.Nat32],
+        [IDL.Opt(IDL.Vec(CardEntry))],
+        ['query'],
+      ),
     'getAnAnswer' : IDL.Func([IDL.Nat], [IDL.Opt(CardEntry)], []),
     'getCompanyProfile' : IDL.Func([], [IDL.Opt(CompanyEntry)], ['query']),
     'greet' : IDL.Func([IDL.Text], [IDL.Text], []),

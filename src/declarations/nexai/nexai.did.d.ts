@@ -20,24 +20,20 @@ export interface CompanyEntry__1 {
   'description' : string,
   'email' : string,
 }
+export type FloatMatrix = Array<FloatVector>;
+export type FloatVector = Array<number>;
 export interface Nexai {
   'CheckPrincipal' : ActorMethod<[], Principal>,
-  'VDBAddQandA' : ActorMethod<
-    [number, BigUint64Array | bigint[], Array<string>],
-    Result
-  >,
-  'VDBBuildIndex' : ActorMethod<[Array<bigint>], Result>,
-  'VDBGetSimilar' : ActorMethod<
-    [bigint, BigUint64Array | bigint[], number],
-    Result_1
-  >,
+  'VDBAddQandA' : ActorMethod<[number, FloatMatrix, Array<string>], Result>,
+  'VDBBuildIndex' : ActorMethod<[number], Result>,
+  'VDBGetSimilar' : ActorMethod<[number, FloatVector, number], Result_1>,
   'VDBRegister' : ActorMethod<[string], Result_2>,
   'createCompany' : ActorMethod<
     [string, string, string, number],
     [] | [CompanyEntry]
   >,
   'createQCard' : ActorMethod<
-    [string, string, BigUint64Array | bigint[], Array<string>],
+    [string, string, FloatMatrix, Array<string>],
     undefined
   >,
   'getAllCompanies' : ActorMethod<[], Array<[Principal, CompanyEntry__1]>>,
@@ -50,7 +46,7 @@ export interface Nexai {
 }
 export type Result = { 'Ok' : null } |
   { 'Err' : string };
-export type Result_1 = { 'Ok' : Array<[bigint, string]> } |
+export type Result_1 = { 'Ok' : Array<[number, string]> } |
   { 'Err' : string };
 export type Result_2 = { 'Ok' : number } |
   { 'Err' : string };

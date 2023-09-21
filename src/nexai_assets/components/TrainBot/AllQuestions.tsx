@@ -14,6 +14,7 @@ import { NavLink } from "react-router-dom";
 import { Box, Spinner } from "@chakra-ui/react";
 import Navbar from "../shared/Navbar";
 import { AuthContext } from "../../context/AuthContext";
+import { useAppSelector } from "../../redux-toolkit/hooks";
 import ClipLoader from "react-spinners/ClipLoader";
 import {
   BarLoader,
@@ -23,38 +24,34 @@ import {
 
 type ArrayT = {
   answer: string;
-  email: string;
+  vdbId: number;
   question: string;
 };
 
 const AllQuestions = () => {
   const { actor } = useContext(AuthContext);
   const [arr, setArr] = useState<ArrayT[]>();
+  // const profile = useAppSelector((state) => state.profile);
+  const vdbId = localStorage.getItem("vdbId");
+
   //firstly make a call to get the email,
 
   // then pass the email into the function]
   // then fitlter the result and display it
 
   useEffect(() => {
-    // const callMe = () => {
-    //   actor
-    //     .getCompanyProfile()
-    //     .then((d) => {
-    //       actor
-    //         .getAllQCards(d[0].email)
-    //         .then((v) => {
-    //           console.log(v);
-    //           setArr(v[0]);
-    //         })
-    //         .catch((err) => {
-    //           console.log(err);
-    //         });
-    //     })
-    //     .catch((err) => {
-    //       console.log(err);
-    //     });
-    // };
-    // callMe();
+    const callMe = () => {
+      actor
+        .getAllQCards(Number(vdbId))
+        .then((v) => {
+          console.log(v);
+          setArr(v[0]);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+    callMe();
   }, []);
   return (
     <Box color="white">

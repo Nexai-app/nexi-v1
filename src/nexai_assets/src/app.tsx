@@ -9,10 +9,15 @@ import Dashboard from "../pages/Dashboard";
 import TrainBot from "../pages/TrainBot";
 import AllQuestion from "../components/TrainBot/AllQuestions";
 import IntegrationPage from "../pages/IntegrationPage";
+import { useAppSelector } from "../redux-toolkit/hooks";
+import { useUpdateProfile } from "../functions";
 
 const App = () => {
-  const { handleAuthenticated, setIIAuth, actor } = useContext(AuthContext);
+  const { handleAuthenticated, setIIAuth, actor } =
+    useContext(AuthContext);
   const [actorRestated, setActorRestated] = useState<boolean>(false);
+  const profile = useAppSelector((state) => state.profile);
+  const { updateProfile } = useUpdateProfile();
   const toast = useToast({
     containerStyle: {
       color: "green",
@@ -25,22 +30,30 @@ const App = () => {
     const runOnMounth = async () => {
       const authClient = await AuthClient.create();
       if (await authClient.isAuthenticated()) {
-        // setTour(tour_);
-        handleAuthenticated(authClient);
+        console.log("IS AUTHENTICATED");
+        console.log(location.hash);
+        await handleAuthenticated(authClient);
         // if (location.hash === "#/signup") {
-        // 	console.log(actor);
-        // 	actor.logIn().then((d)=> {
-        // 		if(d === true)
-        // 			navigate('/dashboard');
-        // 			return
-        // 	}).catch((err) => {
-        // 		console.log("eerrr",err)
-        // 	})
+        actor
+          ?.logIn()
+          .then((d) => {
+            console.log(d);
+            if (d === true) {
+              updateProfile();
+              navigate("/dashboard");
+            } else {
+              navigate("/");
+            }
+          })
+          .catch((err) => {
+            console.log("eerrr", err);
+          });
         // }
         setIIAuth(true);
         setActorRestated(true);
         return;
       } else {
+        console.log("NOT AUTHENTICATED");
         navigate("/");
         return;
       }

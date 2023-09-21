@@ -1,29 +1,38 @@
-import { pipeline, Tensor, Pipeline } from "@xenova/transformers";
 import { useState } from "react";
+import { pipeline, Tensor, Pipeline } from "@xenova/transformers";
 let extractor: null | Pipeline = null;
 
-export const useEmbeddQuestion = async () => {
+export const useEmbeddQuestion = () => {
   let embeddedText = [];
   let answer_arr = [];
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading]: any = useState(false);
+  try {
+    const embedd = async (
+      question: string,
+      answer: string
+    ): Promise<void> => {
+      const embedding = await useEmbedder(question);
+      if (embedding == null) return;
+      setLoading(true);
 
-  const embedd = async (question: string, answer: string) => {
-    let embedding = await useEmbedder(question);
-    if (embedding == null) return;
-    setLoading(true);
+      const embedded = embedding.tolist()[0];
+      console.log(embedded);
 
-    let embedded = embedding.tolist()[0];
-
-    if (embedded.length != 768) {
-      console.log("Embedding size not correct");
+      if (embedded.length != 768) {
+        console.log("Embedding size not correct");
+        setLoading(false);
+        return;
+      }
+      embeddedText.push(embedded);
+      answer_arr.push(question + "\n" + answer);
       setLoading(false);
-      return;
-    }
-    embeddedText.push(embedded);
-    answer_arr.push(question + "\n" + answer);
+    };
+    return { embedd, embeddedText, loading, answer_arr };
+  } catch (err) {
+    // toast.error("something went wrong");
     setLoading(false);
-  };
-  return { embedd, embeddedText, loading, answer_arr };
+    console.log(err);
+  }
 };
 
 const useEmbedder = async (text: string) => {
@@ -43,5 +52,5 @@ export const useInitTransformers = () => {
       "Xenova/all-mpnet-base-v2"
     );
   };
-  return init;
+  return { init };
 };

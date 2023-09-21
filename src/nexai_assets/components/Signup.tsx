@@ -71,6 +71,7 @@ function SignUpForm() {
               description: desc,
             };
             dispatch(addProfile(send));
+            localStorage.setItem("vdbId", companyId);
             toast({ title: "Account created!", status: "success" });
             setSubmitting(false);
             navigate("/train-bot");
