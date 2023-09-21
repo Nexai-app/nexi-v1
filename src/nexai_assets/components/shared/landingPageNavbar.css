@@ -1,0 +1,12 @@
+.background {
+  background-image: url("../../assets/pbg.svg");
+  /* background-color: #341a41; */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  /* align-items: center;
+      justify-content: center; */
+  font-size: calc(10px + 2vmin);
+  color: white;
+  height: 1200px;
+}
