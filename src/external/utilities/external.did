@@ -1,0 +1,16 @@
+type Result_1 = 
+ variant {
+   Err: text;
+   Ok: vec record {
+             float64;
+             text;
+           };
+ };
+type FloatVector = vec float64;
+type External = 
+ service {
+   Greet: (text) -> (text);
+   VDBGetSimilar: (nat32, FloatVector, int32) -> (Result_1);
+   test: (nat) -> (nat);
+ };
+service : () -> External
