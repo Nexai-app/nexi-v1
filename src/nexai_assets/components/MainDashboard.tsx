@@ -18,6 +18,7 @@ import { ChatIcon } from "@chakra-ui/icons";
 import { AiOutlineBook } from "react-icons/ai";
 import FirstModal from "./TestBot/FirstModal";
 import { useUpdateProfile } from "../functions";
+import { useInitTransformers } from "../functions/ml";
 
 const MainDashboard = () => {
   const [isLargerThan991] = useMediaQuery("(max-width: 991px)");
@@ -33,6 +34,7 @@ const MainDashboard = () => {
   const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
   const [isFirstModalOpen, setIsFirstModalOpen] = useState(false);
   const { updateProfile } = useUpdateProfile();
+  const { init } = useInitTransformers();
 
   const onCloseFirstModal = () => {
     setIsFirstModalOpen(false);
@@ -52,9 +54,19 @@ const MainDashboard = () => {
 
   const [overlay, setOverlay] = React.useState(<OverlayOne />);
 
+  // useEffect(() => {
+
+  //   init();
+  // });
+
+  // initializes the ml
   useEffect(() => {
     updateProfile();
-  });
+    const call = async () => {
+      await init();
+    };
+    call();
+  }, []);
 
   return (
     <Flex>

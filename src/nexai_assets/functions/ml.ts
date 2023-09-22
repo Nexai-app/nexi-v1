@@ -35,6 +35,30 @@ export const useEmbeddQuestion = () => {
   }
 };
 
+export const useEmbeddQ = () => {
+  let embeddedQ = [];
+  try {
+    const call = async (question: string) => {
+      const embedding = await useEmbedder(question);
+      if (embedding == null) {
+        console.log("no embedding");
+        return;
+      }
+      const e = embedding.tolist()[0];
+      if (e.length != 768) {
+        console.log("Embedding size not correct");
+        return;
+      }
+      embeddedQ.push(e);
+      // console.log("thier place", embeddedQ);
+      return e;
+    };
+    return { call, embeddedQ };
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 const useEmbedder = async (text: string) => {
   if (extractor == null) return;
 
@@ -51,6 +75,7 @@ export const useInitTransformers = () => {
       "feature-extraction",
       "Xenova/all-mpnet-base-v2"
     );
+    console.log(extractor);
   };
   return { init };
 };

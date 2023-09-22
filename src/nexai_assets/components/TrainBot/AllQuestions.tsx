@@ -123,6 +123,7 @@ const AllQuestions = () => {
                     border="1px solid #FFFFFF"
                     h="280px"
                     color="#fff"
+                    bgColor="#341A41"
                     maxW="sm"
                   >
                     <CardHeader>

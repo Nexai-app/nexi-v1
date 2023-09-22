@@ -187,6 +187,7 @@ public shared ({ caller }) func CheckPrincipal() : async Principal {caller};
 
         
         var savetovdb =  await VDBAddQandA(j.vdbId, keys, values);
+        var buildIndex =  await VDBBuildIndex(j.vdbId);
         var res_ = CardHashMap.put(cardId, _createQCard(j.vdbId, question, answer));
         cardId := cardId + 1;
 
