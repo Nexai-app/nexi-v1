@@ -65,10 +65,22 @@ function SecondModal({ isOpen, onClose }) {
         ?.VDBGetSimilar(profile.vdbId, embeddedQ[0], 1)
         .then((d: any) => {
           console.log("result", d.Ok[0]);
-          var message: ChatType = {
+          let message: ChatType = {
             sender: "nexai",
-            text: d.Ok[0][1],
+            text: "",
           };
+          if (d.Ok[0][0] < 0.5) {
+            message = {
+              sender: "nexai",
+              text: "I apologize for not being able to assist with your question. If you need further help, please contact our support team.",
+            };
+          } else {
+            message = {
+              sender: "nexai",
+              text: d.Ok[0][1],
+            };
+          }
+
           chat.push(message);
           setLoading(false);
         })
@@ -123,7 +135,7 @@ function SecondModal({ isOpen, onClose }) {
           ))}
           {loading && (
             <Flex justifyContent="flex-start">
-              <BeatLoader size={8} color="white" />
+              <BeatLoader size={8} color="#341A41" />
             </Flex>
           )}
         </ModalBody>

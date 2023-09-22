@@ -1,3 +1,6 @@
-service : {
-  test: (nat) -> (nat);
-}
+type External = 
+ service {
+   Greet: (text) -> (text);
+   test: (nat) -> (nat);
+ };
+service : () -> External
