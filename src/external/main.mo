@@ -27,7 +27,7 @@ shared ({ caller }) actor class External() =  {
         await Nexai.greet(name);
     };
 
-    public func VDBGetSimilar(companyId:Nat32, question: FloatVector, limit:Int32): async VDBTypes.Result_1{
+    public func VDBGetSimilar(companyId:Nat32, question: [Float], limit:Int32): async VDBTypes.Result_1{
         await Nexai.VDBGetSimilar(companyId, question, limit);
     };
      
