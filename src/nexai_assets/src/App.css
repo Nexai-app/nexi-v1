@@ -107,31 +107,51 @@
 .spot{
 	position: fixed; 
 	bottom: 30px;
-	right: 20px; 
+	right: 5px; 
 	width: 50px;
 	height: 50px;
+	border: solid 1px #fff ;
 	border-radius:  50%;
 	background-color: #331A41;
-	/* border: 1px solid #ccc; */
-	box-shadow: 0 0 10px rgba(255, 255, 255, 0.707);
 	z-index: 1000;
+	transition: background-color 1s ease, color 1s ease, box-shadow 1s ease;
+	transition: border 1s ease, color 1s ease, box-shadow 1s ease;
+}
+
+.spot-visible {
+	background-color: #fff;
+	border: solid 0.1px #331A41 ;
+	box-shadow: 0 0 10px rgba(255, 255, 255, 0.707);
 }
 
 .chat{
 	position: fixed;
-	bottom: 50px;
-	right: 75px;
+	bottom: 100px;
+	right: 10px;
 	/* left: 40px; */
-	width: 400px;
+	width: 300px;
 	min-width: 280px;
-	height: 300px;
+	height: 500px;
 	/* margin-left: 50px; */
 	/* background-color: #fff; */
-	border: 0.1px solid #ccc;
+	/* border: 0.1px solid #ccc; */
 	border-radius: 5px;
 	/* box-shadow: 0 0 10px rgba(255, 255, 255, 0.707); */
 	z-index: 1000;
+	/* opacity: 0; */
+  	/* Set the initial position to the left */
+	/* transform: translateX(-100%); */
+	/* Add a transition for opacity and transform properties */
+	/* transition: opacity 0.3s ease-in, transform 0.3s ease-in; */
 }
+
+/* .chat.fade-in { */
+  /* Remove the opacity property to allow fading in */
+  /* opacity: 1; */
+  /* Remove the transform property to reset the position */
+  /* transform: translateX(0); */
+/* } */
+
 
 .chat-header{
 	width: 100%;

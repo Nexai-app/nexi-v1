@@ -22,6 +22,8 @@ import '@fontsource/poppins/400.css'
 import '@fontsource/poppins/500.css'
 import '@fontsource/poppins/600.css'
 import '@fontsource/poppins/700.css'
+// import FloatingChat from "../components/shared/FloatingChat";
+import { Assistant } from "nexai-assistant"
 
 const root = ReactDOM.createRoot(document.getElementById("app"));
 root.render(
@@ -29,7 +31,9 @@ root.render(
 		<HashRouter>
 			<ChakraProvider toastOptions={{ defaultOptions: { position: 'top' } }}>
 				<AuthProvider>
-				<App />
+					<App />
+					{/* <FloatingChat color="#331A41" companyName="wahala" /> */}
+					<Assistant color="red" companyName="wahala" />
 				</AuthProvider>
 			</ChakraProvider>
 		</HashRouter>
