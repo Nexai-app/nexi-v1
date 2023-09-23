@@ -98,7 +98,10 @@ function Navbar() {
                 bg="white"
                 color={`#341A41`}
                 border={`1px white solid`}
-                _hover={{ backgroundColor: "transparent", color: "white" }}
+                _hover={{
+                  backgroundColor: "transparent",
+                  color: "white",
+                }}
               >
                 Sign In
               </Button>
@@ -108,7 +111,10 @@ function Navbar() {
                 onClick={Auth}
                 colorScheme="white"
                 variant="outline"
-                _hover={{ backgroundColor: "white", color: "#341A41" }}
+                _hover={{
+                  backgroundColor: "white",
+                  color: "#341A41",
+                }}
               >
                 Try our Assistant
               </Button>
@@ -123,7 +129,7 @@ function Navbar() {
         onClose={handleDrawerToggle}
       >
         <DrawerOverlay />
-        <DrawerContent>
+        <DrawerContent bgColor="#341A41">
           <DrawerHeader color={`white`} fontFamily="Poppins">
             <TypeAnimation
               preRenderFirstString={true}
@@ -142,7 +148,10 @@ function Navbar() {
                   border={`1px white solid`}
                   color={`white`}
                   variant="outline"
-                  _hover={{ backgroundColor: "white", color: "#341A41" }}
+                  _hover={{
+                    backgroundColor: "white",
+                    color: "#341A41",
+                  }}
                 >
                   Try our Assistant
                 </Button>
@@ -152,7 +161,12 @@ function Navbar() {
         </DrawerContent>
       </Drawer>
       <Container centerContent my="300px" bg={`transparent`}>
-        <Heading as="h1" size="4xl" fontFamily="Poppins" bg={`transparent`}>
+        <Heading
+          as="h1"
+          size="4xl"
+          fontFamily="Poppins"
+          bg={`transparent`}
+        >
           <TypeAnimation
             preRenderFirstString={true}
             sequence={["Nexai", 1500, ""]}
@@ -163,9 +177,14 @@ function Navbar() {
             repeat={Infinity}
           />
         </Heading>
-        <Text fontFamily="Public Sans" textAlign="center" bg={`transparent`}>
-          The first fully decentralized, autonomous, integrateable chatbot and
-          assistant that runs on blockchain and artificial intelligence.
+        <Text
+          fontFamily="Public Sans"
+          textAlign="center"
+          bg={`transparent`}
+        >
+          The first fully decentralized, autonomous, integrateable
+          chatbot and assistant that runs on blockchain and artificial
+          intelligence.
         </Text>
         <Text
           fontSize={`md`}
@@ -174,7 +193,12 @@ function Navbar() {
           bg={`transparent`}
         >
           Powered by:{" "}
-          <Image className="logo" alt="" src={`logo.png`} bg={`transparent`} />
+          <Image
+            className="logo"
+            alt=""
+            src={`logo.png`}
+            bg={`transparent`}
+          />
         </Text>
       </Container>
     </Box>
