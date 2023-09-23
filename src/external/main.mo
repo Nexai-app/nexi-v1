@@ -15,7 +15,7 @@ shared ({ caller }) actor class External() =  {
 
     type Nexai = Nexais.Nexai;
 
-    let Nexai = actor("rdmx6-jaaaa-aaaaa-aaadq-cai") : actor {
+    let Nexai = actor("aol7b-vqaaa-aaaak-aepsq-cai") : actor {
         getAllCompanies : () -> async ([(Principal, NexaiTypes.CompanyEntry)]); 
         greet : (Text) -> async Text;
         VDBGetSimilar : (Nat32, [Float], Int32) -> async (VDBTypes.Result_1);
