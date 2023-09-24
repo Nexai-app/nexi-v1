@@ -5,10 +5,10 @@
 }
 
 
-.steps {
-	/* background: linear-gradient(to top,
+/* .steps {
+	background: linear-gradient(to top,
 			hsl(250, 24%, 9%) 70%,
-			hsl(286, 49%, 18%)); */
+			hsl(286, 49%, 18%));
 	padding: 50px;
 	display: flex;
 	flex-direction: column;
@@ -22,6 +22,10 @@
 	margin-bottom: 2rem;
 	text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.2);
 	margin: 0 0 2rem 0;
+} */
+
+.steps{
+	min-height: 1000px;
 }
 
 .cta {
@@ -57,4 +61,16 @@
 .title {
 	font-size: 200;
 	font-weight: 800;
+}
+
+.divider::after{
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 50%; /* Center the line horizontally */
+	transform: translateX(50%) translateY(70%); /* Center the line precisely under the content */
+
+	width: 2px; /* Adjust the line width as needed */
+	height: 100px; /* Adjust the line height as needed */
+	background-color: #fff; /* Line color */
 }

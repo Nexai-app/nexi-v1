@@ -1,16 +1,16 @@
 import React from "react";
 import { Box } from "@chakra-ui/react";
 import LayoutContainer from "../components/shared/LayoutContainer";
-import AddQuestions from "../components/TrainBot/AddQuestion";
+import Integration from "../components/Integration";
 
-function TrainBot() {
+function IntegrationPage() {
   return (
     <Box>
       <LayoutContainer>
-        <AddQuestions />
+        <Integration />
       </LayoutContainer>
     </Box>
   );
 }
 
-export default TrainBot;
+export default IntegrationPage;

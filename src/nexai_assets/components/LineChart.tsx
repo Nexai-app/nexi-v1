@@ -24,48 +24,52 @@ ChartJS.register(
 const LineChart = () => {
 
     const data = {
-        labels: ['MON', 'TUES', 'WED', 'THURS', 'FRI', 'SAT', 'SUN' ],
+        labels: ['MON', 'TUES', 'WED', 'THURS', 'FRI', 'SAT', 'SUN'],
         datasets: [{
             labels: 'Daily Users Statistics',
-            data: [2, 0, 0,0,0,0,0 ],
+            data: [180, 100, -20, 200, 100, 400, -100],
+            // backgroundColor: 'rgba(52, 26, 65, 1)',
+            borderColor: 'white',
+            // pointBorderColor:'rgba(255, 255, 255)',
+            // pointBackgroundColor: 'white',
+            pointBorderWidth: 0,
+            pointHoverBackgroundColor: 'white',
+            pointHoverRadius: 8,
             fill: true,
-            backgroundColor: 'rgba(52, 26, 65, 1)',
-            borderColor: 'rgba(255, 255, 255)',
-            pointBorderColor:'rgba(255, 255, 255)',
-            pointBackgroundColor: 'rgba(255, 225, 225, 1)',
-            pointBorderWidth: 5,
-            tension: 0.4
+            tension: 0.3
         }]
     }
 
-    const options={
+    let delayed;
+    const options = {
         responsive: true,
-        scales:{
-            x:{
+        scales: {
+            x: {
                 ticks: {
                     color: '#fff', // Set this to the color you want
                     fontSize: 14, // Set this to the font size you want
                     fontStyle: 'bold', // Set this to the font style you want
                 },
                 grid: {
-                    display:false,
+                    display: false,
                 },
             },
             
-            y:{
-                min:0,
-                max:400,
+            y: {
+                suggestedMin: 0,
+                suggestedMax: 200,
                 ticks: {
                     color: '#fff',
-                    stepSize: 100 
+                    stepSize: 100
                 },
                 grid: {
-                    color:'#fff',
-                    lineWidth: 1,
+                    color: '#fff',
+                    lineWidth: 0.2,
                     tickColor: '#fff', // for the tick mark
                     tickBorderDash: [2, 3], // also for the tick, if long enough
                     tickLength: 10, // just to see the dotted line
-                    tickWidth: 2,
+                    tickWidth: 0,
+                    
                     
                     
                 },
@@ -74,9 +78,7 @@ const LineChart = () => {
                     color: 'transparent'
                 },
                 beginAtZero: true,
-                  
             }
-            
         }
     }
 
@@ -90,7 +92,7 @@ const LineChart = () => {
             (
                 <Box p="15px" mt="10px" border='1px' borderColor='rgba(255, 255, 255, 0.3)' borderRadius="md" w="100%"  >
                     <Text fontWeight="bold"  fontSize="lg" >Daily Users Statistics</Text>
-                    <Line data={data} options={options} />
+                    <Line data={data} options={options}  />
                 </Box>
             ) :
             (isLargerThan960 ? 
@@ -102,7 +104,7 @@ const LineChart = () => {
             ) :
             (
 
-                <Box p="30px" mt="10px" border='1px' borderColor='rgba(255, 255, 255, 0.3)' borderRadius="md" w={800} h={480} >
+                <Box p="30px" mt="10px" border='1px' borderColor='rgba(255, 255, 255, 0.3)' borderRadius="md" w={`100%`} h={`100%`} >
                     <Text fontWeight="bold"  fontSize="lg" >Daily Users Statistics</Text>
                     <Line data={data} options={options} />
                 </Box>
