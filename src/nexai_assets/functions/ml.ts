@@ -1,5 +1,10 @@
 import { useState } from "react";
 import { pipeline, Tensor, Pipeline } from "@xenova/transformers";
+import "./settings";
+import toast from "react-hot-toast";
+
+// Disable the loading of remote models from the Hugging Face Hub:
+
 let extractor: null | Pipeline = null;
 
 export const useEmbeddQuestion = () => {
@@ -60,7 +65,10 @@ export const useEmbeddQ = () => {
 };
 
 const useEmbedder = async (text: string) => {
-  if (extractor == null) return;
+  if (extractor == null) {
+    toast.error("Error Embedding Text");
+    return;
+  }
 
   let res: Tensor = await extractor(text, {
     pooling: "mean",
@@ -76,6 +84,7 @@ export const useInitTransformers = () => {
       "Xenova/all-mpnet-base-v2"
     );
     console.log(extractor);
+    console.log("also");
   };
   return { init };
 };
