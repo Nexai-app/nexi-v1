@@ -82,7 +82,7 @@ shared ({ caller }) actor class Nexai() = {
 
   /**
    * Create card and answers
-   * Link them to the comapany or principal
+   * Link them to the company or principal
    *
    */
 

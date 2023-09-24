@@ -1,0 +1,15 @@
+type CardEntry = record { question : text; answer : text; email : text };
+type CompanyEntry = record { name : text; createdAt : int; email : text };
+type CompanyEntry__1 = record { name : text; createdAt : int; email : text };
+type Nexai = service {
+  CheckPrincipal : () -> (principal);
+  createCompany : (text, text) -> (bool);
+  createQCard : (text, text) -> ();
+  getAllCompanies : () -> (vec record { principal; CompanyEntry__1 });
+  getAllQCards : (text) -> (opt vec CardEntry);
+  getAnAnswer : (nat) -> (opt CardEntry);
+  getCompanyProfile : () -> (opt CompanyEntry);
+  greet : (text) -> (text);
+  logIn : () -> (bool) query;
+};
+service : Nexai
