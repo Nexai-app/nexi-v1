@@ -59,7 +59,7 @@ function SecondModal({ isOpen, onClose }) {
     setLoading(true);
 
     await call(inputMessage);
-    if (embeddedQ[0].length == 768) {
+    if (embeddedQ[0].length == 384) {
       console.log("my place", embeddedQ);
       actor
         ?.VDBGetSimilar(profile.vdbId, embeddedQ[0], 1)

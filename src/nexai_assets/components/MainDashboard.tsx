@@ -56,6 +56,9 @@ const MainDashboard = () => {
     setIsSecondModalOpen(true);
   };
 
+  useEffect(() => {
+    updateProfile();
+  }, []);
   const [overlay, setOverlay] = React.useState(<OverlayOne />);
 
   const logOut = () => {

@@ -1,7 +1,13 @@
-import { useState } from "react";
-import { pipeline, Tensor, Pipeline } from "@xenova/transformers";
-import "./settings";
+import { useContext, useState } from "react";
+import {
+  pipeline,
+  Tensor,
+  Pipeline,
+  env,
+} from "@xenova/transformers";
+// import "./settings";
 import toast from "react-hot-toast";
+import { AuthContext } from "../context/AuthContext";
 
 // Disable the loading of remote models from the Hugging Face Hub:
 
@@ -23,14 +29,15 @@ export const useEmbeddQuestion = () => {
       const embedded = embedding.tolist()[0];
       console.log(embedded);
 
-      if (embedded.length != 768) {
+      if (embedded.length != 384) {
         console.log("Embedding size not correct");
-        setLoading(false);
+        toast.error("Embedding size not correct");
         return;
       }
       embeddedText.push(embedded);
       answer_arr.push(question + "\n" + answer);
       setLoading(false);
+      return embedded;
     };
     return { embedd, embeddedText, loading, answer_arr };
   } catch (err) {
@@ -47,11 +54,14 @@ export const useEmbeddQ = () => {
       const embedding = await useEmbedder(question);
       if (embedding == null) {
         console.log("no embedding");
+        toast.error("Error Embedding Text");
         return;
       }
       const e = embedding.tolist()[0];
-      if (e.length != 768) {
+      if (e.length != 384) {
         console.log("Embedding size not correct");
+        toast.error("Embedding size not correct");
+
         return;
       }
       embeddedQ.push(e);
@@ -78,13 +88,27 @@ const useEmbedder = async (text: string) => {
 };
 
 export const useInitTransformers = () => {
+  const { pipelineInit, setPipelineInit } = useContext(AuthContext);
   const init = async () => {
-    extractor = await pipeline(
-      "feature-extraction",
-      "Xenova/all-mpnet-base-v2"
-    );
-    console.log(extractor);
-    console.log("also");
+    // @ts-ignore
+    env.allowLocalModels = false;
+    //only run if pipeline hasn't been initialized
+    if (!pipelineInit) {
+      extractor = await pipeline(
+        "feature-extraction"
+        // "Xenova/all-mpnet-base-v2"
+      );
+      if (typeof extractor != "function") {
+        toast.error(
+          "Initialization of Encoder Model not complete, please don't train/test bot yet"
+        );
+        console.log("typeof", extractor, typeof extractor);
+        return;
+      } else {
+        toast.success("Initialization Complete");
+        setPipelineInit(true);
+      }
+    }
   };
   return { init };
 };
