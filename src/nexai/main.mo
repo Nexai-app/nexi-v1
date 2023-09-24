@@ -37,7 +37,7 @@ type FloatMatrix = [FloatVector];
 
   //for stability
   private stable var cardId : Nat = 1;
-  private  var vdbCanisterId: Text = "fnnlb-hqaaa-aaaao-a2igq-cai";
+  private  var vdbCanisterId: Text = "be2us-64aaa-aaaaa-qaabq-cai";
 
   //create HashMaps
 

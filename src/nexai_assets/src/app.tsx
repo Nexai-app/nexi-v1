@@ -11,6 +11,7 @@ import AllQuestion from "../components/TrainBot/AllQuestions";
 import IntegrationPage from "../pages/IntegrationPage";
 import { useAppSelector } from "../redux-toolkit/hooks";
 import { useUpdateProfile } from "../functions";
+import { useInitTransformers } from "../functions/ml";
 
 const App = () => {
   const { handleAuthenticated, setIIAuth, actor } =
@@ -18,6 +19,8 @@ const App = () => {
   const [actorRestated, setActorRestated] = useState<boolean>(false);
   const profile = useAppSelector((state) => state.profile);
   const { updateProfile } = useUpdateProfile();
+  const { init } = useInitTransformers();
+
   const toast = useToast({
     containerStyle: {
       color: "green",
@@ -27,6 +30,10 @@ const App = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    // initializes the ml
+    const call = async () => {
+      await init();
+    };
     const runOnMounth = async () => {
       const authClient = await AuthClient.create();
       if (await authClient.isAuthenticated()) {
@@ -60,6 +67,7 @@ const App = () => {
     };
 
     runOnMounth();
+    call();
   }, []);
 
   if (actorRestated) {

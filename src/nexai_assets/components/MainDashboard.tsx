@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Link as ReactRouterLink } from "react-router-dom";
+import {
+  Link as ReactRouterLink,
+  useNavigate,
+} from "react-router-dom";
 import {
   Box,
   Button,
@@ -10,18 +13,20 @@ import {
   Icon,
   Link as Chakralink,
   ModalOverlay,
+  IconButton,
   useDisclosure,
 } from "@chakra-ui/react";
 import LineChart from "./LineChart";
 import BarChart from "./BarChart";
+import { BiLogOut } from "react-icons/bi";
 import { ChatIcon } from "@chakra-ui/icons";
 import { AiOutlineBook } from "react-icons/ai";
 import FirstModal from "./TestBot/FirstModal";
 import { useUpdateProfile } from "../functions";
-import { useInitTransformers } from "../functions/ml";
 
 const MainDashboard = () => {
   const [isLargerThan991] = useMediaQuery("(max-width: 991px)");
+  const navigate = useNavigate();
 
   const OverlayOne = () => (
     <ModalOverlay
@@ -34,7 +39,6 @@ const MainDashboard = () => {
   const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
   const [isFirstModalOpen, setIsFirstModalOpen] = useState(false);
   const { updateProfile } = useUpdateProfile();
-  const { init } = useInitTransformers();
 
   const onCloseFirstModal = () => {
     setIsFirstModalOpen(false);
@@ -52,22 +56,16 @@ const MainDashboard = () => {
     setIsSecondModalOpen(true);
   };
 
-  const [overlay, setOverlay] = React.useState(<OverlayOne />);
-
-  // useEffect(() => {
-
-  //   init();
-  // });
-
-  // initializes the ml
   useEffect(() => {
     updateProfile();
-    const call = async () => {
-      await init();
-    };
-    call();
   }, []);
+  const [overlay, setOverlay] = React.useState(<OverlayOne />);
 
+  const logOut = () => {
+    localStorage.clear();
+    window.location.reload();
+    navigate("/");
+  };
   return (
     <Flex>
       <Box bg="#341A41" w={`100%`} minH={`100vh`}>
@@ -154,6 +152,20 @@ const MainDashboard = () => {
                 >
                   Test Bot
                 </Button>
+                <IconButton
+                  onClick={logOut}
+                  aria-label="logout"
+                  icon={<BiLogOut />}
+                  color="#b44e4e"
+                  border={`#b44e4e`}
+                  fontSize="20px"
+                  fontWeight="bold"
+                  variant="outline"
+                  _hover={{
+                    backgroundColor: "#b44e4e",
+                    color: "#341A41",
+                  }}
+                />
                 <FirstModal
                   isOpen={isFirstModalOpen}
                   onClose={onCloseFirstModal}

@@ -3,7 +3,7 @@ import { Actor, Identity, ActorSubclass } from "@dfinity/agent";
 import { AuthClient } from "@dfinity/auth-client";
 import { canisterId, createActor } from "../../declarations/nexai";
 import { useLocation, useNavigate } from "react-router-dom";
-import { _SERVICE } from "../../declarations/nexai/nexai.did";
+import { _SERVICE } from "../../declarations/nexai/service.did";
 // import { ShepherdTourContext } from "react-shepherd";
 // import { useMatomo } from "@datapunt/matomo-tracker-react";
 // import Onboarding from "../pages/Onboard/Onboarding";
@@ -18,6 +18,8 @@ export const AuthContext = React.createContext<{
   handleAuthenticated: (arg0: any) => any;
   loggedIn: boolean;
   setLoggedIn: any;
+  pipelineInit: boolean;
+  setPipelineInit: any;
 }>({
   Auth: undefined,
   actor: undefined,
@@ -28,6 +30,8 @@ export const AuthContext = React.createContext<{
   handleAuthenticated: undefined,
   loggedIn: false,
   setLoggedIn: undefined,
+  pipelineInit: false,
+  setPipelineInit: undefined,
 });
 
 export const AuthProvider = ({ children }) => {
@@ -35,6 +39,7 @@ export const AuthProvider = ({ children }) => {
   const [actor, setActor] = useState<ActorSubclass<_SERVICE>>();
   const [iiAuth, setIIAuth] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
+  const [pipelineInit, setPipelineInit] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -125,6 +130,8 @@ export const AuthProvider = ({ children }) => {
         changeAuthStatus,
         loggedIn,
         setLoggedIn,
+        pipelineInit,
+        setPipelineInit,
       }}
     >
       {children}
