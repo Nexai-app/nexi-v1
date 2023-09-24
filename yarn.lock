@@ -3931,6 +3931,11 @@ neo-async@^2.6.2:
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.2.tgz#b4aafb93e3aeb2d8174ca53cf163ab7d7308305f"
   integrity sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==
 
+nexai-assistant@0.0.9:
+  version "0.0.9"
+  resolved "https://registry.yarnpkg.com/nexai-assistant/-/nexai-assistant-0.0.9.tgz#45c80f54be126b26572711d43891f061a74e8622"
+  integrity sha512-HqjrISFJL/EY3cf46IYGJYJSqZZOfBtwhM+dRrFpfUu6EhEz5B8Fyxosl1+KnivoOuEQ/WKljJwMX6bOYBLl8Q==
+
 no-case@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/no-case/-/no-case-3.0.4.tgz#d361fd5c9800f558551a8369fc0dcd4662b6124d"
