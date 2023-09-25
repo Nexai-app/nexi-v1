@@ -13,7 +13,7 @@ const theme = extendTheme({
     },
   },
   fonts: {
-    body: "Public Sans, Poppins, Open Sans",
+    body: "Public Sans,Open Sans",
     heading: "Public Sans, Open Sans",
   },
 });
