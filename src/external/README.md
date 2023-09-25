@@ -46,8 +46,7 @@ In the dfx.json file, add a "canisters" section if it doesn't already exist. Thi
       "module": "your_canister_module"
     },
 
-
-  "nexai" : {
+    nexai" : {
     "type" : "custom",
     "candid" : "https://github.com/Nexai-app/nexi-v1/releases/download/latest/external.did",
     "wasm" : "https://github.com/Nexai-app/nexi-v1/releases/download/latest/external.wasm",
@@ -56,8 +55,12 @@ In the dfx.json file, add a "canisters" section if it doesn't already exist. Thi
             "ic" : "CANISTER_ID HERE"
         }
     }
-  }
- },
+}
+  },
+
+  
+  
+  "
 }
 ```
 
