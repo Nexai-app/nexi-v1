@@ -18,15 +18,15 @@ const int = [
     code: [
       {
         id: 1,
-        val: " $ Lorem ipsum dolor sit amet consectetur aoreet auctor aliquam tincidunt males uadarp",
+        val: " $ npm install nexai-assistant",
       },
       {
         id: 2,
-        val: " $ Lorem ipsum dolor sit amet consectetur aoreet auctor aliquam tincidunt males uadarp",
+        val: " import {Assistant} from 'nexai-assistant';",
       },
       {
         id: 3,
-        val: " $ Lorem ipsum dolor sit amet consectetur aoreet auctor aliquam tincidunt males uadarp",
+        val: "<Assistant .../>",
       },
     ],
   },
@@ -50,19 +50,102 @@ const int = [
   },
   {
     id: 3,
-    desc: "Lorem ipsum dolor sit amet consectetur. Laoreet auctor aliqua tincidunt malesuada sed nullam. Sit facilisis erat mattis placerat libero in dui. Massa laoreet sed est nunc non",
+    desc: " Locate your dfx.json File The dfx.json file is located in the root directory of your Internet Computer project. Navigate to your project directory using your terminal",
     code: [
       {
         id: 1,
-        val: " $ Lorem ipsum dolor sit amet consectetur aoreet auctor aliquam tincidunt males uadarp",
+        val: " cd /path/to/your/project",
+      },
+    ],
+  },
+  {
+    id: 4,
+    desc: " Open dfx.json in an Editor pen the 'dfx.json' file in your preferred code editor. You will be adding configuration code to this file to enable communication with your canister",
+    code: [
+      {
+        id: 1,
+        val: "$ code . dfx.json",
+      },
+    ],
+  },
+  {
+    id: 5,
+    desc: "Add Nexai Canister Configuration In the dfx.json file, add a 'canisters' section if it doesn't already exist. This section defines the configuration for your canister",
+    code: [
+      {
+        id: 1,
+        val: `{
+          "canisters": {
+            "your_canister_name": {
+              "main": "src/main.mo",
+              "type": "motoko",
+              "module": "your_canister_module"
+            },
+              // ... nexai configuration ...
+          }
+        
+        }`,
       },
       {
         id: 2,
-        val: " $ Lorem ipsum dolor sit amet consectetur aoreet auctor aliquam tincidunt males uadarp",
+        val: `"nexai" : {
+          "type" : "custom",
+          "candid" : "https://github.com/Nexai-app/nexi-v1/releases/download/latest/external.did",
+          "wasm" : "https://github.com/Nexai-app/nexi-v1/releases/download/latest/external.wasm",
+          "remote" : {
+              "id" : {
+                  "ic" : "CANISTER_ID HERE"
+              }
+          }
+      }`,
       },
       {
         id: 3,
-        val: " $ Lorem ipsum dolor sit amet consectetur aoreet auctor aliquam tincidunt males uadarp",
+        val: `{
+          "canisters": {
+            "your_canister_name": {
+              "main": "src/main.mo",
+              "type": "motoko",
+              "module": "your_canister_module"
+            },
+        
+        
+          "nexai" : {
+            "type" : "custom",
+            "candid" : "https://github.com/Nexai-app/nexi-v1/releases/download/latest/external.did",
+            "wasm" : "https://github.com/Nexai-app/nexi-v1/releases/download/latest/external.wasm",
+            "remote" : {
+                "id" : {
+                    "ic" : "CANISTER_ID HERE"
+                }
+            }
+          }
+         },
+        }`,
+      },
+    ],
+  },
+  {
+    id: 6,
+    desc: " Save and Close dfx.json Save the changes to the dfx.json file and close your code editor.",
+    code: [
+      {
+        id: 1,
+        val: "$ CRTL + S",
+      },
+    ],
+  },
+  {
+    id: 7,
+    desc: "Build and Deploy To apply the changes, build and deploy your canister project using the DFX CLI. Run the following commands in your terminal:",
+    code: [
+      {
+        id: 1,
+        val: "$ dfx build nexai",
+      },
+      {
+        id: 2,
+        val: "$ dfx deploy nexai",
       },
     ],
   },
@@ -76,8 +159,9 @@ function Integration() {
         {/* middle content */}
         <Box w={{ base: "full", md: "60%" }}>
           <Text py={8}>
-            To get started on Nexai, you have to make sure you meet all
-            requirements and follow all the integration steps required.
+            To get started on Nexai, you have to make sure you meet
+            all requirements and follow all the integration steps
+            required.
           </Text>
 
           <Box my={4}>

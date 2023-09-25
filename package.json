@@ -13,7 +13,7 @@
 		"prebuild": "npm run copy:types",
 		"start": "webpack serve --mode development --env development",
 		"prestart": "npm run copy:types",
-		"copy:types": "rsync -avr .dfx/$(echo ${DFX_NETWORK:-'**'})/canisters/** --exclude='assets/' --exclude='idl/' --exclude='*.wasm'  --exclude='*.most' --delete src/declarations"
+		"copy:types": "rsync -avr .dfx/$(echo ${DFX_NETWORK:-'**'})/canisters/** --exclude='assets/' --exclude='idl/' --exclude='*.wasm' --exclude='*.most' --delete src/declarations"
 	},
 	"devDependencies": {
 		"@dfinity/agent": "0.15.4",
@@ -68,7 +68,6 @@
 		"chart.js": "^4.2.1",
 		"file-loader": "^6.2.0",
 		"framer-motion": "^10.10.0",
-		"nexai-assistant": "^0.0.19",
 		"react": "^18.2.0",
 		"react-bootstrap": "^2.7.2",
 		"react-chartjs-2": "^5.2.0",
