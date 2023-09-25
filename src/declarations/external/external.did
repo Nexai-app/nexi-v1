@@ -1,3 +1,8 @@
+type TransformArgs = 
+ record {
+   context: blob;
+   response: HttpResponsePayload;
+ };
 type Result_1 = 
  variant {
    Err: text;
@@ -6,10 +11,29 @@ type Result_1 =
              text;
            };
  };
+type HttpResponsePayload = 
+ record {
+   body: vec nat8;
+   headers: vec HttpHeader;
+   status: nat;
+ };
+type HttpHeader = 
+ record {
+   name: text;
+   value: text;
+ };
 type External = 
  service {
    Greet: (text) -> (text);
    VDBGetSimilar: (nat32, vec float64, int32) -> (Result_1);
+   send_http_post_request: () -> (text);
    test: (nat) -> (nat);
+   transform: (TransformArgs) -> (CanisterHttpResponsePayload) query;
+ };
+type CanisterHttpResponsePayload = 
+ record {
+   body: vec nat8;
+   headers: vec HttpHeader;
+   status: nat;
  };
 service : () -> External

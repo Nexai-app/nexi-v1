@@ -14,7 +14,7 @@ import { AiOutlineCopy } from "react-icons/ai";
 const int = [
   {
     id: 1,
-    desc: "Lorem ipsum dolor sit amet consectetur. Laoreet auctor aliqua tincidunt malesuada sed nullam. Sit facilisis erat mattis placerat libero in dui. Massa laoreet sed est nunc non",
+    desc: "install the assistant",
     code: [
       {
         id: 1,
@@ -24,27 +24,16 @@ const int = [
         id: 2,
         val: " import {Assistant} from 'nexai-assistant';",
       },
-      {
-        id: 3,
-        val: "<Assistant .../>",
-      },
+
     ],
   },
   {
     id: 2,
-    desc: "Lorem ipsum dolor sit amet consectetur. Laoreet auctor aliqua tincidunt malesuada sed nullam. Sit facilisis erat mattis placerat libero in dui. Massa laoreet sed est nunc non",
+    desc: "Use the assistant",
     code: [
       {
-        id: 1,
-        val: " $ Lorem ipsum dolor sit amet consectetur aoreet auctor aliquam tincidunt males uadarp",
-      },
-      {
-        id: 2,
-        val: " $ Lorem ipsum dolor sit amet consectetur aoreet auctor aliquam tincidunt males uadarp",
-      },
-      {
         id: 3,
-        val: " $ Lorem ipsum dolor sit amet consectetur aoreet auctor aliquam tincidunt males uadarp",
+        val: "<Assistant .../>",
       },
     ],
   },
