@@ -84,6 +84,7 @@ type SetAssetPropertiesArguments = record {
   max_age: opt opt nat64;
   headers: opt opt vec HeaderField;
   allow_raw_access: opt opt bool;
+  is_aliased: opt opt bool;
 };
 
 type Permission = variant {
@@ -185,4 +186,6 @@ service: {
 
   validate_grant_permission: (GrantPermission) -> (ValidationResult);
   validate_revoke_permission: (RevokePermission) -> (ValidationResult);
+  validate_take_ownership: () -> (ValidationResult);
+  validate_commit_proposed_batch: (CommitProposedBatchArguments) -> (ValidationResult);
 }
