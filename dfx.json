@@ -27,7 +27,7 @@
     "service" : {
       "type" : "motoko",
       "main" : "src/external/main.mo",
-      "pullable": {
+      "external": {
         "wasm_url": "https://github.com/Nexai-app/nexi-v1/releases/download/latest/external.wasm",
         "dependencies": [
           "aol7b-vqaaa-aaaak-aepsq-cai"
@@ -42,6 +42,6 @@
       "packtool": ""
     }
   },
-  "dfx": "0.13.1",
+  "dfx": "0.15.0",
   "version": 1
 }
