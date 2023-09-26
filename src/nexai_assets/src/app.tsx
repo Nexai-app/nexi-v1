@@ -66,33 +66,33 @@ const App = () => {
       }
     };
 
-    runOnMounth();
+    // runOnMounth();
     call();
   }, []);
 
-  if (actorRestated) {
-    return (
-      <React.Fragment>
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="dashboard" element={<Dashboard />} />
-          <Route path="signup" element={<Signup />} />
-          <Route path="train-bot" element={<TrainBot />} />
-          <Route path="my-questions" element={<AllQuestion />} />
-          <Route path="integration" element={<IntegrationPage />} />
-        </Routes>
-      </React.Fragment>
-    );
-  } else {
-    return (
-      <React.Fragment>
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          {/* <Route path='/signup' element={<Signup />} /> */}
-        </Routes>
-      </React.Fragment>
-    );
-  }
+  // if (actorRestated) {
+  return (
+    <React.Fragment>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="dashboard" element={<Dashboard />} />
+        <Route path="signup" element={<Signup />} />
+        <Route path="train-bot" element={<TrainBot />} />
+        <Route path="my-questions" element={<AllQuestion />} />
+        <Route path="integration" element={<IntegrationPage />} />
+      </Routes>
+    </React.Fragment>
+  );
+  // } else {
+  //   return (
+  //     <React.Fragment>
+  //       <Routes>
+  //         <Route path="/" element={<LandingPage />} />
+  //         {/* <Route path='/signup' element={<Signup />} /> */}
+  //       </Routes>
+  //     </React.Fragment>
+  //   );
+  // }
 };
 
 export default App;
