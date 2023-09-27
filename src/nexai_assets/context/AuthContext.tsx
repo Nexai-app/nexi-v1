@@ -3,10 +3,15 @@ import { Actor, Identity, ActorSubclass } from "@dfinity/agent";
 import { AuthClient } from "@dfinity/auth-client";
 import { canisterId, createActor } from "../../declarations/nexai";
 import { useLocation, useNavigate } from "react-router-dom";
-import { _SERVICE } from "../../declarations/nexai/nexai.did";
+import { _SERVICE } from "../../declarations/nexai/service.did";
 // import { ShepherdTourContext } from "react-shepherd";
 // import { useMatomo } from "@datapunt/matomo-tracker-react";
 // import Onboarding from "../pages/Onboard/Onboarding";
+
+/* 
+import { idlFactory } from "./service.did.js";
+export { idlFactory } from "./service.did.js";
+*/
 
 export const AuthContext = React.createContext<{
   Auth: any;

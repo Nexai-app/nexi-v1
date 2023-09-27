@@ -9,26 +9,18 @@
       "type": "motoko",
       "pullable": {
         "wasm_url": "https://github.com/Nexai-app/nexi-v1/releases/download/latest/external.wasm",
-        "dependencies": [
-          "aol7b-vqaaa-aaaak-aepsq-cai"
-        ],
+        "dependencies": ["aol7b-vqaaa-aaaak-aepsq-cai"],
         "init_guide": "null"
       }
     },
     "nexai_assets": {
-      "dependencies": [
-        "nexai"
-      ],
+      "dependencies": ["nexai"],
       "frontend": {
         "entrypoint": "src/nexai_assets/src/index.html"
       },
-      "source": [
-        "dist/nexai_assets/"
-      ],
+      "source": ["dist/nexai_assets/"],
       "type": "assets"
     }
-
-
   },
   "defaults": {
     "build": {
