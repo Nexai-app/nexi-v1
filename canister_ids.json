@@ -1,11 +1,14 @@
 {
+  "external": {
+    "ic": "ouyx4-nyaaa-aaaag-qclkq-cai"
+  },
   "nexai": {
     "ic": "aol7b-vqaaa-aaaak-aepsq-cai"
   },
   "nexai_assets": {
     "ic": "ahiu5-dyaaa-aaaak-aepta-cai"
   },
-  "external": {
-    "ic": "ouyx4-nyaaa-aaaag-qclkq-cai"
+  "service": {
+    "ic": "cfo6o-yqaaa-aaaal-ac34a-cai"
   }
 }

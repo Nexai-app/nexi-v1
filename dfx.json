@@ -5,7 +5,9 @@
       "type": "motoko",
       "pullable": {
         "wasm_url": "https://github.com/Nexai-app/nexi-v1/releases/download/latest/nexai.wasm",
-        "dependencies": [],
+        "dependencies": [
+          "fnnlb-hqaaa-aaaao-a2igq-cai"
+        ],
         "init_guide": "null"
       }
     },
