@@ -106,11 +106,6 @@ type SetAssetPropertiesArguments = record {
   max_age: opt opt nat64;
   headers: opt opt vec HeaderField;
   allow_raw_access: opt opt bool;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 58383e8 (stashed)
   is_aliased: opt opt bool;
 };
 
@@ -124,7 +119,6 @@ type ConfigureArguments = record {
   max_batches: opt opt nat64;
   max_chunks: opt opt nat64;
   max_bytes: opt opt nat64;
->>>>>>> 4ab5eb1c25160be47dfdc7f248eaea84f9e54877
 };
 
 type Permission = variant {
@@ -239,6 +233,12 @@ service: {
     is_aliased: opt bool; } ) query;
   set_asset_properties: (SetAssetPropertiesArguments) -> ();
 
+  get_configuration: () -> (ConfigurationResponse);
+  configure: (ConfigureArguments) -> ();
+
   validate_grant_permission: (GrantPermission) -> (ValidationResult);
   validate_revoke_permission: (RevokePermission) -> (ValidationResult);
+  validate_take_ownership: () -> (ValidationResult);
+  validate_commit_proposed_batch: (CommitProposedBatchArguments) -> (ValidationResult);
+  validate_configure: (ConfigureArguments) -> (ValidationResult);
 }

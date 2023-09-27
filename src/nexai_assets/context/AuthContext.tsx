@@ -3,7 +3,7 @@ import { Actor, Identity, ActorSubclass } from "@dfinity/agent";
 import { AuthClient } from "@dfinity/auth-client";
 import { canisterId, createActor } from "../../declarations/nexai";
 import { useLocation, useNavigate } from "react-router-dom";
-import { _SERVICE } from "../../declarations/nexai/nexai.did";
+import { _SERVICE } from "../../declarations/nexai/service.did";
 // import { ShepherdTourContext } from "react-shepherd";
 // import { useMatomo } from "@datapunt/matomo-tracker-react";
 // import Onboarding from "../pages/Onboard/Onboarding";
@@ -27,6 +27,8 @@ export const AuthContext = React.createContext<{
   setPipelineInit: any;
   llmStatus: string;
   setLlmStatus: any;
+  llmBoolStatus:boolean;
+  setLlmBoolStatus:any
 }>({
   Auth: undefined,
   actor: undefined,
@@ -41,6 +43,8 @@ export const AuthContext = React.createContext<{
   setPipelineInit: undefined,
   llmStatus: undefined,
   setLlmStatus: undefined,
+  llmBoolStatus:undefined,
+  setLlmBoolStatus:undefined
 });
 
 export const AuthProvider = ({ children }) => {
@@ -54,6 +58,7 @@ export const AuthProvider = ({ children }) => {
   );
   const navigate = useNavigate();
   const location = useLocation();
+  const [llmBoolStatus, setLlmBoolStatus] = useState(false)
 
   // const { trackEvent } = useMatomo();
 
@@ -146,6 +151,8 @@ export const AuthProvider = ({ children }) => {
         setPipelineInit,
         llmStatus,
         setLlmStatus,
+        llmBoolStatus,
+        setLlmBoolStatus
       }}
     >
       {children}

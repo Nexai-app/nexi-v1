@@ -27,7 +27,7 @@ type ChatType = {
 };
 
 function SecondModal({ isOpen, onClose }) {
-  const { actor, llmStatus } = useContext(AuthContext);
+  const { actor, llmBoolStatus } = useContext(AuthContext);
   const [inputMessage, setInputMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [chat, setChat] = useState<ChatType[]>([]); // State variable for chat messages
@@ -49,7 +49,7 @@ function SecondModal({ isOpen, onClose }) {
   useEffect(() => {
     const call = async () => {
       await init();
-      await initLLM();
+      // await initLLM();
     };
     call();
   }, []);
@@ -60,20 +60,17 @@ function SecondModal({ isOpen, onClose }) {
       text: inputMessage,
     };
     chat.push(myMess);
-    setLoading(true);
-    if (llmStatus) {
+
       await call(inputMessage);
-    }
+    
     if (embeddedQ[0].length == 384) {
-      console.log("embedding", embeddedQ);
+      // console.log("embedding", embeddedQ);
       actor
         ?.VDBGetSimilar(profile.vdbId, embeddedQ[0], 1)
         .then(async (d: any) => {
-          if (llmStatus) {
+          if (llmBoolStatus) {
             let template = `Please answer users' questions base on the company description:
-          ${profile?.description}.
-         Here we have a set of existing similar questions:
-         ${d.Ok[0][1]}
+          ${profile?.description} and the default answer the company gave as reply to the question which is ${d.Ok[0][1]}.modify it an answer the question like a human with the reply that the company already set
          Please answer question ${inputMessage}
          `;
             await getReply(template);
@@ -93,10 +90,19 @@ function SecondModal({ isOpen, onClose }) {
                   text: res,
                 };
               }
-
+              
               chat.push(message);
               setLoading(false);
             }
+            else {
+              let message: ChatType = {
+                sender: "nexai",
+                text: "Language Model not fully initiaiized",
+              };
+              chat.push(message);
+              setLoading(false);
+            }
+
           } else {
             let newM = res.split("\n");
             let message: ChatType = {

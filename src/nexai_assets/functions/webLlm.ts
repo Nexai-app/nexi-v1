@@ -7,12 +7,13 @@ let model_name = "RedPajama-INCITE-Chat-3B-v1-q4f32_0";
 let chatBot = new webllm.ChatModule();
 
 export const useInitLLM = () => {
-  const { setLlmStatus } = useContext(AuthContext);
+  const { setLlmStatus, setLlmBoolStatus } = useContext(AuthContext);
   try {
     const initLLM = async () => {
       const c_ = await chatBot.reload(model_name);
       console.log("c_", c_);
       useInitProgressCB();
+      setLlmBoolStatus(true)
       setLlmStatus("WebGPU is Initaialized Successfully");
     };
 
@@ -20,6 +21,7 @@ export const useInitLLM = () => {
     return { initLLM };
   } catch (err) {
     console.log(err);
+    setLlmBoolStatus(false)
     setLlmStatus(
       "WebGPU is not enabled or supported on your browser, assistant will default back to responding without it"
     );
@@ -28,20 +30,20 @@ export const useInitLLM = () => {
 };
 
 const useInitProgressCB = () => {
-  let val = "";
+  // let val = "";
 
   chatBot.setInitProgressCallback(
     (report: webllm.InitProgressReport) => {
-      val = report.text;
+      console.log(report)
+      // val = report.text;
     }
   );
-  console.log("progress", val);
+  // console.log("progress", val);
 };
 
 const generateProgressCallback = (_step: number, message: string) => {
-  const [label, setLabel] = useState("");
-  setLabel(message);
-  console.log("label", label);
+
+  console.log(_step, message);
 };
 
 export function useInteractBot() {
@@ -52,7 +54,7 @@ export function useInteractBot() {
         msg,
         generateProgressCallback
       );
-      console.log(reply);
+      console.log("reply from bot",reply);
       setRes(reply);
       return reply;
     };

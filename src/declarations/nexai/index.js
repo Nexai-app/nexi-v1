@@ -17,15 +17,12 @@ export const createActor = (canisterId, options = {}) => {
   console.warn(`Deprecation warning: you are currently importing code from .dfx. Going forward, refactor to use the dfx generate command for JavaScript bindings.
 
 See https://internetcomputer.org/docs/current/developer-docs/updates/release-notes/ for migration instructions`);
-  const agent =
-    options.agent || new HttpAgent({ ...options.agentOptions });
-
+  const agent = options.agent || new HttpAgent({ ...options.agentOptions });
+  
   // Fetch root key for certificate validation during development
   if (process.env.DFX_NETWORK !== "ic") {
-    agent.fetchRootKey().catch((err) => {
-      console.warn(
-        "Unable to fetch root key. Check to ensure that your local replica is running"
-      );
+    agent.fetchRootKey().catch(err => {
+      console.warn("Unable to fetch root key. Check to ensure that your local replica is running");
       console.error(err);
     });
   }
@@ -37,7 +34,7 @@ See https://internetcomputer.org/docs/current/developer-docs/updates/release-not
     ...(options ? options.actorOptions : {}),
   });
 };
-
+  
 /**
  * A ready-to-use agent for the nexai canister
  * @type {import("@dfinity/agent").ActorSubclass<import("./nexai.did.js")._SERVICE>}
