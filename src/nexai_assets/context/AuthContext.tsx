@@ -25,6 +25,8 @@ export const AuthContext = React.createContext<{
   setLoggedIn: any;
   pipelineInit: boolean;
   setPipelineInit: any;
+  llmStatus: string;
+  setLlmStatus: any;
 }>({
   Auth: undefined,
   actor: undefined,
@@ -37,6 +39,8 @@ export const AuthContext = React.createContext<{
   setLoggedIn: undefined,
   pipelineInit: false,
   setPipelineInit: undefined,
+  llmStatus: undefined,
+  setLlmStatus: undefined,
 });
 
 export const AuthProvider = ({ children }) => {
@@ -45,6 +49,9 @@ export const AuthProvider = ({ children }) => {
   const [iiAuth, setIIAuth] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
   const [pipelineInit, setPipelineInit] = useState(false);
+  const [llmStatus, setLlmStatus] = useState(
+    "WebGPU is not enabled or supported on your browser, assistant will default back to responding without it"
+  );
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -137,6 +144,8 @@ export const AuthProvider = ({ children }) => {
         setLoggedIn,
         pipelineInit,
         setPipelineInit,
+        llmStatus,
+        setLlmStatus,
       }}
     >
       {children}

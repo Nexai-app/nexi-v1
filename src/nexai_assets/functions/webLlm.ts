@@ -1,13 +1,30 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import * as webllm from "@mlc-ai/web-llm";
 import toast from "react-hot-toast";
+import { AuthContext } from "../context/AuthContext";
 
 let model_name = "RedPajama-INCITE-Chat-3B-v1-q4f32_0";
 let chatBot = new webllm.ChatModule();
 
-export const useInitLLM = async () => {
-  await chatBot.reload(model_name);
-  useInitProgressCB();
+export const useInitLLM = () => {
+  const { setLlmStatus } = useContext(AuthContext);
+  try {
+    const initLLM = async () => {
+      const c_ = await chatBot.reload(model_name);
+      console.log("c_", c_);
+      useInitProgressCB();
+      setLlmStatus("WebGPU is Initaialized Successfully");
+    };
+
+    // if ()
+    return { initLLM };
+  } catch (err) {
+    console.log(err);
+    setLlmStatus(
+      "WebGPU is not enabled or supported on your browser, assistant will default back to responding without it"
+    );
+    return;
+  }
 };
 
 const useInitProgressCB = () => {

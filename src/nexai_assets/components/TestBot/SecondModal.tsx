@@ -34,6 +34,7 @@ function SecondModal({ isOpen, onClose }) {
   const profile = useAppSelector((state) => state.profile);
   const { init } = useInitTransformers();
   const { getReply, res } = useInteractBot();
+  const { initLLM } = useInitLLM();
 
   const OverlayOne = () => (
     <ModalOverlay
@@ -48,7 +49,7 @@ function SecondModal({ isOpen, onClose }) {
   useEffect(() => {
     const call = async () => {
       await init();
-      await useInitLLM();
+      await initLLM();
     };
     call();
   }, []);

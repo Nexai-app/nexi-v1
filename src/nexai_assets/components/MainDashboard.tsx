@@ -23,6 +23,7 @@ import { ChatIcon } from "@chakra-ui/icons";
 import { AiOutlineBook } from "react-icons/ai";
 import FirstModal from "./TestBot/FirstModal";
 import { useUpdateProfile } from "../functions";
+import Banner from "./Banner";
 
 const MainDashboard = () => {
   const [isLargerThan991] = useMediaQuery("(max-width: 991px)");
@@ -71,6 +72,7 @@ const MainDashboard = () => {
       <Box bg="#341A41" w={`100%`} minH={`100vh`}>
         {isLargerThan991 ? (
           <>
+            <Banner />
             <Heading>Home</Heading>
 
             <Flex alignItems="center" py="10px">
@@ -118,6 +120,7 @@ const MainDashboard = () => {
           </>
         ) : (
           <>
+            <Banner />
             <Heading>Home</Heading>
 
             <Flex alignItems="center" py="10px">
