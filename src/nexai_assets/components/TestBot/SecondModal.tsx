@@ -27,7 +27,7 @@ type ChatType = {
 };
 
 function SecondModal({ isOpen, onClose }) {
-  const { actor } = useContext(AuthContext);
+  const { actor, llmStatus } = useContext(AuthContext);
   const [inputMessage, setInputMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [chat, setChat] = useState<ChatType[]>([]); // State variable for chat messages
@@ -61,21 +61,43 @@ function SecondModal({ isOpen, onClose }) {
     };
     chat.push(myMess);
     setLoading(true);
-
-    await call(inputMessage);
+    if (llmStatus) {
+      await call(inputMessage);
+    }
     if (embeddedQ[0].length == 384) {
       console.log("embedding", embeddedQ);
       actor
         ?.VDBGetSimilar(profile.vdbId, embeddedQ[0], 1)
         .then(async (d: any) => {
-          let template = `Please answer users' questions base on the company description:
+          if (llmStatus) {
+            let template = `Please answer users' questions base on the company description:
           ${profile?.description}.
          Here we have a set of existing similar questions:
          ${d.Ok[0][1]}
          Please answer question ${inputMessage}
          `;
-          await getReply(template);
-          if (res.length > 4) {
+            await getReply(template);
+            if (res.length > 4) {
+              let message: ChatType = {
+                sender: "nexai",
+                text: res,
+              };
+              if (d.Ok[0][0] < 0.5) {
+                message = {
+                  sender: "nexai",
+                  text: "I apologize for not being able to assist with your question. If you need further help, please contact our support team.",
+                };
+              } else {
+                message = {
+                  sender: "nexai",
+                  text: res,
+                };
+              }
+
+              chat.push(message);
+              setLoading(false);
+            }
+          } else {
             let message: ChatType = {
               sender: "nexai",
               text: res,
@@ -94,6 +116,7 @@ function SecondModal({ isOpen, onClose }) {
 
             chat.push(message);
             setLoading(false);
+
           }
         })
         .catch((err) => {
