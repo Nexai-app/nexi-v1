@@ -10,7 +10,7 @@
       "pullable": {
         "wasm_url": "https://github.com/Nexai-app/nexi-v1/releases/download/latest/external.wasm",
         "dependencies": [
-          "nexai"
+          "aol7b-vqaaa-aaaak-aepsq-cai"
         ],
         "init_guide": "null"
       }
