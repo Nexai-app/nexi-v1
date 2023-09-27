@@ -98,9 +98,10 @@ function SecondModal({ isOpen, onClose }) {
               setLoading(false);
             }
           } else {
+            let newM = res.split("\n");
             let message: ChatType = {
               sender: "nexai",
-              text: res,
+              text: newM[1],
             };
             if (d.Ok[0][0] < 0.5) {
               message = {
@@ -110,13 +111,12 @@ function SecondModal({ isOpen, onClose }) {
             } else {
               message = {
                 sender: "nexai",
-                text: res,
+                text: newM[1],
               };
             }
 
             chat.push(message);
             setLoading(false);
-
           }
         })
         .catch((err) => {
