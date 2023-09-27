@@ -20,6 +20,16 @@
       },
       "source": ["dist/nexai_assets/"],
       "type": "assets"
+    },
+
+    "service": {
+      "type": "motoko",
+      "main": "src/external/main.mo",
+      "external": {
+        "wasm_url": "https://github.com/Nexai-app/nexi-v1/releases/download/latest/external.wasm",
+        "dependencies": ["aol7b-vqaaa-aaaak-aepsq-cai"],
+        "init_guide": "Testing"
+      }
     }
   },
   "defaults": {
