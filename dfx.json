@@ -2,7 +2,12 @@
   "canisters": {
     "nexai": {
       "main": "src/nexai/main.mo",
-      "type": "motoko"
+      "type": "motoko",
+      "pullable": {
+        "wasm_url": "https://github.com/Nexai-app/nexi-v1/releases/download/latest/nexai.wasm",
+        "dependencies": [],
+        "init_guide": "null"
+      }
     },
     "external": {
       "main": "src/external/main.mo",
