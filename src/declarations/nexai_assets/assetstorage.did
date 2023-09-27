@@ -107,7 +107,10 @@ type SetAssetPropertiesArguments = record {
   headers: opt opt vec HeaderField;
   allow_raw_access: opt opt bool;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 58383e8 (stashed)
   is_aliased: opt opt bool;
 };
 

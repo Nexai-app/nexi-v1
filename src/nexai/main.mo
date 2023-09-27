@@ -38,8 +38,13 @@ type FloatMatrix = [FloatVector];
   //for stability
   private stable var cardId : Nat = 1;
   // private  var vdbCanisterId: Text = "a3shf-5eaaa-aaaaa-qaafa-cai";
+<<<<<<< HEAD
   // production vdb
   private  var vdbCanisterId: Text = "fnnlb-hqaaa-aaaao-a2igq-cai";
+=======
+  //production vdb
+    private  var vdbCanisterId: Text = "fnnlb-hqaaa-aaaao-a2igq-cai";
+>>>>>>> 58383e8 (stashed)
 
 
   //create HashMaps
