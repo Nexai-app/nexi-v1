@@ -56,9 +56,10 @@ const AddQuestions = () => {
       });
       return;
     }
-    setSubmitting(true);
+
     await embedd(question, ans);
-    if (!mlLoading) {
+    if (embeddedText[0].length == 384) {
+      setSubmitting(true);
       actor
         .createQCard(question, ans, embeddedText, answer_arr)
         .then(() => {

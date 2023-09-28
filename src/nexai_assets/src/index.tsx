@@ -24,6 +24,7 @@ import "@fontsource/poppins/400.css";
 import "@fontsource/poppins/500.css";
 import "@fontsource/poppins/600.css";
 import "@fontsource/poppins/700.css";
+// import { Assistant } from "nexai-assistant";
 
 const root = ReactDOM.createRoot(document.getElementById("app"));
 root.render(
@@ -37,6 +38,7 @@ root.render(
         >
           <AuthProvider>
             <App />
+            {/* <Assistant color="blue" companyName="Gift Coin" companyId={1} loading={true} newMessage={{ sender: "nexai", text: "never give up" }} /> */}
           </AuthProvider>
         </ChakraProvider>
       </Provider>

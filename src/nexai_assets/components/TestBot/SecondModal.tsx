@@ -19,6 +19,7 @@ import { AuthContext } from "../../context/AuthContext";
 import { useEmbeddQ, useInitTransformers } from "../../functions/ml";
 import { useAppSelector } from "../../redux-toolkit/hooks";
 import { BeatLoader } from "react-spinners";
+import { useInitLLM, useInteractBot } from "../../functions/webLlm";
 
 type ChatType = {
   sender: "you" | "nexai";
@@ -26,12 +27,14 @@ type ChatType = {
 };
 
 function SecondModal({ isOpen, onClose }) {
-  const { actor } = useContext(AuthContext);
+  const { actor, llmBoolStatus } = useContext(AuthContext);
   const [inputMessage, setInputMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [chat, setChat] = useState<ChatType[]>([]); // State variable for chat messages
   const profile = useAppSelector((state) => state.profile);
   const { init } = useInitTransformers();
+  const { getReply, res } = useInteractBot();
+  const { initLLM } = useInitLLM();
 
   const OverlayOne = () => (
     <ModalOverlay
@@ -46,6 +49,7 @@ function SecondModal({ isOpen, onClose }) {
   useEffect(() => {
     const call = async () => {
       await init();
+      // await initLLM();
     };
     call();
   }, []);
@@ -56,33 +60,70 @@ function SecondModal({ isOpen, onClose }) {
       text: inputMessage,
     };
     chat.push(myMess);
-    setLoading(true);
 
-    await call(inputMessage);
-    if (embeddedQ[0].length == 768) {
-      console.log("my place", embeddedQ);
+      await call(inputMessage);
+    
+    if (embeddedQ[0].length == 384) {
+      // console.log("embedding", embeddedQ);
       actor
         ?.VDBGetSimilar(profile.vdbId, embeddedQ[0], 1)
-        .then((d: any) => {
-          console.log("result", d.Ok[0]);
-          let message: ChatType = {
-            sender: "nexai",
-            text: "",
-          };
-          if (d.Ok[0][0] < 0.5) {
-            message = {
-              sender: "nexai",
-              text: "I apologize for not being able to assist with your question. If you need further help, please contact our support team.",
-            };
-          } else {
-            message = {
-              sender: "nexai",
-              text: d.Ok[0][1],
-            };
-          }
+        .then(async (d: any) => {
+          if (llmBoolStatus) {
+            let template = `Please answer users' questions base on the company description:
+          ${profile?.description} and the default answer the company gave as reply to the question which is ${d.Ok[0][1]}.modify it an answer the question like a human with the reply that the company already set
+         Please answer question ${inputMessage}
+         `;
+            await getReply(template);
+            if (res.length > 4) {
+              let message: ChatType = {
+                sender: "nexai",
+                text: res,
+              };
+              if (d.Ok[0][0] < 0.5) {
+                message = {
+                  sender: "nexai",
+                  text: "I apologize for not being able to assist with your question. If you need further help, please contact our support team.",
+                };
+              } else {
+                message = {
+                  sender: "nexai",
+                  text: res,
+                };
+              }
+              
+              chat.push(message);
+              setLoading(false);
+            }
+            else {
+              let message: ChatType = {
+                sender: "nexai",
+                text: "Language Model not fully initiaiized",
+              };
+              chat.push(message);
+              setLoading(false);
+            }
 
-          chat.push(message);
-          setLoading(false);
+          } else {
+            let newM = res.split("\n");
+            let message: ChatType = {
+              sender: "nexai",
+              text: newM[1],
+            };
+            if (d.Ok[0][0] < 0.5) {
+              message = {
+                sender: "nexai",
+                text: "I apologize for not being able to assist with your question. If you need further help, please contact our support team.",
+              };
+            } else {
+              message = {
+                sender: "nexai",
+                text: newM[1],
+              };
+            }
+
+            chat.push(message);
+            setLoading(false);
+          }
         })
         .catch((err) => {
           console.log(err);
