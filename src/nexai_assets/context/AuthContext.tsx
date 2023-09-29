@@ -27,6 +27,10 @@ export const AuthContext = React.createContext<{
   setPipelineInit: any;
   llmStatus: string;
   setLlmStatus: any;
+  llmBoolStatus: boolean;
+  setLlmBoolStatus: any;
+  llmReply: string;
+  setLlmReply: any
 }>({
   Auth: undefined,
   actor: undefined,
@@ -41,6 +45,10 @@ export const AuthContext = React.createContext<{
   setPipelineInit: undefined,
   llmStatus: undefined,
   setLlmStatus: undefined,
+  llmBoolStatus: undefined,
+  setLlmBoolStatus: undefined,
+  llmReply: "",
+  setLlmReply: undefined
 });
 
 export const AuthProvider = ({ children }) => {
@@ -50,10 +58,12 @@ export const AuthProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [pipelineInit, setPipelineInit] = useState(false);
   const [llmStatus, setLlmStatus] = useState(
-    "WebGPU is not enabled or supported on your browser, assistant will default back to responding without it"
+    "Initializinig web language model and webGPU, this might take a while, if webGPU is not enabled on your browser, please enable it to allow this feature work..."
   );
   const navigate = useNavigate();
   const location = useLocation();
+  const [llmBoolStatus, setLlmBoolStatus] = useState(false)
+  const [llmReply, setLlmReply] = useState("")
 
   // const { trackEvent } = useMatomo();
 
@@ -146,6 +156,10 @@ export const AuthProvider = ({ children }) => {
         setPipelineInit,
         llmStatus,
         setLlmStatus,
+        llmBoolStatus,
+        setLlmBoolStatus,
+        llmReply,
+        setLlmReply
       }}
     >
       {children}
