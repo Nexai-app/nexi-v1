@@ -40,9 +40,9 @@ type FloatMatrix = [FloatVector];
 
   //for stability
   private stable var cardId : Nat = 1;
-  private  var vdbCanisterId: Text = "asrmz-lmaaa-aaaaa-qaaeq-cai";
+  // private  var vdbCanisterId: Text = "asrmz-lmaaa-aaaaa-qaaeq-cai";
   //production vdb
-    // private  var vdbCanisterId: Text = "fnnlb-hqaaa-aaaao-a2igq-cai";
+    private  var vdbCanisterId: Text = "fnnlb-hqaaa-aaaao-a2igq-cai";
 
 
   //create HashMaps
