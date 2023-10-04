@@ -30,7 +30,9 @@ export const AuthContext = React.createContext<{
   llmBoolStatus: boolean;
   setLlmBoolStatus: any;
   llmReply: string;
-  setLlmReply: any
+  setLlmReply: any;
+  useLLM: boolean;
+  setUseLLM: any
 }>({
   Auth: undefined,
   actor: undefined,
@@ -48,7 +50,9 @@ export const AuthContext = React.createContext<{
   llmBoolStatus: undefined,
   setLlmBoolStatus: undefined,
   llmReply: "",
-  setLlmReply: undefined
+  setLlmReply: undefined,
+  useLLM: false,
+  setUseLLM: undefined
 });
 
 export const AuthProvider = ({ children }) => {
@@ -64,6 +68,7 @@ export const AuthProvider = ({ children }) => {
   const location = useLocation();
   const [llmBoolStatus, setLlmBoolStatus] = useState(false)
   const [llmReply, setLlmReply] = useState("")
+  const [useLLM, setUseLLM] = useState(false)
 
   // const { trackEvent } = useMatomo();
 
@@ -159,7 +164,9 @@ export const AuthProvider = ({ children }) => {
         llmBoolStatus,
         setLlmBoolStatus,
         llmReply,
-        setLlmReply
+        setLlmReply,
+        useLLM,
+        setUseLLM
       }}
     >
       {children}

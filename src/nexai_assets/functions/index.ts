@@ -2,9 +2,10 @@ import { useContext, useState } from "react";
 // import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
-import { addProfile } from "../redux-toolkit/slice/ProfileSlice";
-import { useAppDispatch } from "../redux-toolkit/hooks";
+import { addProfile, addQAPair } from "../redux-toolkit/slice/ProfileSlice";
+import { useAppDispatch, useAppSelector } from "../redux-toolkit/hooks";
 import toast from "react-hot-toast";
+import { QuestionAnswerT } from "../redux-toolkit/types";
 
 // not useful, cll this function inside any page it is needed
 export const useLogIn = () => {
@@ -36,6 +37,8 @@ export const useUpdateProfile = () => {
   const [loading, setLoading] = useState(false);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const { addQA } = useAddQA()
+  const user = useAppSelector((state => state.profile))
 
   try {
     const updateProfile = async () => {
@@ -49,9 +52,10 @@ export const useUpdateProfile = () => {
             description: profile[0].description,
             email: profile[0].email,
           };
-
           dispatch(addProfile(data));
           setLoading(false);
+          addQA();
+        
         })
         .catch((err) => {
           toast.error("you were logged out");
@@ -68,3 +72,38 @@ export const useUpdateProfile = () => {
   }
 };
 // export
+
+
+const useAddQA = () => {
+  const [loading, setLoading] = useState(false)
+  const { actor } = useContext(AuthContext)
+  const user = useAppSelector((state => state.profile))
+  const dispatch = useAppDispatch();
+  const vdbId = localStorage.getItem("vdbId")
+
+  try {
+    const addQA = async () => {
+      actor.getAllQCards(Number(vdbId)).
+        then((cards: any) => {
+          let id = 1
+          setLoading(true)
+          cards[0]?.map((card: any) => {
+            const res: QuestionAnswerT = {
+              id,
+              qa: card.question + " \n" + card.answer
+            };
+            dispatch(addQAPair(res));
+            // console.log(res)
+            id++;
+          });
+        }).catch((err) => {
+          console.log(err)
+          setLoading(false)
+        });
+      }
+    return {loading, addQA }
+  } catch (err) {
+    setLoading(false);
+    console.log(err);
+  }
+}
