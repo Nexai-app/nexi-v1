@@ -54,7 +54,7 @@ const NewFeatures = () => {
   useEffect(() => {
     if (!localStorage.getItem("newFeatures")) {
       onOpen();
-      //   localStorage.setItem("newFeatures", "true");
+      // localStorage.setItem("newFeatures", "true");
     }
   }, []);
   return (
