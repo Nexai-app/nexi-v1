@@ -66,6 +66,7 @@ export const AuthProvider = ({ children }) => {
   );
   const navigate = useNavigate();
   const location = useLocation();
+  const [llmBoolStatus, setLlmBoolStatus] = useState(false);
   const [llmReply, setLlmReply] = useState("");
   const [useLLM, setUseLLM] = useState(false);
 
