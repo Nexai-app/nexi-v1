@@ -77,7 +77,7 @@ function FirstModal({ isOpen, onClose }) {
             border={`1px #dccae3 solid`}
           >
             <option value="option1">Default support</option>
-            <option value="option2">Transformer support</option>
+            <option value="option2">LLM support</option>
           </Select>
         </ModalBody>
         <ModalFooter>
