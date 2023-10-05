@@ -64,7 +64,6 @@ export const AuthProvider = ({ children }) => {
   const [llmStatus, setLlmStatus] = useState(
     "Initializinig web language model and webGPU, this might take a while, if webGPU is not enabled on your browser, please enable it to allow this feature work..."
   );
-  const [llmBoolStatus, setLlmBoolStatus] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const [llmReply, setLlmReply] = useState("");
