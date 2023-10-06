@@ -41,6 +41,10 @@ type FloatMatrix = [FloatVector];
   //for stability
   private stable var cardId : Nat = 1;
   private  var vdbCanisterId: Text = "bw4dl-smaaa-aaaaa-qaacq-cai";
+  
+  private stable var cardEntries : [(Nat, CardEntry)] = [];
+  private stable var companyEntries : [(Principal, CompanyEntry)] = [];
+
   //production vdb
     // private  var vdbCanisterId: Text = "fnnlb-hqaaa-aaaao-a2igq-cai";
 
@@ -48,8 +52,10 @@ type FloatMatrix = [FloatVector];
   //create HashMaps
 
   //TODO: should take Principal as key
-  var CompanyHashMap : HashMap.HashMap<Principal, CompanyEntry> = HashMap.HashMap<Principal, CompanyEntry>(10, Principal.equal, Principal.hash);
-  var CardHashMap : HashMap.HashMap<Nat, CardEntry> = HashMap.HashMap<Nat, CardEntry>(1, Nat.equal, Hash.hash);
+  var CompanyHashMap : HashMap.HashMap<Principal, CompanyEntry> = HashMap.fromIter<Principal, CompanyEntry>(companyEntries.vals(), 10, Principal.equal, Principal.hash);
+  var CardHashMap : HashMap.HashMap<Nat, CardEntry> = HashMap.fromIter<Nat, CardEntry>(cardEntries.vals(), 1, Nat.equal, Hash.hash);
+  // let map = Map.fromIter<Text,Nat>(
+  //   entries.vals(), 10, Text.equal, Text.hash);
 
   public shared ({caller}) func getVDB_ID(cardID : Nat) : async Nat32{
     var result : Nat32 = 0;
@@ -59,7 +65,7 @@ type FloatMatrix = [FloatVector];
       };
     };
     return result;
-  };
+  }; 
 
   //connect to the vector database
   let vdb = actor(vdbCanisterId): actor { 
@@ -274,6 +280,17 @@ public shared ({ caller }) func CheckPrincipal() : async Principal {caller};
   public  shared query ({ caller }) func getCompanyProfile() : async ?CompanyEntry {
    return CompanyHashMap.get(caller);
   };
+
+// stable UPGRADING
+  system func preupgrade() {
+    cardEntries := Iter.toArray(CardHashMap.entries());
+    companyEntries := Iter.toArray(CompanyHashMap.entries());
+  };
+
+  system func postupgrade() {
+    cardEntries := [];
+    companyEntries := [];
+  }
 
 };
 
