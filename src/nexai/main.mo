@@ -199,7 +199,7 @@ public shared ({ caller }) func CheckPrincipal() : async Principal {caller};
     { vdbId : Nat32; question : Text; answer : Text };
   };
 
-  public shared ({ caller }) func createQCard(question : Text, answer : Text,keys:FloatMatrix, values:[Text]) : async () {
+  public shared ({ caller }) func createQCard(question : Text, answer : Text,keys:FloatMatrix, values:[Text]) : async Result.Result<Text, Text> {
 
     // var res: CardEntry = {};
     //find the CompanyEntry by the caller == companyEntry.principal
@@ -213,10 +213,12 @@ public shared ({ caller }) func CheckPrincipal() : async Principal {caller};
         var res_ = CardHashMap.put(cardId, _createQCard(j.vdbId, question, answer));
         Debug.print(debug_show (cardId)); // added a debug_print to let the user know what card id their card has
         cardId := cardId + 1;
+        
 
       };
-      // return res;
+      
     };
+    return #ok("Card successfuly created , your id is " # Nat.toText(cardId));
   };
 
   
@@ -238,7 +240,7 @@ public shared ({ caller }) func CheckPrincipal() : async Principal {caller};
   
   // edit and delete functions
 
-  public shared func editQCard(cardId: Nat, updatedQuestion: Text, updatedAnswer: Text): async () {
+  public shared func editQCard(cardId: Nat, updatedQuestion: Text, updatedAnswer: Text) : async () {
     var card = CardHashMap.get(cardId);
       switch(card){
         case (null) {};
