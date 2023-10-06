@@ -3,7 +3,7 @@ import { Actor, Identity, ActorSubclass } from "@dfinity/agent";
 import { AuthClient } from "@dfinity/auth-client";
 import { canisterId, createActor } from "../../declarations/nexai";
 import { useLocation, useNavigate } from "react-router-dom";
-import { _SERVICE } from "../../declarations/nexai/service.did";
+import { _SERVICE } from "../../declarations/nexai/nexai.did";
 // import { ShepherdTourContext } from "react-shepherd";
 // import { useMatomo } from "@datapunt/matomo-tracker-react";
 // import Onboarding from "../pages/Onboard/Onboarding";
@@ -27,8 +27,12 @@ export const AuthContext = React.createContext<{
   setPipelineInit: any;
   llmStatus: string;
   setLlmStatus: any;
-  llmBoolStatus:boolean;
-  setLlmBoolStatus:any
+  llmBoolStatus: boolean;
+  setLlmBoolStatus: any;
+  llmReply: string;
+  setLlmReply: any;
+  useLLM: boolean;
+  setUseLLM: any;
 }>({
   Auth: undefined,
   actor: undefined,
@@ -43,8 +47,12 @@ export const AuthContext = React.createContext<{
   setPipelineInit: undefined,
   llmStatus: undefined,
   setLlmStatus: undefined,
-  llmBoolStatus:undefined,
-  setLlmBoolStatus:undefined
+  llmBoolStatus: undefined,
+  setLlmBoolStatus: undefined,
+  llmReply: "",
+  setLlmReply: undefined,
+  useLLM: false,
+  setUseLLM: undefined,
 });
 
 export const AuthProvider = ({ children }) => {
@@ -54,11 +62,13 @@ export const AuthProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [pipelineInit, setPipelineInit] = useState(false);
   const [llmStatus, setLlmStatus] = useState(
-    "WebGPU is not enabled or supported on your browser, assistant will default back to responding without it"
+    "Initializinig web language model and webGPU, this might take a while, if webGPU is not enabled on your browser, please enable it to allow this feature work..."
   );
   const navigate = useNavigate();
   const location = useLocation();
-  const [llmBoolStatus, setLlmBoolStatus] = useState(false)
+  const [llmBoolStatus, setLlmBoolStatus] = useState(false);
+  const [llmReply, setLlmReply] = useState("");
+  const [useLLM, setUseLLM] = useState(false);
 
   // const { trackEvent } = useMatomo();
 
@@ -152,7 +162,11 @@ export const AuthProvider = ({ children }) => {
         llmStatus,
         setLlmStatus,
         llmBoolStatus,
-        setLlmBoolStatus
+        setLlmBoolStatus,
+        llmReply,
+        setLlmReply,
+        useLLM,
+        setUseLLM,
       }}
     >
       {children}

@@ -76,7 +76,7 @@ export const useEmbeddQ = () => {
 
 const useEmbedder = async (text: string) => {
   if (extractor == null) {
-    toast.error("Error Embedding Text");
+    toast.error("Downloading Embedding Model, this shouldn't take long");
     return;
   }
 
@@ -105,7 +105,7 @@ export const useInitTransformers = () => {
         console.log("typeof", extractor, typeof extractor);
         return;
       } else {
-        toast.success("Initialization Complete");
+        toast.success("Model Initialization Complete");
         setPipelineInit(true);
       }
     }

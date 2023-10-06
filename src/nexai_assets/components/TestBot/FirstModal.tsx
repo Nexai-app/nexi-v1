@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import {
   ModalContent,
@@ -19,6 +19,7 @@ import {
   ModalFooter,
 } from "@chakra-ui/react";
 import SecondModal from "./SecondModal";
+import { AuthContext } from "../../context/AuthContext";
 
 function FirstModal({ isOpen, onClose }) {
   const OverlayOne = () => (
@@ -31,14 +32,7 @@ function FirstModal({ isOpen, onClose }) {
   // const { isOpen, onOpen, onClose } = useDisclosure()
   const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
   const [isFirstModalOpen, setIsFirstModalOpen] = useState(false);
-
-  // const onCloseFirstModal = () => {
-  //     setIsFirstModalOpen(false);
-  // };
-
-  // const onOpenFirstModal = () => {
-  //     setIsFirstModalOpen(true);
-  // };
+  const { setUseLLM } = useContext(AuthContext)
 
   const onCloseSecondModal = () => {
     setIsSecondModalOpen(false);
@@ -66,6 +60,16 @@ function FirstModal({ isOpen, onClose }) {
           <Select
             title="test"
             color="#341A41"
+            onChange={(e) => {
+              if (e.target.value === "option2") {
+                setUseLLM(true)
+                return
+              }
+              else if (e.target.value === "option1") {
+                setUseLLM(false)
+                return
+              }
+            }}
             // placeholder="Select option"
             variant="outline"
             w={`100%`}
@@ -73,7 +77,7 @@ function FirstModal({ isOpen, onClose }) {
             border={`1px #dccae3 solid`}
           >
             <option value="option1">Default support</option>
-            <option value="option2">Transformer support</option>
+            <option value="option2">LLM support</option>
           </Select>
         </ModalBody>
         <ModalFooter>
