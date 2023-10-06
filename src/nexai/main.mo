@@ -46,7 +46,7 @@ type FloatMatrix = [FloatVector];
   private stable var companyEntries : [(Principal, CompanyEntry)] = [];
 
   //production vdb
-    private  var vdbCanisterId: Text = "fnnlb-hqaaa-aaaao-a2igq-cai";
+    // private  var vdbCanisterId: Text = "fnnlb-hqaaa-aaaao-a2igq-cai";
 
 
   //create HashMaps
@@ -280,14 +280,18 @@ public shared ({ caller }) func CheckPrincipal() : async Principal {caller};
    return CompanyHashMap.get(caller);
   };
 
-// stable UPGRADING
+
+  // stable UPGRADING
   system func preupgrade() {
     cardEntries := Iter.toArray(CardHashMap.entries());
     companyEntries := Iter.toArray(CompanyHashMap.entries());
   };
 
   system func postupgrade() {
+    CardHashMap := HashMap.fromIter<Nat, CardEntry>(cardEntries.vals(), 1, Nat.equal, Hash.hash);
     cardEntries := [];
+
+    CompanyHashMap := HashMap.fromIter<Principal, CompanyEntry>(companyEntries.vals(), 10, Principal.equal, Principal.hash);
     companyEntries := [];
   }
 
