@@ -22,11 +22,34 @@ shared ({ caller }) actor class External() =  {
 
     type Nexai = Nexais.Nexai;
 
+    type FloatVector = [Float];
+    
+    type FloatMatrix = [FloatVector];
+
     let Nexai = actor("aol7b-vqaaa-aaaak-aepsq-cai") : actor {
         getAllCompanies : () -> async ([(Principal, NexaiTypes.CompanyEntry)]); 
         greet : (Text) -> async Text;
         VDBGetSimilar : (Nat32, [Float], Int32) -> async (VDBTypes.Result_1);
     };
+
+    let vdb = actor("fnnlb-hqaaa-aaaao-a2igq-cai") : actor { 
+        add_manager: (Principal) -> async Bool;
+        remove_manager: (Principal) -> async Bool; 
+        add_accesser: (Principal) ->  async Bool;
+        remove_accesser: (Principal) -> async Bool;
+        register: (Text) -> async  VDBTypes.Result_2;
+        build_index: (Nat32) -> async  VDBTypes.Result;
+        get_similar: (Nat32, FloatVector, Int32) -> async (VDBTypes.Result_1);
+        append_keys_values: (Nat32,FloatMatrix,  [Text]) -> async VDBTypes.Result;
+    }; 
+
+    public func ExternalVDBGetSimilar (companyId:Nat32, question: FloatVector, limit:Int32): async VDBTypes.Result_1{
+      await vdb.get_similar(companyId, question, limit);
+    };
+
+   public func VDBBuildIndex (companyId: Nat32): async VDBTypes.Result {
+       await vdb.build_index(companyId);
+    } ;
 
     public query func transform(raw : Types.TransformArgs) : async Types.CanisterHttpResponsePayload {
       let transformed : Types.CanisterHttpResponsePayload = {
