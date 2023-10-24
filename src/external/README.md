@@ -25,7 +25,7 @@ In the dfx.json file, add a "canisters" section if it doesn't already exist. Thi
 ```
 
 ```
-"external" : {
+  "external" : {
       "type": "pull",
       "id" : "ouyx4-nyaaa-aaaag-qclkq-cai"
     },
