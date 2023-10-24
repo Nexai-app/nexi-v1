@@ -67,9 +67,6 @@ In the dfx.json file, add a "canisters" section if it doesn't already exist. Thi
   }
 },
 
-  
-  "
-
 ```
 
 Step 4: Save and Close dfx.json
