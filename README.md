@@ -4,9 +4,7 @@ Nexai is the first fully decentralized, autonomous, and integratable chatbot and
 
 ## Stage
 
-Currently, the Nexai project has completed the frontend of the app, which was written in JavaScript (React). The frontend includes the landing page, sign up, sign in, dashboard, and a few other pages. We are actively developing the backend and working on integrating the chatbot into various platforms.
-
-The Nexai project currently has five contributors: Abisuwa Dunsin, Dare Onaopemipo, Bello Hadi, Bello, and Olatokunbo David.
+At present, Nexai has made substantial progress, reaching a significant milestone resembling an MVP (Minimum Viable Product). We are actively engaged in rigorous testing and refinement of the platform.
 
 <!--We are constantly seeking new contributors who are interested in joining our project and helping us bring our vision to life.-->
 
@@ -15,10 +13,12 @@ We welcome any feedback, suggestions, or questions about Nexai and are excited t
 ## Contributors
 
 - Abisuwa Dunsin: [Dunsin-cyber](https://github.com/Dunsin-cyber) (Blockchain Developer/ AI Engineer)
-- Dare Onaopemipo: [Horpemipor](https://github.com/Horpemipor) (Product Designer)
-- Akinade Anjola: [Anjyfade](https://github.com/anjyfade1) (Frontend Developer)
-- Bello Hadi: [Bello](https://github.com/Bello2609) (Full Stack Developer)
 - Olatokunbo David: [dvdslab](https://github.com/dvdslab) (Full Stack Developer)
+- Chan [bianyuanop](https://github.com/bianyuanop)(Ai/ Blockchain Engineer)
+- Dare Onaopemipo: [Horpemipor](https://github.com/Horpemipor) (Product Designer)
+- Abisuwa Samuel: [Sammycoderr](https://github.com/Sammycoderr) (Blockchain Developer)
+- Success Aje: [successaje](https://github.com/successaje) (Blockchain Developer)
+- Akanmu Abiola : Community Manager
 
 ## Other Information
 

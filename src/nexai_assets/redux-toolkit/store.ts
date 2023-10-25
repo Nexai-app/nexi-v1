@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import Profile from "./slice/ProfileSlice";
+import llm from "./slice/llmSlice"
 
 export const store = configureStore({
   reducer: {
     profile: Profile,
+    llm
   },
 });
 

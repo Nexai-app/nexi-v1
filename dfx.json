@@ -1,35 +1,38 @@
 {
-	"canisters": {
-		"nexai": {
-			"main": "src/nexai/main.mo",
-			"type": "motoko"
-		},
-		"external": {
-			"main": "src/external/main.mo",
-			"type": "motoko",
-			"dependencies": ["nexai"]
-		},
-
-		"nexai_assets": {
-			"dependencies": [
-				"nexai"
-			],
-			"frontend": {
-				"entrypoint": "src/nexai_assets/src/index.html"
-			},
-			"source": [
-				"dist/nexai_assets/"
-			],
-			"type": "assets"
-		}
-	},
-	"defaults": {
-		"build": {
-			"args": "",
-			"packtool": ""
-		}
-	},
-	"dfx": "0.14.0",
-	"version": 1
+  "canisters": {
+    "nexai": {
+      "main": "src/nexai/main.mo",
+      "type": "motoko",
+      "pullable": {
+        "wasm_url": "https://github.com/Nexai-app/nexi-v1/releases/download/latest/nexai.wasm",
+        "dependencies": ["fnnlb-hqaaa-aaaao-a2igq-cai"],
+        "init_guide": "null"
+      }
+    },
+    "external": {
+      "main": "src/external/main.mo",
+      "type": "motoko",
+      "pullable": {
+        "wasm_url": "https://github.com/Nexai-app/nexi-v1/releases/download/latest/external.wasm",
+        "dependencies": ["aol7b-vqaaa-aaaak-aepsq-cai"],
+        "init_guide": "null"
+      }
+    },
+    "nexai_assets": {
+      "dependencies": ["nexai"],
+      "frontend": {
+        "entrypoint": "src/nexai_assets/src/index.html"
+      },
+      "source": ["dist/nexai_assets/"],
+      "type": "assets"
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": ""
+    }
+  },
+  "dfx": "0.15.0",
+  "version": 1
 }
-

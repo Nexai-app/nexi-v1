@@ -32,17 +32,38 @@ type FloatMatrix = [FloatVector];
   public type CompanyEntry = Types.CompanyEntry;
   public type CardEntry = Types.CardEntry;
 
+  //new variables
+  var newCard : [CardEntry] = [];
+  var updatedCard : [CardEntry] = [];
 
   //for stability
   private stable var cardId : Nat = 1;
-  private  var vdbCanisterId: Text = "rrkah-fqaaa-aaaaa-aaaaq-cai";
+  // private  var vdbCanisterId: Text = "bw4dl-smaaa-aaaaa-qaacq-cai";
+  
+  private stable var cardEntries : [(Nat, CardEntry)] = [];
+  private stable var companyEntries : [(Principal, CompanyEntry)] = [];
+
+  //production vdb
+    private  var vdbCanisterId: Text = "fnnlb-hqaaa-aaaao-a2igq-cai";
+
 
   //create HashMaps
 
   //TODO: should take Principal as key
-  var CompanyHashMap : HashMap.HashMap<Principal, CompanyEntry> = HashMap.HashMap<Principal, CompanyEntry>(10, Principal.equal, Principal.hash);
-  var CardHashMap : HashMap.HashMap<Nat, CardEntry> = HashMap.HashMap<Nat, CardEntry>(1, Nat.equal, Hash.hash);
+  var CompanyHashMap : HashMap.HashMap<Principal, CompanyEntry> = HashMap.fromIter<Principal, CompanyEntry>(companyEntries.vals(), 10, Principal.equal, Principal.hash);
+  var CardHashMap : HashMap.HashMap<Nat, CardEntry> = HashMap.fromIter<Nat, CardEntry>(cardEntries.vals(), 1, Nat.equal, Hash.hash);
+  // let map = Map.fromIter<Text,Nat>(
+  //   entries.vals(), 10, Text.equal, Text.hash);
 
+  public shared ({caller}) func getVDB_ID(cardID : Nat) : async Nat32{
+    var result : Nat32 = 0;
+    for ((card, entry) in CardHashMap.entries()) {
+      if (card == cardID){
+        result := entry.vdbId;
+      };
+    };
+    return result;
+  }; 
 
   //connect to the vector database
   let vdb = actor(vdbCanisterId): actor { 
@@ -167,15 +188,16 @@ public shared ({ caller }) func CheckPrincipal() : async Principal {caller};
 
   /**
    * Create card and answers
-   * Link them to the comapany or principal
+   * Link them to the company or principal
    *
    */
+
 
   func _createQCard(vdbId : Nat32, question : Text, answer : Text) : CardEntry {
     { vdbId : Nat32; question : Text; answer : Text };
   };
 
-  public shared ({ caller }) func createQCard(question : Text, answer : Text,keys:FloatMatrix, values:[Text]) : async () {
+  public shared ({ caller }) func createQCard(question : Text, answer : Text,keys:FloatMatrix, values:[Text]) : async Result.Result<Text, Text> {
 
     // var res: CardEntry = {};
     //find the CompanyEntry by the caller == companyEntry.principal
@@ -184,15 +206,20 @@ public shared ({ caller }) func CheckPrincipal() : async Principal {caller};
 
         
         var savetovdb =  await VDBAddQandA(j.vdbId, keys, values);
-        var res_ = CardHashMap.put(cardId, _createQCard(j.vdbId, question, answer));
-        cardId := cardId + 1;
-
+        var buildIndex =  await VDBBuildIndex(j.vdbId);
         Debug.print(debug_show(savetovdb));
+        var res_ = CardHashMap.put(cardId, _createQCard(j.vdbId, question, answer));
+        Debug.print(debug_show (cardId)); // added a debug_print to let the user know what card id their card has
+        cardId := cardId + 1;
+        
 
       };
-      // return res;
+      
     };
+    return #ok("Card successfuly created , your id is " # Nat.toText(cardId));
   };
+
+  
 
   public shared ({ caller }) func getAnAnswer(id : Nat) : async ?CardEntry {
 
@@ -208,12 +235,39 @@ public shared ({ caller }) func CheckPrincipal() : async Principal {caller};
     };
 
   };
+  
+  // edit and delete functions
+
+  public shared func editQCard(cardId: Nat, updatedQuestion: Text, updatedAnswer: Text) : async () {
+    var card = CardHashMap.get(cardId);
+      switch(card){
+        case (null) {};
+        case(?card){
+          var newCard : CardEntry = {
+            vdbId = card.vdbId; 
+            question = updatedQuestion; 
+            answer = updatedAnswer;
+          };
+          CardHashMap.put(cardId, newCard);
+        };
+        
+      };
+      // "You have successfully edited whatever";
+  };
+    
+  // delete function
+  public shared func deleteQCard (cardId: Nat): async () {
+    CardHashMap.delete(cardId);
+    // return ();
+  };
+
+    // -----------------------------------____________________-----------------------------
 
   public shared query ({ caller }) func getAllQCards(id : Nat32) : async ?[CardEntry] {
     do ? {
       var buff = Buffer.Buffer<CardEntry>(0);
       for ((i, j) in CardHashMap.entries()) {
-        if (j.vdbId == id) {
+        if (j.vdbId == id){
           buff.add(j);
         };
       };
@@ -227,8 +281,19 @@ public shared ({ caller }) func CheckPrincipal() : async Principal {caller};
   };
 
 
+  // stable UPGRADING
+  system func preupgrade() {
+    cardEntries := Iter.toArray(CardHashMap.entries());
+    companyEntries := Iter.toArray(CompanyHashMap.entries());
+  };
 
+  system func postupgrade() {
+    CardHashMap := HashMap.fromIter<Nat, CardEntry>(cardEntries.vals(), 1, Nat.equal, Hash.hash);
+    cardEntries := [];
 
+    CompanyHashMap := HashMap.fromIter<Principal, CompanyEntry>(companyEntries.vals(), 10, Principal.equal, Principal.hash);
+    companyEntries := [];
+  }
 
 };
 

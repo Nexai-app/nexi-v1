@@ -10,15 +10,15 @@ import {
   Box,
   Text,
   Flex,
-  Link as Chakralink,
 } from "@chakra-ui/react";
-import { useLocation, Link as ReactRouterLink } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { MenuNavigation } from "../Sidebar";
 
 function index() {
   const location = useLocation();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
+  const navigate = useNavigate();
 
   return (
     <Show below="md">
@@ -48,47 +48,49 @@ function index() {
 
             <DrawerBody pt="100px">
               {MenuNavigation.map(({ icon, title, route }) => (
-                <Chakralink key={title} as={ReactRouterLink} to={`/${route}`}>
-                  <Box
-                    h={`45px`}
-                    my={5}
-                    ml={5}
-                    borderLeftRadius="5"
-                    pl={`15px`}
-                    __css={{
-                      background: location.pathname.includes(route)
-                        ? "white"
-                        : "#341A41",
-                      color: location.pathname.includes(route)
-                        ? "#341A41"
-                        : "white",
-                    }}
-                    _hover={{
-                      backgroundColor: "white",
-                      color: "#341A41",
-                    }}
-                    cursor="pointer"
-                    pb={8}
-                  >
-                    <Flex alignItems="center">
-                      <Box mr={3} my={0}>
-                        {location.pathname.includes(route)
-                          ? icon.active
-                          : icon.inactive}
-                      </Box>
-                      <Text
-                        my={0}
-                        py={0}
-                        position="relative"
-                        top="3px"
-                        fontSize="18px"
-                        fontWeight="500"
-                      >
-                        {title}
-                      </Text>
-                    </Flex>
-                  </Box>
-                </Chakralink>
+                <Box
+                  key={title}
+                  h={`45px`}
+                  my={5}
+                  ml={5}
+                  borderLeftRadius="5"
+                  pl={`15px`}
+                  __css={{
+                    background: location.pathname.includes(route)
+                      ? "white"
+                      : "#341A41",
+                    color: location.pathname.includes(route)
+                      ? "#341A41"
+                      : "white",
+                  }}
+                  _hover={{
+                    backgroundColor: "white",
+                    color: "#341A41",
+                  }}
+                  cursor="pointer"
+                  pb={8}
+                  onClick={() => {
+                    navigate(`${route}`);
+                  }}
+                >
+                  <Flex alignItems="center">
+                    <Box mr={3} my={0}>
+                      {location.pathname.includes(route)
+                        ? icon.active
+                        : icon.inactive}
+                    </Box>
+                    <Text
+                      my={0}
+                      py={0}
+                      position="relative"
+                      top="3px"
+                      fontSize="18px"
+                      fontWeight="500"
+                    >
+                      {title}
+                    </Text>
+                  </Flex>
+                </Box>
               ))}
             </DrawerBody>
           </DrawerContent>

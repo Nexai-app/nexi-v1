@@ -1,6 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { ProfileT } from "../types";
+import { ProfileT , QuestionAnswerT } from "../types";
+
+
 
 // Define the initial state using that type
 const initialState: ProfileT = {
@@ -8,6 +10,7 @@ const initialState: ProfileT = {
   email: "",
   name: "",
   description: "",
+  qA:[]
 };
 
 export const profileSlice = createSlice({
@@ -20,10 +23,13 @@ export const profileSlice = createSlice({
       state.name = payload.name;
       state.description = payload.description;
     },
+    addQAPair: (state, { payload }: PayloadAction<QuestionAnswerT>) => {
+      state.qA.push(payload);
+    }
   },
 });
 
-export const { addProfile } = profileSlice.actions;
+export const { addProfile, addQAPair } = profileSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 // export const selectCount = (state: RootState) => state.counter.value;

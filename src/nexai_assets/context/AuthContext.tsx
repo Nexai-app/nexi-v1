@@ -8,6 +8,11 @@ import { _SERVICE } from "../../declarations/nexai/nexai.did";
 // import { useMatomo } from "@datapunt/matomo-tracker-react";
 // import Onboarding from "../pages/Onboard/Onboarding";
 
+/* 
+import { idlFactory } from "./service.did.js";
+export { idlFactory } from "./service.did.js";
+*/
+
 export const AuthContext = React.createContext<{
   Auth: any;
   actor: ActorSubclass<_SERVICE> | undefined;
@@ -18,6 +23,16 @@ export const AuthContext = React.createContext<{
   handleAuthenticated: (arg0: any) => any;
   loggedIn: boolean;
   setLoggedIn: any;
+  pipelineInit: boolean;
+  setPipelineInit: any;
+  llmStatus: string;
+  setLlmStatus: any;
+  llmBoolStatus: boolean;
+  setLlmBoolStatus: any;
+  llmReply: string;
+  setLlmReply: any;
+  useLLM: boolean;
+  setUseLLM: any;
 }>({
   Auth: undefined,
   actor: undefined,
@@ -28,6 +43,16 @@ export const AuthContext = React.createContext<{
   handleAuthenticated: undefined,
   loggedIn: false,
   setLoggedIn: undefined,
+  pipelineInit: false,
+  setPipelineInit: undefined,
+  llmStatus: undefined,
+  setLlmStatus: undefined,
+  llmBoolStatus: undefined,
+  setLlmBoolStatus: undefined,
+  llmReply: "",
+  setLlmReply: undefined,
+  useLLM: false,
+  setUseLLM: undefined,
 });
 
 export const AuthProvider = ({ children }) => {
@@ -35,8 +60,15 @@ export const AuthProvider = ({ children }) => {
   const [actor, setActor] = useState<ActorSubclass<_SERVICE>>();
   const [iiAuth, setIIAuth] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
+  const [pipelineInit, setPipelineInit] = useState(false);
+  const [llmStatus, setLlmStatus] = useState(
+    "Initializinig web language model and webGPU, this might take a while, if webGPU is not enabled on your browser, please enable it to allow this feature work..."
+  );
   const navigate = useNavigate();
   const location = useLocation();
+  const [llmBoolStatus, setLlmBoolStatus] = useState(false);
+  const [llmReply, setLlmReply] = useState("");
+  const [useLLM, setUseLLM] = useState(false);
 
   // const { trackEvent } = useMatomo();
 
@@ -125,6 +157,16 @@ export const AuthProvider = ({ children }) => {
         changeAuthStatus,
         loggedIn,
         setLoggedIn,
+        pipelineInit,
+        setPipelineInit,
+        llmStatus,
+        setLlmStatus,
+        llmBoolStatus,
+        setLlmBoolStatus,
+        llmReply,
+        setLlmReply,
+        useLLM,
+        setUseLLM,
       }}
     >
       {children}

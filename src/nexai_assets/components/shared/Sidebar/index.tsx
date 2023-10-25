@@ -1,9 +1,5 @@
 import React from "react";
-import {
-  useLocation,
-  useNavigate,
-  Link as ReactRouterLink,
-} from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   Box,
   Text,
@@ -107,8 +103,8 @@ export const MenuNavigation = [
         />
       ),
     },
-    title: "Train Assistant",
-    route: "/train-bot",
+    title: "View Trainings",
+    route: "/my-questions",
   },
 ];
 
@@ -141,10 +137,6 @@ function index() {
         transform="auto"
         transition="transform 0.2s ease"
         py={8}
-        // translateX={{
-        //   base: showSidebar ? 0 : "-100%",
-        //   mdx2: "-100%",
-        // }}
         onClick={() => setShowSidebar(false)}
         translateX={{ base: showSidebar ? 0 : "-100%", mdx2: 0 }}
       >
