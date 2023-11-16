@@ -173,7 +173,6 @@ public shared ({ caller }) func CheckPrincipal() : async Principal {caller};
     return "Hello, " # name # "!";
   };
   
-  //Edit company details
 
   //LogIn
   public shared query ({ caller }) func logIn() : async Bool {
@@ -261,7 +260,26 @@ public shared ({ caller }) func CheckPrincipal() : async Principal {caller};
     // return ();
   };
 
-    // -----------------------------------____________________-----------------------------
+//newfeat__nov152023__editcompanies
+  public shared ({ caller }) func editCompanyDetails (editedName : Text, editedMail : Text, editedDescription:Text) : async ?CompanyEntry {
+    var company = CompanyHashMap.get(caller);
+    switch(company) {
+      case(null){};
+      case(?company){
+        var editedCompany : CompanyEntry = {
+          vdbId = company.vdbId;
+          name = editedName;
+          email = editedMail;
+          description = editedDescription;
+          createdAt = company.createdAt;
+        };
+        CompanyHashMap.put(caller, editedCompany);
+      };
+    
+    };
+    await getCompanyProfile();
+  };
+
 
   public shared query ({ caller }) func getAllQCards(id : Nat32) : async ?[CardEntry] {
     do ? {
