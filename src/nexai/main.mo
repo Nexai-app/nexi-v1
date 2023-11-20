@@ -21,6 +21,7 @@ import Int32 "mo:base/Int32";
 
 import Types "./types";
 import VDBTypes "./vdbTypes";
+import Message "message";
 
 shared ({ caller }) actor class Nexai() = {
 
@@ -38,16 +39,47 @@ type FloatMatrix = [FloatVector];
 
   //for stability
   private stable var cardId : Nat = 1;
+
+  private stable var conversationID : Nat = 0;
+  private stable var messageID : Nat = 0;
+
+
+  
   // private  var vdbCanisterId: Text = "bw4dl-smaaa-aaaaa-qaacq-cai";
   
   private stable var cardEntries : [(Nat, CardEntry)] = [];
   private stable var companyEntries : [(Principal, CompanyEntry)] = [];
+
+  
+  private stable var conversationEntries : [(Text, Conversation)] = [];
 
   //production vdb
     private  var vdbCanisterId: Text = "fnnlb-hqaaa-aaaao-a2igq-cai";
 
 
   //create HashMaps
+
+  type Whoami = {
+    #company : Principal;
+    #anonymous : Principal;
+  };
+
+  type Message = {
+    id  : Nat;
+    customer : Principal;
+    body : Text;
+    company : Principal;
+    time : Int;
+  };
+
+  type Conversation = {
+    conversationID : ?Text;
+    messages : [Message];
+  };
+
+  var messages : [Message] = [];
+
+  var MessageHashMap : HashMap.HashMap<Text, Conversation> = HashMap.fromIter<Text, Conversation>(conversationEntries.vals(), 10, Text.equal, Text.hash);
 
   //TODO: should take Principal as key
   var CompanyHashMap : HashMap.HashMap<Principal, CompanyEntry> = HashMap.fromIter<Principal, CompanyEntry>(companyEntries.vals(), 10, Principal.equal, Principal.hash);
@@ -64,6 +96,81 @@ type FloatMatrix = [FloatVector];
     };
     return result;
   }; 
+
+  public shared ({caller}) func sendMessage(account : Principal, body : Text, id : ?Text) : () {
+    let principal = CompanyHashMap.get(caller);
+    switch(principal) {
+      case(null){
+        switch(id){
+          case(null){
+            var idx : Text = Principal.toText(account) # Nat.toText(conversationID) # Principal.toText(caller);
+            var message = createMessage(account, caller, body, messageID, Time.now());
+            messageID += 1;
+            var conversation : Conversation = await createConversation(?idx, [message]);
+            MessageHashMap.put(idx, conversation);
+          }; case (?id) {
+            var conversation = MessageHashMap.get(id);
+            
+            switch(conversation) {
+              case(null) { };
+              case(?conversation) { 
+                var message = createMessage(account, caller, body, messageID, Time.now());
+                var updateMessage = {
+                  conversationID = conversation.conversationID;
+                  messages = Array.append(conversation.messages, [message])
+                };
+                var update = MessageHashMap.replace(id, updateMessage);
+                messageID += 1;
+               };
+            };
+          };
+        }   
+      }; 
+      case (?principal){
+        switch(id) {
+          case(null) { };
+          case(?id) { 
+            var conversation = MessageHashMap.get(id);
+            switch(conversation) {
+              case(null) { };
+              case(?conversation) { 
+                
+                var message = createMessage(account, caller, body, messageID, Time.now());
+                var updateMessage = {
+                  conversationID = conversation.conversationID;
+                  messages = Array.append(conversation.messages, [message])
+                };
+                var update = MessageHashMap.replace(id, updateMessage);
+                messageID += 1;
+              };
+            };
+          };
+        };
+      };
+    };
+  }; 
+
+  public func getMessage(id : Text) : async ?Conversation {
+    MessageHashMap.get(id);
+  };
+
+
+    // assert(caller != receiver);
+    // var message = createMessage()
+
+  public func createConversation(conversationID : ?Text, messages : [Message]) : async Conversation {
+    {
+      conversationID;
+      messages;
+    }
+  };
+
+
+  func createMessage(company : Principal, customer : Principal, body : Text, id : Nat, time : Int) : Message {
+    {
+      id; customer; body; company; time;
+    }
+  };
 
   //connect to the vector database
   let vdb = actor(vdbCanisterId): actor { 
@@ -297,6 +404,16 @@ public shared ({ caller }) func CheckPrincipal() : async Principal {caller};
   public  shared query ({ caller }) func getCompanyProfile() : async ?CompanyEntry {
    return CompanyHashMap.get(caller);
   };
+
+  // public shared query ({ caller }) func getCompanyPrincipal() : async Principal {
+  //   let result = await getCompanyProfile();
+  //   switch (result){
+  //     case null {null};
+  //     case (?CompanyEntry){
+  //       return result.
+  //     }
+  //   }
+  // }
 
 
   // stable UPGRADING

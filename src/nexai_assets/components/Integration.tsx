@@ -115,7 +115,7 @@ const int = [
   },
   {
     id: 6,
-    desc: "Add Nexai Canister Configuration In the dfx.json file, add a 'canisters' section if it doesn't already exist. This section defines the configuration for your canister",
+    desc: "Add Nexai Canister Configuration In the dfx.json file, add a 'canisters' section if it doesn't already exist. This section defines the configuration for your canister. Please note: You have to be running on ^0.15.0 dfx version",
     code: [
       {
         id: 1,

@@ -1,0 +1,7 @@
+module {
+
+    public class Message() {
+
+        
+    }
+}
