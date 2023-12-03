@@ -4,6 +4,7 @@ import { AuthClient } from "@dfinity/auth-client";
 import { useToast } from "@chakra-ui/react";
 import { AuthContext } from "../context/AuthContext";
 import LandingPage from "../pages/LandingPage";
+import Lest from "../pages/Lest";
 import Signup from "../pages/Signup";
 import Dashboard from "../pages/Dashboard";
 import TrainBot from "../pages/TrainBot";
@@ -21,7 +22,7 @@ const App = () => {
   const profile = useAppSelector((state) => state.profile);
   const { updateProfile } = useUpdateProfile();
   const { init } = useInitTransformers();
-  const {initLLM} = useInitLLM()
+  const { initLLM } = useInitLLM()
 
   const toast = useToast({
     containerStyle: {
@@ -79,6 +80,7 @@ const App = () => {
       <React.Fragment>
         <Routes>
           <Route path="/" element={<LandingPage />} />
+          <Route path="/we" element={<Lest />} />
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="signup" element={<Signup />} />
           <Route path="train-bot" element={<TrainBot />} />
@@ -92,7 +94,7 @@ const App = () => {
       <React.Fragment>
         <Routes>
           <Route path="/" element={<LandingPage />} />
-          {/* <Route path='/signup' element={<Signup />} /> */}
+          <Route path="/we" element={<Lest />} />
         </Routes>
       </React.Fragment>
     );

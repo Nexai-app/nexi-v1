@@ -69,6 +69,7 @@
     "chart.js": "^4.2.1",
     "file-loader": "^6.2.0",
     "framer-motion": "^10.10.0",
+    "perf_hooks": "^0.0.1",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.2",
     "react-chartjs-2": "^5.2.0",
@@ -79,6 +80,7 @@
     "react-router-dom": "^6.9.0",
     "react-spinners": "^0.13.8",
     "react-type-animation": "^3.1.0",
+    "svg-loader": "^0.0.2",
     "url-loader": "^4.1.1"
   }
 }

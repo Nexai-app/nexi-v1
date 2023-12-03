@@ -24,32 +24,32 @@ import VDBTypes "./vdbTypes";
 
 
 
-shared ({ caller }) actor class Nexai() = {
+shared  ({ caller }) actor class Nexai() = {
 
 type FloatVector = [Float];
 
 type FloatMatrix = [FloatVector];
 
   // types from types.mo file
-  public type CompanyEntry = Types.CompanyEntry;
-  public type CardEntry = Types.CardEntry;
+ type CompanyEntry = Types.CompanyEntry;
+ type CardEntry = Types.CardEntry;
 
   //new variables
   var newCard : [CardEntry] = [];
   var updatedCard : [CardEntry] = [];
 
   //for stability
-  private stable var cardId : Nat = 1;
+  private var cardId : Nat = 1;
   // private  var vdbCanisterId: Text = "bw4dl-smaaa-aaaaa-qaacq-cai";
   //production vdb
-    private  var vdbCanisterId: Text = "fnnlb-hqaaa-aaaao-a2igq-cai";
+    private var vdbCanisterId: Text = "fnnlb-hqaaa-aaaao-a2igq-cai";
 
 
   //create HashMaps
 
   //TODO: should take Principal as key
-  var CompanyHashMap : HashMap.HashMap<Principal, CompanyEntry> = HashMap.HashMap<Principal, CompanyEntry>(10, Principal.equal, Principal.hash);
-  var CardHashMap : HashMap.HashMap<Nat, CardEntry> = HashMap.HashMap<Nat, CardEntry>(1, Nat.equal, Hash.hash);
+   var CompanyHashMap : HashMap.HashMap<Principal, CompanyEntry> = HashMap.HashMap<Principal, CompanyEntry>(10, Principal.equal, Principal.hash);
+   var CardHashMap : HashMap.HashMap<Nat, CardEntry> = HashMap.HashMap<Nat, CardEntry>(1, Nat.equal, Hash.hash);
 
   public shared ({caller}) func getVDB_ID(cardID : Nat) : async Nat32{
     var result : Nat32 = 0;
