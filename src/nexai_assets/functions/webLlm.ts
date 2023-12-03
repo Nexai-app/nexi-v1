@@ -15,7 +15,7 @@ export const useInitLLM = () => {
       const c_ = await chatBot.reload(model_name);
       console.log("c_", c_);
       useInitProgressCB();
-      setLlmBoolStatus(true)
+      setLlmBoolStatus(true);
       setLlmStatus("LLM is Initaialized Successfully");
     };
 
@@ -23,7 +23,7 @@ export const useInitLLM = () => {
     return { initLLM };
   } catch (err) {
     console.log(err);
-    setLlmBoolStatus(false)
+    setLlmBoolStatus(false);
     setLlmStatus(
       "WebGPU is not enabled or supported on your browser, assistant will default back to responding without it"
     );
@@ -36,8 +36,8 @@ const useInitProgressCB = () => {
 
   chatBot.setInitProgressCallback(
     (report: webllm.InitProgressReport) => {
-      console.log("progress call back",report)
-      
+      console.log("progress call back", report);
+
       // val = report.text;
     }
   );
@@ -45,23 +45,22 @@ const useInitProgressCB = () => {
 };
 
 const generateProgressCallback = (_step: number, message: string) => {
-
   // console.log(_step, message);
 };
 
 export function useInteractBot() {
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
   try {
     const getReply = async (msg: string) => {
       const reply = await chatBot.generate(
         msg,
         generateProgressCallback
       );
-      if(reply) {
-      // console.log("reply from bot",reply);
+      if (reply) {
+        // console.log("reply from bot",reply);
         dispatch(addReply(reply));
         return reply;
-        }
+      }
     };
     return { getReply };
   } catch (err) {

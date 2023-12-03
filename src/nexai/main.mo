@@ -21,8 +21,7 @@ import Int32 "mo:base/Int32";
 
 import Types "./types";
 import VDBTypes "./vdbTypes";
-
-
+import Message "message";
 
 shared  ({ caller }) actor class Nexai() = {
 
@@ -39,17 +38,54 @@ type FloatMatrix = [FloatVector];
   var updatedCard : [CardEntry] = [];
 
   //for stability
-  private var cardId : Nat = 1;
+  private stable var cardId : Nat = 1;
+
+  private stable var conversationID : Nat = 0;
+  private stable var messageID : Nat = 0;
+
+
+  
   // private  var vdbCanisterId: Text = "bw4dl-smaaa-aaaaa-qaacq-cai";
+  
+  private stable var cardEntries : [(Nat, CardEntry)] = [];
+  private stable var companyEntries : [(Principal, CompanyEntry)] = [];
+
+  
+  private stable var conversationEntries : [(Text, Conversation)] = [];
+
   //production vdb
     private var vdbCanisterId: Text = "fnnlb-hqaaa-aaaao-a2igq-cai";
 
 
   //create HashMaps
 
+  type Whoami = {
+    #company : Principal;
+    #anonymous : Principal;
+  };
+
+  type Message = {
+    id  : Nat;
+    customer : Principal;
+    body : Text;
+    company : Principal;
+    time : Int;
+  };
+
+  type Conversation = {
+    conversationID : ?Text;
+    messages : [Message];
+  };
+
+  var messages : [Message] = [];
+
+  var MessageHashMap : HashMap.HashMap<Text, Conversation> = HashMap.fromIter<Text, Conversation>(conversationEntries.vals(), 10, Text.equal, Text.hash);
+
   //TODO: should take Principal as key
-   var CompanyHashMap : HashMap.HashMap<Principal, CompanyEntry> = HashMap.HashMap<Principal, CompanyEntry>(10, Principal.equal, Principal.hash);
-   var CardHashMap : HashMap.HashMap<Nat, CardEntry> = HashMap.HashMap<Nat, CardEntry>(1, Nat.equal, Hash.hash);
+  var CompanyHashMap : HashMap.HashMap<Principal, CompanyEntry> = HashMap.fromIter<Principal, CompanyEntry>(companyEntries.vals(), 10, Principal.equal, Principal.hash);
+  var CardHashMap : HashMap.HashMap<Nat, CardEntry> = HashMap.fromIter<Nat, CardEntry>(cardEntries.vals(), 1, Nat.equal, Hash.hash);
+  // let map = Map.fromIter<Text,Nat>(
+  //   entries.vals(), 10, Text.equal, Text.hash);
 
   public shared ({caller}) func getVDB_ID(cardID : Nat) : async Nat32{
     var result : Nat32 = 0;
@@ -59,6 +95,81 @@ type FloatMatrix = [FloatVector];
       };
     };
     return result;
+  }; 
+
+  public shared ({caller}) func sendMessage(account : Principal, body : Text, id : ?Text) : () {
+    let principal = CompanyHashMap.get(caller);
+    switch(principal) {
+      case(null){
+        switch(id){
+          case(null){
+            var idx : Text = Principal.toText(account) # Nat.toText(conversationID) # Principal.toText(caller);
+            var message = createMessage(account, caller, body, messageID, Time.now());
+            messageID += 1;
+            var conversation : Conversation = await createConversation(?idx, [message]);
+            MessageHashMap.put(idx, conversation);
+          }; case (?id) {
+            var conversation = MessageHashMap.get(id);
+            
+            switch(conversation) {
+              case(null) { };
+              case(?conversation) { 
+                var message = createMessage(account, caller, body, messageID, Time.now());
+                var updateMessage = {
+                  conversationID = conversation.conversationID;
+                  messages = Array.append(conversation.messages, [message])
+                };
+                var update = MessageHashMap.replace(id, updateMessage);
+                messageID += 1;
+               };
+            };
+          };
+        }   
+      }; 
+      case (?principal){
+        switch(id) {
+          case(null) { };
+          case(?id) { 
+            var conversation = MessageHashMap.get(id);
+            switch(conversation) {
+              case(null) { };
+              case(?conversation) { 
+                
+                var message = createMessage(account, caller, body, messageID, Time.now());
+                var updateMessage = {
+                  conversationID = conversation.conversationID;
+                  messages = Array.append(conversation.messages, [message])
+                };
+                var update = MessageHashMap.replace(id, updateMessage);
+                messageID += 1;
+              };
+            };
+          };
+        };
+      };
+    };
+  }; 
+
+  public func getMessage(id : Text) : async ?Conversation {
+    MessageHashMap.get(id);
+  };
+
+
+    // assert(caller != receiver);
+    // var message = createMessage()
+
+  public func createConversation(conversationID : ?Text, messages : [Message]) : async Conversation {
+    {
+      conversationID;
+      messages;
+    }
+  };
+
+
+  func createMessage(company : Principal, customer : Principal, body : Text, id : Nat, time : Int) : Message {
+    {
+      id; customer; body; company; time;
+    }
   };
 
   //connect to the vector database
@@ -169,7 +280,6 @@ public shared ({ caller }) func CheckPrincipal() : async Principal {caller};
     return "Hello, " # name # "!";
   };
   
-  //Edit company details
 
   //LogIn
   public shared query ({ caller }) func logIn() : async Bool {
@@ -193,7 +303,7 @@ public shared ({ caller }) func CheckPrincipal() : async Principal {caller};
     { vdbId : Nat32; question : Text; answer : Text };
   };
 
-  public shared ({ caller }) func createQCard(question : Text, answer : Text,keys:FloatMatrix, values:[Text]) : async () {
+  public shared ({ caller }) func createQCard(question : Text, answer : Text,keys:FloatMatrix, values:[Text]) : async Result.Result<Text, Text> {
 
     // var res: CardEntry = {};
     //find the CompanyEntry by the caller == companyEntry.principal
@@ -207,10 +317,12 @@ public shared ({ caller }) func CheckPrincipal() : async Principal {caller};
         var res_ = CardHashMap.put(cardId, _createQCard(j.vdbId, question, answer));
         Debug.print(debug_show (cardId)); // added a debug_print to let the user know what card id their card has
         cardId := cardId + 1;
+        
 
       };
-      // return res;
+      
     };
+    return #ok("Card successfuly created , your id is " # Nat.toText(cardId));
   };
 
   
@@ -232,7 +344,7 @@ public shared ({ caller }) func CheckPrincipal() : async Principal {caller};
   
   // edit and delete functions
 
-  public shared func editQCard(cardId: Nat, updatedQuestion: Text, updatedAnswer: Text): async () {
+  public shared func editQCard(cardId: Nat, updatedQuestion: Text, updatedAnswer: Text) : async () {
     var card = CardHashMap.get(cardId);
       switch(card){
         case (null) {};
@@ -255,7 +367,26 @@ public shared ({ caller }) func CheckPrincipal() : async Principal {caller};
     // return ();
   };
 
-    // -----------------------------------____________________-----------------------------
+//newfeat__nov152023__editcompanies
+  public shared ({ caller }) func editCompanyDetails (editedName : Text, editedMail : Text, editedDescription:Text) : async ?CompanyEntry {
+    var company = CompanyHashMap.get(caller);
+    switch(company) {
+      case(null){};
+      case(?company){
+        var editedCompany : CompanyEntry = {
+          vdbId = company.vdbId;
+          name = editedName;
+          email = editedMail;
+          description = editedDescription;
+          createdAt = company.createdAt;
+        };
+        CompanyHashMap.put(caller, editedCompany);
+      };
+    
+    };
+    await getCompanyProfile();
+  };
+
 
   public shared query ({ caller }) func getAllQCards(id : Nat32) : async ?[CardEntry] {
     do ? {
@@ -273,6 +404,31 @@ public shared ({ caller }) func CheckPrincipal() : async Principal {caller};
   public  shared query ({ caller }) func getCompanyProfile() : async ?CompanyEntry {
    return CompanyHashMap.get(caller);
   };
+
+  // public shared query ({ caller }) func getCompanyPrincipal() : async Principal {
+  //   let result = await getCompanyProfile();
+  //   switch (result){
+  //     case null {null};
+  //     case (?CompanyEntry){
+  //       return result.
+  //     }
+  //   }
+  // }
+
+
+  // stable UPGRADING
+  system func preupgrade() {
+    cardEntries := Iter.toArray(CardHashMap.entries());
+    companyEntries := Iter.toArray(CompanyHashMap.entries());
+  };
+
+  system func postupgrade() {
+    CardHashMap := HashMap.fromIter<Nat, CardEntry>(cardEntries.vals(), 1, Nat.equal, Hash.hash);
+    cardEntries := [];
+
+    CompanyHashMap := HashMap.fromIter<Principal, CompanyEntry>(companyEntries.vals(), 10, Principal.equal, Principal.hash);
+    companyEntries := [];
+  }
 
 };
 

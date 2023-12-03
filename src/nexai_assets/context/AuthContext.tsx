@@ -32,7 +32,7 @@ export const AuthContext = React.createContext<{
   llmReply: string;
   setLlmReply: any;
   useLLM: boolean;
-  setUseLLM: any
+  setUseLLM: any;
 }>({
   Auth: undefined,
   actor: undefined,
@@ -52,7 +52,7 @@ export const AuthContext = React.createContext<{
   llmReply: "",
   setLlmReply: undefined,
   useLLM: false,
-  setUseLLM: undefined
+  setUseLLM: undefined,
 });
 
 export const AuthProvider = ({ children }) => {
@@ -66,9 +66,9 @@ export const AuthProvider = ({ children }) => {
   );
   const navigate = useNavigate();
   const location = useLocation();
-  const [llmBoolStatus, setLlmBoolStatus] = useState(false)
-  const [llmReply, setLlmReply] = useState("")
-  const [useLLM, setUseLLM] = useState(false)
+  const [llmBoolStatus, setLlmBoolStatus] = useState(false);
+  const [llmReply, setLlmReply] = useState("");
+  const [useLLM, setUseLLM] = useState(false);
 
   // const { trackEvent } = useMatomo();
 
@@ -166,7 +166,7 @@ export const AuthProvider = ({ children }) => {
         llmReply,
         setLlmReply,
         useLLM,
-        setUseLLM
+        setUseLLM,
       }}
     >
       {children}

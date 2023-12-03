@@ -115,7 +115,7 @@ const int = [
   },
   {
     id: 6,
-    desc: "Add Nexai Canister Configuration In the dfx.json file, add a 'canisters' section if it doesn't already exist. This section defines the configuration for your canister",
+    desc: "Add Nexai Canister Configuration In the dfx.json file, add a 'canisters' section if it doesn't already exist. This section defines the configuration for your canister. Please note: You have to be running on ^0.15.0 dfx version",
     code: [
       {
         id: 1,
@@ -133,16 +133,20 @@ const int = [
       },
       {
         id: 2,
-        val: `"nexai" : {
-          "type" : "custom",
-          "candid" : "https://github.com/Nexai-app/nexi-v1/releases/download/latest/external.did",
-          "wasm" : "https://github.com/Nexai-app/nexi-v1/releases/download/latest/external.wasm",
-          "remote" : {
-              "id" : {
-                  "ic" : "ouyx4-nyaaa-aaaag-qclkq-cai"
-              }
-          }
-      }`,
+        val: `"external" : {
+          "type": "pull",
+          "id" : "ouyx4-nyaaa-aaaag-qclkq-cai"
+        },
+    
+        "nexai" : {
+          "type": "pull",
+          "id" : "aol7b-vqaaa-aaaak-aepsq-cai"
+        },
+    
+        "vdb" : {
+          "type" : "pull",
+          "id" : "fnnlb-hqaaa-aaaao-a2igq-cai"
+        }`,
       },
       {
         id: 3,
@@ -154,19 +158,22 @@ const int = [
               "module": "your_canister_module"
             },
         
+            "external" : {
+              "type": "pull",
+              "id" : "ouyx4-nyaaa-aaaag-qclkq-cai"
+            },
         
-          "nexai" : {
-            "type" : "custom",
-            "candid" : "https://github.com/Nexai-app/nexi-v1/releases/download/latest/external.did",
-            "wasm" : "https://github.com/Nexai-app/nexi-v1/releases/download/latest/external.wasm",
-            "remote" : {
-                "id" : {
-                    "ic" : "ouyx4-nyaaa-aaaag-qclkq-cai"
-                }
+            "nexai" : {
+              "type": "pull",
+              "id" : "aol7b-vqaaa-aaaak-aepsq-cai"
+            },
+        
+            "vdb" : {
+              "type" : "pull",
+              "id" : "fnnlb-hqaaa-aaaao-a2igq-cai"
             }
           }
-         },
-        }`,
+        },`,
       },
     ],
   },
@@ -186,12 +193,16 @@ const int = [
     code: [
       {
         id: 1,
-        val: "$ dfx build nexai",
+        val: "$ dfx deps pull",
       },
       {
         id: 2,
-        val: "$ dfx deploy nexai",
+        val: "$ dfx deps init",
       },
+      {
+        id: 3,
+        val: "$ dfx deps deploy"
+      }
     ],
   },
 ];

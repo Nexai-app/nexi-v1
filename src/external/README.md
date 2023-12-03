@@ -25,16 +25,20 @@ In the dfx.json file, add a "canisters" section if it doesn't already exist. Thi
 ```
 
 ```
-"nexai" : {
-    "type" : "custom",
-    "candid" : "https://github.com/Nexai-app/nexi-v1/releases/download/latest/external.did",
-    "wasm" : "https://github.com/Nexai-app/nexi-v1/releases/download/latest/external.wasm",
-    "remote" : {
-        "id" : {
-            "ic" : "CANISTER_ID HERE"
-        }
+  "external" : {
+      "type": "pull",
+      "id" : "ouyx4-nyaaa-aaaag-qclkq-cai"
+    },
+
+    "nexai" : {
+      "type": "pull",
+      "id" : "aol7b-vqaaa-aaaak-aepsq-cai"
+    },
+
+    "vdb" : {
+      "type" : "pull",
+      "id" : "fnnlb-hqaaa-aaaao-a2igq-cai"
     }
-}
 ```
 
 ```
@@ -46,34 +50,40 @@ In the dfx.json file, add a "canisters" section if it doesn't already exist. Thi
       "module": "your_canister_module"
     },
 
-    nexai" : {
-    "type" : "custom",
-    "candid" : "https://github.com/Nexai-app/nexi-v1/releases/download/latest/external.did",
-    "wasm" : "https://github.com/Nexai-app/nexi-v1/releases/download/latest/external.wasm",
-    "remote" : {
-        "id" : {
-            "ic" : "CANISTER_ID HERE"
-        }
-    }
-}
-  },
+    "external" : {
+      "type": "pull",
+      "id" : "ouyx4-nyaaa-aaaag-qclkq-cai"
+    },
 
-  
-  
-  "
-}
+    "nexai" : {
+      "type": "pull",
+      "id" : "aol7b-vqaaa-aaaak-aepsq-cai"
+    },
+
+    "vdb" : {
+      "type" : "pull",
+      "id" : "fnnlb-hqaaa-aaaao-a2igq-cai"
+    }
+  }
+},
+
 ```
 
 Step 4: Save and Close dfx.json
-Save the changes to the dfx.json file and close your code editor.
+Save the changes to the dfx.json file.
 
 Step 5: Build and Deploy
 To apply the changes, build and deploy your canister project using the DFX CLI. Run the following commands in your terminal:
 
 ```
-dfx build nexai
+dfx deps pull
 ```
 
 ```
-dfx deploy nexai
+dfx deps init
 ```
+
+```
+dfx deps deploy
+```
+
