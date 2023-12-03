@@ -23,15 +23,15 @@ import Types "./types";
 import VDBTypes "./vdbTypes";
 import Message "message";
 
-shared ({ caller }) actor class Nexai() = {
+shared  ({ caller }) actor class Nexai() = {
 
 type FloatVector = [Float];
 
 type FloatMatrix = [FloatVector];
 
   // types from types.mo file
-  public type CompanyEntry = Types.CompanyEntry;
-  public type CardEntry = Types.CardEntry;
+ type CompanyEntry = Types.CompanyEntry;
+ type CardEntry = Types.CardEntry;
 
   //new variables
   var newCard : [CardEntry] = [];
@@ -54,7 +54,7 @@ type FloatMatrix = [FloatVector];
   private stable var conversationEntries : [(Text, Conversation)] = [];
 
   //production vdb
-    private  var vdbCanisterId: Text = "fnnlb-hqaaa-aaaao-a2igq-cai";
+    private var vdbCanisterId: Text = "fnnlb-hqaaa-aaaao-a2igq-cai";
 
 
   //create HashMaps

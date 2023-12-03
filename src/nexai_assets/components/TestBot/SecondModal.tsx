@@ -94,6 +94,11 @@ function SecondModal({ isOpen, onClose }) {
           }
         })
         .catch((err) => {
+          if (err.message === "Cannot read properties of undefined (reading '0')" || "undefined is not an object (evaluating 'A.Ok[0][0]')") {
+            console.log("got here")
+            toast.error("Please Train your Assistant First")
+            return
+          }
           console.log(err);
           toast.error(err.message);
           setLoading(false);

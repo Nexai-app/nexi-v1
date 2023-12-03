@@ -1,6 +1,6 @@
 import React from "react";
 import Signin_ from "../components/Signin";
-import Footer from "../components/Footer";
+// import Footer from "../components/LandingPage/Footer";
 import Navbar from "../components/shared/Navbar";
 
 function Signin() {

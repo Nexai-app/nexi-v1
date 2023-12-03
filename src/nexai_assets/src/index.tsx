@@ -14,6 +14,7 @@ import "@fontsource/public-sans/200.css";
 import "@fontsource/public-sans/300.css";
 import "@fontsource/public-sans/400.css";
 import "@fontsource/public-sans/500.css";
+
 import "@fontsource/public-sans/600.css";
 import "@fontsource/public-sans/700.css";
 
@@ -26,7 +27,7 @@ import "@fontsource/poppins/600.css";
 import "@fontsource/poppins/700.css";
 // import { Assistant } from "nexai-assistant";
 
-const root = ReactDOM.createRoot(document.getElementById("app"));
+const root = ReactDOM.createRoot(document.getElementById("app") as HTMLElement);
 root.render(
   <React.StrictMode>
     <HashRouter>
