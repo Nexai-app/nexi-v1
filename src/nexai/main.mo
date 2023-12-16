@@ -158,7 +158,7 @@ type FloatMatrix = [FloatVector];
     // assert(caller != receiver);
     // var message = createMessage()
 
-  public func createConversation(conversationID : ?Text, messages : [Message]) : async Conversation {
+   func createConversation(conversationID : ?Text, messages : [Message]) : async Conversation {
     {
       conversationID;
       messages;
