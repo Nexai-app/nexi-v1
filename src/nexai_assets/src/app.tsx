@@ -18,11 +18,11 @@ import { useInitLLM } from "../functions/webLlm";
 const App = () => {
   const { handleAuthenticated, setIIAuth, actor } =
     useContext(AuthContext);
-  const [actorRestated, setActorRestated] = useState<boolean>(false);
+  const [actorRestated, setActorRestated] = useState<boolean>(true);
   const profile = useAppSelector((state) => state.profile);
   const { updateProfile } = useUpdateProfile();
   const { init } = useInitTransformers();
-  const { initLLM } = useInitLLM()
+  const { initLLM } = useInitLLM();
 
   const toast = useToast({
     containerStyle: {
@@ -36,7 +36,7 @@ const App = () => {
     // initializes the ml
     //initialize llm
     const call = async () => {
-      await initLLM();
+      // await initLLM();
       await init();
     };
     const runOnMounth = async () => {
@@ -71,8 +71,8 @@ const App = () => {
       }
     };
 
-    runOnMounth();
-    call();
+    // runOnMounth();
+    // call();
   }, []);
 
   if (actorRestated) {

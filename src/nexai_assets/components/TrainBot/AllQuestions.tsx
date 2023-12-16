@@ -42,7 +42,7 @@ const AllQuestions = () => {
   useEffect(() => {
     const callMe = () => {
       actor
-        .getAllQCards(Number(vdbId))
+        ?.getAllQCards(Number(vdbId))
         .then((v) => {
           console.log(v);
           setArr(v[0]);

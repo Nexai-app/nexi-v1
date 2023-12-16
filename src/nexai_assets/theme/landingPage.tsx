@@ -1,6 +1,6 @@
 import { extendTheme } from "@chakra-ui/react";
 
-const theme = extendTheme({
+const landingPageTheme = extendTheme({
   colors: {
     primary: {
       50: "#341A41",
@@ -16,11 +16,11 @@ const theme = extendTheme({
   styles: {
     global: {
       body: {
-        bg: "#341A41",
+        // bg: "#341A41",
         // backgroundSize: "cover",
         // backgroundRepeat: "no-repeat",
         // backgroundPosition: "center",
-        color: "white",
+        // color: "white",
       },
     },
   },
@@ -30,4 +30,4 @@ const theme = extendTheme({
   },
 });
 
-export default theme;
+export default landingPageTheme;
