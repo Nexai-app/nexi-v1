@@ -267,7 +267,7 @@ public shared ({ caller }) func CheckPrincipal() : async Principal {caller};
     return await getCompanyProfile();
   };
 
-  public shared ({ caller }) func getAllCompanies() : async ([(Principal, Types.CompanyEntry)]) {
+  public shared query ({ caller }) func getAllCompanies() : async ([(Principal, Types.CompanyEntry)]) {
     Iter.toArray(CompanyHashMap.entries());
   };
 
