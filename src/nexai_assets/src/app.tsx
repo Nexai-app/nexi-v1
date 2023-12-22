@@ -10,6 +10,7 @@ import Dashboard from "../pages/Dashboard";
 import TrainBot from "../pages/TrainBot";
 import AllQuestion from "../components/TrainBot/AllQuestions";
 import IntegrationPage from "../pages/IntegrationPage";
+import Chat from "../pages/ChatPage";
 import { useAppSelector } from "../redux-toolkit/hooks";
 import { useUpdateProfile } from "../functions";
 import { useInitTransformers } from "../functions/ml";
@@ -86,6 +87,7 @@ const App = () => {
           <Route path="train-bot" element={<TrainBot />} />
           <Route path="my-questions" element={<AllQuestion />} />
           <Route path="integration" element={<IntegrationPage />} />
+          <Route path="chat" element={<Chat />} />
         </Routes>
       </React.Fragment>
     );

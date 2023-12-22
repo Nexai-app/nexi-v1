@@ -1,5 +1,11 @@
 /* eslint-disable react/require-default-props */
-import React, { createContext, Dispatch, FC, ReactNode, useState } from "react";
+import React, {
+  createContext,
+  Dispatch,
+  FC,
+  ReactNode,
+  useState,
+} from "react";
 import { Box, Flex } from "@chakra-ui/react";
 import Sidebar from "../Sidebar";
 //   import LayoutHeader from "@components/shared/layout/LayoutHeader";
@@ -38,7 +44,7 @@ const LayoutContainer: FC<Props> = ({ children }) => {
           pt={10}
           ml={{ md: "15%" }}
           w={{ md: "85%" }}
-          px={{ base: "30px", md: "80px" }}
+          px={{ base: "30px", md: "20px" }}
           bg="#341A41"
           h={{ base: "500px", sm: "100%" }}
           pb="30px"
