@@ -25,7 +25,7 @@ function index() {
       <Box bg="#341A41">
         <Box
           display={{ base: "flex", md: "none" }}
-          dir="flex-end"
+          justifyContent="flex-end"
           m={8}
           onClick={onOpen}
           color="white"
