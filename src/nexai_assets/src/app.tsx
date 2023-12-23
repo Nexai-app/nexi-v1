@@ -8,7 +8,7 @@ import Lest from "../pages/Lest";
 import Signup from "../pages/Signup";
 import Dashboard from "../pages/Dashboard";
 import TrainBot from "../pages/TrainBot";
-import AllQuestion from "../components/TrainBot/AllQuestions";
+import AllQuestion from "../pages/AllQuestions";
 import IntegrationPage from "../pages/IntegrationPage";
 import Chat from "../pages/ChatPage";
 import { useAppSelector } from "../redux-toolkit/hooks";

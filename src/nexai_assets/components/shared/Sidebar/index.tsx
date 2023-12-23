@@ -16,6 +16,7 @@ import { LayoutContext } from "../LayoutContainer";
 import _chakra_ui_system from "@chakra-ui/system";
 import { AiFillHome } from "react-icons/ai";
 import { BsJournalCode, BsPeopleFill } from "react-icons/bs";
+import { FaChalkboardTeacher } from "react-icons/fa";
 import { RiChat2Fill } from "react-icons/ri";
 
 export const MenuNavigation = [
@@ -40,6 +41,28 @@ export const MenuNavigation = [
     },
     title: "Home",
     route: "/dashboard",
+  },
+  {
+    icon: {
+      inactive: (
+        <Icon
+          as={FaChalkboardTeacher}
+          boxSize={6}
+          alignSelf={`center`}
+          mr={`15px`}
+        />
+      ),
+      active: (
+        <Icon
+          as={FaChalkboardTeacher}
+          boxSize={6}
+          alignSelf={`center`}
+          mr={`15px`}
+        />
+      ),
+    },
+    title: "Train Assistant",
+    route: "/train-bot",
   },
   {
     icon: {

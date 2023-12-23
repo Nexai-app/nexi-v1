@@ -55,7 +55,6 @@ const AllQuestions = () => {
   }, []);
   return (
     <Box color="white">
-      <Navbar />
       <Box>
         <Flex justify="center" direction="column" align="center">
           <Flex
