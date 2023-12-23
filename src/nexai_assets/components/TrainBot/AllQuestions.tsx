@@ -54,7 +54,7 @@ const AllQuestions = () => {
     callMe();
   }, []);
   return (
-    <Box color="white">
+    <Box mt={8} color="white">
       <Box>
         <Flex justify="center" direction="column" align="center">
           <Flex
