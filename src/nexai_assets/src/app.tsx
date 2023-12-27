@@ -40,6 +40,7 @@ const App = () => {
       // await initLLM();
       await init();
     };
+
     const runOnMounth = async () => {
       const authClient = await AuthClient.create();
       if (await authClient.isAuthenticated()) {

@@ -201,8 +201,8 @@ const int = [
       },
       {
         id: 3,
-        val: "$ dfx deps deploy"
-      }
+        val: "$ dfx deps deploy",
+      },
     ],
   },
 ];
@@ -267,6 +267,7 @@ function Integration() {
                   Company Description: {profile?.description}
                 </Text>
                 <Text>Company Email: {profile?.email}</Text>
+                <Text>Principal: {profile?.email}</Text>
               </Box>
             </Show>
           </Box>
@@ -286,6 +287,7 @@ function Integration() {
               <Text>Company Name: {profile?.name}</Text>
               <Text>Company Description: {profile?.description}</Text>
               <Text>Company Email: {profile?.email}</Text>
+              <Text>Principal: {profile?.email}</Text>
             </Box>
             {/*    <AspectRatio maxW="560px" ratio={1}>
               <iframe
