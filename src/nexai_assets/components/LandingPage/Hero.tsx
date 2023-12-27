@@ -23,8 +23,7 @@ import { TypeAnimation } from "react-type-animation";
 const Hero: React.FC = () => {
   const [isLargerThan650] = useMediaQuery("(min-width: 650px)");
 
-  const { Auth, iiAuth, changeAuthStatus, QuickAuthWithoutII } =
-    useContext(AuthContext);
+  const { Auth, iiAuth, changeAuthStatus } = useContext(AuthContext);
   const navigate = useNavigate();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const { actor, setLoggedIn } = useContext(AuthContext);
@@ -94,7 +93,7 @@ const Hero: React.FC = () => {
               <Button
                 variant={`ghost`}
                 color={`white`}
-                onClick={QuickAuthWithoutII}
+                onClick={Auth}
               >
                 Sign In
               </Button>

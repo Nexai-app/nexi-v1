@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Actor, Identity, ActorSubclass } from "@dfinity/agent";
 import { AuthClient } from "@dfinity/auth-client";
-import { Secp256k1KeyIdentity } from "@dfinity/identity-secp256k1";
 import { canisterId, createActor } from "../../declarations/nexai";
 import { useLocation, useNavigate } from "react-router-dom";
 import { _SERVICE } from "../../declarations/nexai/nexai.did";
@@ -26,7 +25,6 @@ export const AuthContext = React.createContext<{
   setLlmReply: any;
   useLLM: boolean;
   setUseLLM: any;
-  QuickAuthWithoutII: any;
 }>({
   Auth: undefined,
   actor: undefined,
@@ -47,7 +45,6 @@ export const AuthContext = React.createContext<{
   setLlmReply: undefined,
   useLLM: false,
   setUseLLM: undefined,
-  QuickAuthWithoutII: undefined,
 });
 
 export const AuthProvider = ({ children }) => {
@@ -66,31 +63,6 @@ export const AuthProvider = ({ children }) => {
   const [useLLM, setUseLLM] = useState(false);
 
   // const { trackEvent } = useMatomo();
-
-  //a clone of Auth func but this uses Secp256k1KeyIdentity
-  // instead of II or NFID
-  async function QuickAuthWithoutII(e) {
-    e.preventDefault();
-    console.log("You clicked me.");
-
-    function generateIdentity(): any {
-      let identity = Secp256k1KeyIdentity.fromSeedPhrase(
-        "tank barely gap arrow will nothing hawk canal birth donkey token despair genius loan boat raccoon virus member lounge flame plug method outside toss"
-      );
-      return identity;
-    }
-    let owner = generateIdentity();
-    const whoami_actor = createActor(canisterId as string, {
-      agentOptions: {
-        identity: owner,
-      },
-    });
-    setActor(whoami_actor);
-    if (location.pathname === "/") {
-      navigate("/");
-    }
-    setIIAuth(true);
-  }
 
   async function Auth(e) {
     e.preventDefault();
@@ -187,7 +159,6 @@ export const AuthProvider = ({ children }) => {
         setLlmReply,
         useLLM,
         setUseLLM,
-        QuickAuthWithoutII,
       }}
     >
       {children}
