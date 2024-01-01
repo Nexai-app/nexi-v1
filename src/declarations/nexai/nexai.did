@@ -37,30 +37,33 @@ type Nexai =
                                  principal;
                                  CompanyEntry__1;
                                }) query;
+   getAllConnections: () -> (opt vec ConnectionEntry) query;
    getAllQCards: (nat32) -> (opt vec CardEntry) query;
    getAnAnswer: (nat) -> (opt CardEntry);
    getCompanyProfile: () -> (opt CompanyEntry) query;
-   getMessage: (text) -> (opt Conversation);
+   getMessage: (nat) -> (opt MessageEntry);
+   getMessages: (principal) -> (vec MessageEntry) query;
    getVDB_ID: (nat) -> (nat32);
    greet: (text) -> (text);
    logIn: () -> (bool) query;
    makeManager: () -> (bool);
-   sendMessage: (principal, text, opt text) -> () oneway;
+   sendMessage: (principal, text) -> () oneway;
  };
-type Message = 
+type MessageEntry = 
  record {
    body: text;
-   company: principal;
-   customer: principal;
-   id: nat;
-   time: int;
+   connectionId: nat;
+   createdAt: int;
+   sender: principal;
  };
 type FloatVector = vec float64;
 type FloatMatrix = vec FloatVector;
-type Conversation = 
+type ConnectionEntry = 
  record {
-   conversationID: opt text;
-   messages: vec Message;
+   account1: principal;
+   account2: principal;
+   createdAt: int;
+   id: nat;
  };
 type CompanyEntry__1 = 
  record {

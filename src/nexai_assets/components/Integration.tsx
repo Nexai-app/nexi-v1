@@ -7,8 +7,6 @@ import {
   Text,
   Hide,
   Show,
-  AspectRatio,
-  Center,
 } from "@chakra-ui/react";
 import { AiOutlineCopy } from "react-icons/ai";
 import { useAppSelector } from "../redux-toolkit/hooks";
@@ -267,7 +265,7 @@ function Integration() {
                   Company Description: {profile?.description}
                 </Text>
                 <Text>Company Email: {profile?.email}</Text>
-                <Text>Principal: {profile?.email}</Text>
+                <Text>Principal: {profile?.principal}</Text>
               </Box>
             </Show>
           </Box>
@@ -287,7 +285,7 @@ function Integration() {
               <Text>Company Name: {profile?.name}</Text>
               <Text>Company Description: {profile?.description}</Text>
               <Text>Company Email: {profile?.email}</Text>
-              <Text>Principal: {profile?.email}</Text>
+              <Text>Principal: {profile?.principal}</Text>
             </Box>
             {/*    <AspectRatio maxW="560px" ratio={1}>
               <iframe

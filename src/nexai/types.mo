@@ -25,4 +25,19 @@ module {
         answer : Text /* just sleep and your btc would be transfered*/;
     };
 
+    // connection Id is the key
+    public type MessageEntry = {
+        connectionId: Nat;
+        sender:Principal;
+        body: Text;
+        createdAt: Int;
+    };
+    public  type ConnectionType = {
+    id: Nat;
+    account1: Principal;
+    account2: Principal;
+    createdAt: Int;
+
+  };
+
 };

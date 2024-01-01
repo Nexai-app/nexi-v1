@@ -12,6 +12,7 @@ import {
   Textarea,
 } from "@chakra-ui/react";
 import React from "react";
+import {useGetAllConnections} from "../../functions/index"
 
 type ChatType = {
   sender: SenderType;
@@ -104,6 +105,10 @@ const dummyEnquires: EnquiryType[] = [
 ];
 
 function index() {
+  const {getEnquires} = useGetAllConnections()
+  React.useEffect(() => {
+     getEnquires()
+  }, [])
   return (
     <Box w="100%">
       <Flex justifyContent={"space-between"}>
@@ -275,3 +280,4 @@ function MessageCard(props: MessageProp) {
     </Box>
   );
 }
+

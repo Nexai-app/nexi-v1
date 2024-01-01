@@ -73,7 +73,7 @@ const App = () => {
       }
     };
 
-    // runOnMounth();
+    runOnMounth();
     // call();
   }, []);
 

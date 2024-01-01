@@ -32,6 +32,8 @@ type FloatMatrix = [FloatVector];
   // types from types.mo file
  type CompanyEntry = Types.CompanyEntry;
  type CardEntry = Types.CardEntry;
+ type MessageEntry = Types.MessageEntry;
+ type ConnectionEntry = Types.ConnectionType;
 
   //new variables
   var newCard : [CardEntry] = [];
@@ -40,21 +42,22 @@ type FloatMatrix = [FloatVector];
   //for stability
   private stable var cardId : Nat = 1;
 
-  private stable var conversationID : Nat = 0;
+  private stable var connectionID : Nat = 0;
   private stable var messageID : Nat = 0;
 
 
   
-  // private  var vdbCanisterId: Text = "bw4dl-smaaa-aaaaa-qaacq-cai";
+  private  var vdbCanisterId: Text = "bd3sg-teaaa-aaaaa-qaaba-cai";
   
   private stable var cardEntries : [(Nat, CardEntry)] = [];
   private stable var companyEntries : [(Principal, CompanyEntry)] = [];
 
   
   private stable var conversationEntries : [(Text, Conversation)] = [];
-
+  private stable var connectionEntries : [(Nat, ConnectionEntry)] = [];
+  private stable var messageEntries : [(Nat, MessageEntry)] = [];
   //production vdb
-    private var vdbCanisterId: Text = "fnnlb-hqaaa-aaaao-a2igq-cai";
+    // private var vdbCanisterId: Text = "fnnlb-hqaaa-aaaao-a2igq-cai";
 
 
   //create HashMaps
@@ -77,13 +80,20 @@ type FloatMatrix = [FloatVector];
     messages : [Message];
   };
 
+
+
   var messages : [Message] = [];
 
-  var MessageHashMap : HashMap.HashMap<Text, Conversation> = HashMap.fromIter<Text, Conversation>(conversationEntries.vals(), 10, Text.equal, Text.hash);
+  // var MessageHashMap : HashMap.HashMap<Text, Conversation> = HashMap.fromIter<Text, Conversation>(conversationEntries.vals(), 10, Text.equal, Text.hash);
 
+  var ConnectionHashMap: HashMap.HashMap<Nat, ConnectionEntry> = HashMap.fromIter<Nat, ConnectionEntry>(connectionEntries.vals(), 10, Nat.equal, Hash.hash);
+  var MessageHashMap_ : HashMap.HashMap<Nat, MessageEntry> = HashMap.fromIter<Nat, MessageEntry>(messageEntries.vals(), 10, Nat.equal, Hash.hash);
   //TODO: should take Principal as key
   var CompanyHashMap : HashMap.HashMap<Principal, CompanyEntry> = HashMap.fromIter<Principal, CompanyEntry>(companyEntries.vals(), 10, Principal.equal, Principal.hash);
   var CardHashMap : HashMap.HashMap<Nat, CardEntry> = HashMap.fromIter<Nat, CardEntry>(cardEntries.vals(), 1, Nat.equal, Hash.hash);
+
+
+
   // let map = Map.fromIter<Text,Nat>(
   //   entries.vals(), 10, Text.equal, Text.hash);
 
@@ -97,80 +107,189 @@ type FloatMatrix = [FloatVector];
     return result;
   }; 
 
-  public shared ({caller}) func sendMessage(account : Principal, body : Text, id : ?Text) : () {
-    let principal = CompanyHashMap.get(caller);
-    switch(principal) {
-      case(null){
-        switch(id){
-          case(null){
-            var idx : Text = Principal.toText(account) # Nat.toText(conversationID) # Principal.toText(caller);
-            var message = createMessage(account, caller, body, messageID, Time.now());
-            messageID += 1;
-            var conversation : Conversation = await createConversation(?idx, [message]);
-            MessageHashMap.put(idx, conversation);
-          }; case (?id) {
-            var conversation = MessageHashMap.get(id);
-            
-            switch(conversation) {
-              case(null) { };
-              case(?conversation) { 
-                var message = createMessage(account, caller, body, messageID, Time.now());
-                var updateMessage = {
-                  conversationID = conversation.conversationID;
-                  messages = Array.append(conversation.messages, [message])
-                };
-                var update = MessageHashMap.replace(id, updateMessage);
-                messageID += 1;
-               };
-            };
-          };
-        }   
-      }; 
-      case (?principal){
-        switch(id) {
-          case(null) { };
-          case(?id) { 
-            var conversation = MessageHashMap.get(id);
-            switch(conversation) {
-              case(null) { };
-              case(?conversation) { 
-                
-                var message = createMessage(account, caller, body, messageID, Time.now());
-                var updateMessage = {
-                  conversationID = conversation.conversationID;
-                  messages = Array.append(conversation.messages, [message])
-                };
-                var update = MessageHashMap.replace(id, updateMessage);
-                messageID += 1;
-              };
-            };
-          };
+  public shared ({caller}) func sendMessage (account: Principal, body: Text): async ?() {
+    var sent: Bool = false;
+    do ? {
+     var size =  ConnectionHashMap.size();
+         Debug.print(debug_show(size));
+    if (size == 0 ) {
+        var newConnection: ConnectionEntry = createConnection(connectionID, account, caller, Time.now() );
+        ConnectionHashMap.put(connectionID, newConnection);
+        connectionID := connectionID + 1;
+        //create message with the connection Id
+        var newMessage = createMessage(newConnection.id, caller, body, Time.now()); 
+        MessageHashMap_.put(messageID, newMessage);
+         messageID := messageID + 1;
+         sent := true;
+    } else  {
+    for ((i, j) in ConnectionHashMap.entries()) {
+      if (((j.account1 == caller) and (j.account2 == account )) or ((j.account1 == account) and (j.account2 == caller )) ) {
+        // THERE IS A CONNCETION PAIRING THIER CONVERSATION ALREADY
+        var newMessage = createMessage(j.id, caller, body, Time.now());
+       MessageHashMap_.put(messageID, newMessage);
+        messageID := messageID + 1;
+        sent := true;
+
+      }
+    }
+    };
+    if (sent == false) {
+        // NO CONNECTION; NEW USER
+        //create a new connetion
+        var newConnection: ConnectionEntry = createConnection(connectionID, account, caller, Time.now() );
+        ConnectionHashMap.put(connectionID, newConnection);
+        connectionID := connectionID + 1;
+        //create message with the connection Id
+        var newMessage = createMessage(newConnection.id, caller, body, Time.now()); 
+        MessageHashMap_.put(messageID, newMessage);
+         messageID := messageID + 1;
+
+      
+    }
+    }
+  };
+
+  public shared query ({caller}) func getMessages (account:Principal) : async [MessageEntry] {
+    // var checkForConnection = await checkConnection(account, caller);
+  //  if (checkForConnection == true) {
+    var msgs = Buffer.Buffer<MessageEntry>(0);
+    for ((i,j) in ConnectionHashMap.entries()) {
+      if (((j.account1 == caller) and (j.account2 == account )) or ((j.account1 == account) and (j.account2 == caller ))) {
+        for ((k,l) in MessageHashMap_.entries()) {
+          if(l.connectionId == j.id) {
+
+         msgs.add(l);
+          }
+        };
+      }
+    };
+    msgs.toArray(); 
+  //  }
+  };
+
+  /* ({caller}) */ func checkConnection (account:Principal, caller:Principal): async  Bool {
+  var val: Bool = false;
+   for ((i, j) in ConnectionHashMap.entries()) {
+      if (((j.account1 == caller) and (j.account2 == account )) or ((j.account1 == account) and (j.account2 == caller )) ) {
+          val := true;
+
+      }
+      else {
+
+        val := false;
+      
+      }
+    };
+   return val;
+ };
+
+ public shared query ({caller}) func getAllConnections (): async ?[ConnectionEntry] {
+   do ? {
+      var buff = Buffer.Buffer<ConnectionEntry>(0);
+      for ((i, j) in ConnectionHashMap.entries()) {
+        if ((j.account1 == caller) or (j.account2 == caller)){
+          buff.add(j);
         };
       };
-    };
-  }; 
+      buff.toArray();
 
-  public func getMessage(id : Text) : async ?Conversation {
-    MessageHashMap.get(id);
+    };
+ };
+  //to get all messages between two users
+  //
+
+   func createConnection(id:Nat, account1:Principal, account2:Principal, createdAt:Int) : ConnectionEntry {
+    {
+      id;
+      account1;
+      account2;
+      createdAt;
+    }
+  };
+
+
+  func createMessage(connectionId: Nat, sender : Principal, body : Text,  createdAt : Int) : MessageEntry {
+    {
+      connectionId;  sender; body; createdAt;
+    }
+  };
+
+  // public shared ({caller}) func sendMessage(account : Principal, body : Text, id : ?Text) : () {
+  //   let principal = CompanyHashMap.get(caller);
+  //   switch(principal) {
+  //     case(null){
+  //       switch(id){
+  //         // when there is no conversation ID,(id) create a new message and a new conversation
+  //         case(null){
+  //           var idx : Text = Principal.toText(account) # Nat.toText(conversationID) # Principal.toText(caller);
+  //           var message = createMessage(account, caller, body, messageID, Time.now());
+  //           messageID += 1;
+  //           var conversation : Conversation = await createConversation(?idx, [message]);
+  //           MessageHashMap.put(idx, conversation);
+  //         }; case (?id) {
+  //        // when there is conversation ID, find the conversation by the (id) and append to the array
+  //           var conversation = MessageHashMap.get(id);
+            
+  //           switch(conversation) {
+  //             case(null) { };
+  //             case(?conversation) { 
+  //               var message = createMessage(account, caller, body, messageID, Time.now());
+  //               var updateMessage = {
+  //                 conversationID = conversation.conversationID;
+  //                 messages = Array.append(conversation.messages, [message])
+  //               };
+  //               var update = MessageHashMap.replace(id, updateMessage);
+  //               messageID += 1;
+  //              };
+  //           };
+  //         };
+  //       }   
+  //     }; 
+  //     case (?principal){
+  //       switch(id) {
+  //         case(null) { };
+  //         case(?id) { 
+  //           var conversation = MessageHashMap.get(id);
+  //           switch(conversation) {
+  //             case(null) { };
+  //             case(?conversation) { 
+                
+  //               var message = createMessage(account, caller, body, messageID, Time.now());
+  //               var updateMessage = {
+  //                 conversationID = conversation.conversationID;
+  //                 messages = Array.append(conversation.messages, [message])
+  //               };
+  //               var update = MessageHashMap.replace(id, updateMessage);
+  //               messageID += 1;
+  //             };
+  //           };
+  //         };
+  //       };
+  //     };
+  //   };
+  // }; 
+
+  public func getMessage(id : Nat) : async ?MessageEntry {
+    MessageHashMap_.get(id);
   };
 
 
     // assert(caller != receiver);
     // var message = createMessage()
 
-   func createConversation(conversationID : ?Text, messages : [Message]) : async Conversation {
-    {
-      conversationID;
-      messages;
-    }
-  };
+  //  func createConversation(conversationID : ?Text, messages : [Message]) : async Conversation {
+  //   {
+  //     conversationID;
+  //     messages;
+  //   }
+  // };
 
 
-  func createMessage(company : Principal, customer : Principal, body : Text, id : Nat, time : Int) : Message {
-    {
-      id; customer; body; company; time;
-    }
-  };
+  // func createMessage(company : Principal, customer : Principal, body : Text, id : Nat, time : Int) : Message {
+  //   {
+  //     id; customer; body; company; time;
+  //   }
+  // };
 
   //connect to the vector database
   let vdb = actor(vdbCanisterId): actor { 
@@ -232,7 +351,7 @@ return similar;
 };
 
 
-public shared ({ caller }) func CheckPrincipal() : async Principal {caller};
+public shared query ({ caller }) func CheckPrincipal() : async Principal {caller};
 
   func _makeCompany(name : Text, email : Text, description:Text, vdbId:Nat32, createdAt : Int) : Types.CompanyEntry {
     {

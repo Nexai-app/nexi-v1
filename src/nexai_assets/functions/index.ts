@@ -11,7 +11,13 @@ import {
   useAppSelector,
 } from "../redux-toolkit/hooks";
 import toast from "react-hot-toast";
-import { QuestionAnswerT } from "../redux-toolkit/types";
+import { EnquiryT, QuestionAnswerT } from "../redux-toolkit/types";
+import { ConnectionEntry } from "../../declarations/nexai/nexai.did";
+import {
+  addEnquiry,
+  clearEnqury,
+} from "../redux-toolkit/slice/EnquirySlice";
+import { Principal } from "@dfinity/principal";
 
 // not useful, cll this function inside any page it is needed
 export const useLogIn = () => {
@@ -52,15 +58,18 @@ export const useUpdateProfile = () => {
       actor
         ?.getCompanyProfile()
         .then((profile) => {
-          const data = {
-            vdbId: profile[0].vdbId,
-            name: profile[0].name,
-            description: profile[0].description,
-            email: profile[0].email,
-          };
-          dispatch(addProfile(data));
-          setLoading(false);
-          addQA();
+          actor?.CheckPrincipal().then((p) => {
+            const data = {
+              vdbId: profile[0].vdbId,
+              name: profile[0].name,
+              description: profile[0].description,
+              email: profile[0].email,
+              principal: p.toText(),
+            };
+            dispatch(addProfile(data));
+            setLoading(false);
+            addQA();
+          });
         })
         .catch((err) => {
           toast.error("you were logged out");
@@ -108,6 +117,68 @@ const useAddQA = () => {
         });
     };
     return { loading, addQA };
+  } catch (err) {
+    setLoading(false);
+    console.debug("[nexai]", err);
+  }
+};
+
+// chat functions
+
+export const useGetAllConnections = () => {
+  const [loading, setLoading] = useState(false);
+  const { actor } = useContext(AuthContext);
+  const user = useAppSelector((state) => state.profile);
+  const dispatch = useAppDispatch();
+  try {
+    const getEnquires = () => {
+      actor
+        ?.getAllConnections()
+        .then((connections: [ConnectionEntry[]]) => {
+          if (connections) {
+            dispatch(clearEnqury());
+            var c = connections[0];
+            for (let i = 0; i < c.length; i++) {
+              var data: EnquiryT = {
+                id: Number(c[i].id),
+                account1: c[i].account1.toText(),
+                account2: c[i].account2.toText(),
+                createdAt: Number(c[i].createdAt),
+              };
+              dispatch(addEnquiry(data));
+            }
+          }
+        })
+        .catch((err) => {
+          console.debug("[nexai]", err);
+          setLoading(false);
+        });
+    };
+    return { loading, getEnquires };
+  } catch (err) {
+    setLoading(false);
+    console.debug("[nexai]", err);
+  }
+};
+
+export const useGetMessage = () => {
+  const [loading, setLoading] = useState(false);
+  const { actor } = useContext(AuthContext);
+  const user = useAppSelector((state) => state.profile);
+  const dispatch = useAppDispatch();
+  try {
+  } catch (err) {
+    setLoading(false);
+    console.log(err);
+  }
+};
+
+export const useSendMessage = () => {
+  const [loading, setLoading] = useState(false);
+  const { actor } = useContext(AuthContext);
+  const user = useAppSelector((state) => state.profile);
+  const dispatch = useAppDispatch();
+  try {
   } catch (err) {
     setLoading(false);
     console.log(err);
