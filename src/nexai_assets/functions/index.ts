@@ -11,13 +11,24 @@ import {
   useAppSelector,
 } from "../redux-toolkit/hooks";
 import toast from "react-hot-toast";
-import { EnquiryT, QuestionAnswerT } from "../redux-toolkit/types";
-import { ConnectionEntry } from "../../declarations/nexai/nexai.did";
+import {
+  ConversationT,
+  EnquiryT,
+  QuestionAnswerT,
+} from "../redux-toolkit/types";
+import {
+  ConnectionEntry,
+  MessageEntry,
+} from "../../declarations/nexai/nexai.did";
 import {
   addEnquiry,
   clearEnqury,
 } from "../redux-toolkit/slice/EnquirySlice";
 import { Principal } from "@dfinity/principal";
+import {
+  addConvo,
+  clearConvo,
+} from "../redux-toolkit/slice/ConversationSlice";
 
 // not useful, cll this function inside any page it is needed
 export const useLogIn = () => {
@@ -161,15 +172,41 @@ export const useGetAllConnections = () => {
   }
 };
 
-export const useGetMessage = () => {
+export const useGetConversation = () => {
   const [loading, setLoading] = useState(false);
   const { actor } = useContext(AuthContext);
   const user = useAppSelector((state) => state.profile);
   const dispatch = useAppDispatch();
   try {
+    const handleGetConversation = (principal: Principal) => {
+      actor
+        ?.getMessages(principal)
+        .then((data: [MessageEntry]) => {
+          if (data) {
+            dispatch(clearConvo());
+            for (let i = 0; i < data.length; i++) {
+              var param: ConversationT = {
+                id: Number(data[i].createdAt),
+                connectionId: Number(data[i].connectionId),
+                sender: data[i].sender.toText(),
+                body: data[i].body,
+                createdAt: Number(data[i].createdAt),
+              };
+              dispatch(addConvo(param));
+              console.log(data);
+            }
+          }
+        })
+        .catch((err) => {
+          setLoading(false);
+          console.debug("[nexai]", err);
+        });
+    };
+
+    return { handleGetConversation, loading };
   } catch (err) {
+    console.debug("[nexai]", err);
     setLoading(false);
-    console.log(err);
   }
 };
 

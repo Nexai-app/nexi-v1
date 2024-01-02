@@ -20,3 +20,11 @@ export type EnquiryT = {
   account2: string;
   createdAt: number;
 };
+
+export type ConversationT = {
+  id: number;
+  connectionId: number;
+  sender: string;
+  body: string;
+  createdAt: number;
+};

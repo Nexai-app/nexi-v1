@@ -12,7 +12,14 @@ import {
   Textarea,
 } from "@chakra-ui/react";
 import React from "react";
-import {useGetAllConnections} from "../../functions/index"
+import {
+  useGetAllConnections,
+  useGetConversation,
+} from "../../functions/index";
+import { Principal } from "@dfinity/principal";
+import { useAppSelector } from "../../redux-toolkit/hooks";
+import { EnquiryT } from "../../redux-toolkit/types";
+import { AuthContext } from "../../context/AuthContext";
 
 type ChatType = {
   sender: SenderType;
@@ -105,10 +112,12 @@ const dummyEnquires: EnquiryType[] = [
 ];
 
 function index() {
-  const {getEnquires} = useGetAllConnections()
+  const { getEnquires } = useGetAllConnections();
+  const { handleGetConversation } = useGetConversation();
+
   React.useEffect(() => {
-     getEnquires()
-  }, [])
+    getEnquires();
+  }, []);
   return (
     <Box w="100%">
       <Flex justifyContent={"space-between"}>
@@ -137,6 +146,23 @@ function index() {
 export default index;
 
 function ChatArea() {
+  const { customerPrincipal } = React.useContext(AuthContext);
+  const user = useAppSelector((state) => state.profile);
+  const conversation = useAppSelector((state) => state.conversation);
+
+  const { handleGetConversation } = useGetConversation();
+
+  React.useEffect(() => {
+    if (customerPrincipal.length < 63) {
+      console.debug("[nexai] - get conv func not called");
+
+      return;
+    } else {
+      console.debug("[nexai] - get conv func called");
+      handleGetConversation(Principal.fromText(customerPrincipal));
+    }
+  }, [customerPrincipal]);
+
   return (
     <Box w="100%">
       {/* Header */}
@@ -164,17 +190,19 @@ function ChatArea() {
           msOverflowStyle: "none", // Hide scrollbar for Internet Explorer and Edge
         }}
       >
-        {dummyChat.map((c, index) => (
+        {conversation?.map((c, index) => (
           <Flex
             mb={3}
             key={index}
             justifyContent={
-              c.sender == SenderType["anonymous"]
-                ? "flex-start"
-                : "flex-end"
+              c.sender != user.principal ? "flex-start" : "flex-end"
             }
           >
-            <MessageCard sender={c.sender} />
+            <MessageCard
+              sender={c.sender}
+              body={c.body}
+              time={c.createdAt}
+            />
           </Flex>
         ))}
       </Box>
@@ -201,6 +229,15 @@ function ChatArea() {
 }
 
 function EnquiryList() {
+  const enquiry = useAppSelector((state) => state.enquiry);
+  const { setCustomerPrincipal } = React.useContext(AuthContext);
+
+  const handleSetActveConversation = (
+    id: number,
+    principal: string
+  ) => {
+    setCustomerPrincipal(principal);
+  };
   return (
     <Box w="30%">
       <Text fontSize="20px" fontWeight={"700"} mb={8}>
@@ -217,7 +254,7 @@ function EnquiryList() {
           msOverflowStyle: "none", // Hide scrollbar for Internet Explorer and Edge
         }}
       >
-        {dummyEnquires.map((d) => (
+        {enquiry?.map((d: EnquiryT) => (
           <Box
             px={8}
             key={d.id}
@@ -226,6 +263,9 @@ function EnquiryList() {
             h="154px"
             w="348px"
             bg="#271732"
+            onClick={(e) =>
+              handleSetActveConversation(d.id, d.account2)
+            }
           >
             {/* top part */}
             <Flex justifyContent={"space-between"}>
@@ -239,10 +279,10 @@ function EnquiryList() {
             <Box h="1px" w="full" bg="white" />
             {/* down part */}
             <Text mt={2} fontSize="10px">
-              {d.time}
+              {d.createdAt}
             </Text>
 
-            <Text fontSize="14px">{d.message}</Text>
+            <Text fontSize="14px">{d.account2}</Text>
           </Box>
         ))}
       </Box>
@@ -251,9 +291,13 @@ function EnquiryList() {
 }
 
 type MessageProp = {
-  sender: SenderType;
+  sender: string;
+  body: string;
+  time: number;
 };
 function MessageCard(props: MessageProp) {
+  const user = useAppSelector((state) => state.profile);
+
   return (
     <Box
       display={"flex"}
@@ -265,19 +309,13 @@ function MessageCard(props: MessageProp) {
       py={4}
       borderRadius={5}
       justifyContent={
-        props.sender === SenderType["anonymous"]
-          ? "flex-start"
-          : "flex-end"
+        props.sender !== user.principal ? "flex-start" : "flex-end"
       }
     >
-      <Text fontSize="14">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum,
-        consequatur.
-      </Text>
+      <Text fontSize="14">{props.body}</Text>
       <Text fontSize="10" display="flex" justifyContent="flex-end">
-        12.32pm
+        {props.time}
       </Text>
     </Box>
   );
 }
-
