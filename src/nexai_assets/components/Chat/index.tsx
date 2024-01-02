@@ -146,22 +146,35 @@ function index() {
 export default index;
 
 function ChatArea() {
-  const { customerPrincipal } = React.useContext(AuthContext);
+  const { customerPrincipal, actor } = React.useContext(AuthContext);
   const user = useAppSelector((state) => state.profile);
   const conversation = useAppSelector((state) => state.conversation);
-
+  const [sending, setSending] = React.useState(false);
+  const [message, setMessage] = React.useState("");
   const { handleGetConversation } = useGetConversation();
 
   React.useEffect(() => {
     if (customerPrincipal.length < 63) {
-      console.debug("[nexai] - get conv func not called");
-
       return;
     } else {
-      console.debug("[nexai] - get conv func called");
       handleGetConversation(Principal.fromText(customerPrincipal));
     }
   }, [customerPrincipal]);
+
+  const handleSendMessage = () => {
+    setSending(true);
+    actor
+      .sendMessage(Principal.fromText(customerPrincipal), message)
+      .then((data) => {
+        //TODO: save the message with redux instead of calling get message
+        handleGetConversation(Principal.fromText(customerPrincipal));
+        setSending(false);
+      })
+      .catch((err) => {
+        setSending(false);
+        console.debug("nexai", err);
+      });
+  };
 
   return (
     <Box w="100%">
@@ -217,9 +230,11 @@ function ChatArea() {
           h={"70px"}
           placeholder="Enter Message"
           resize="none"
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
         />
         <InputRightElement w="150px" h={"70px"} mr="1.5rem">
-          <Button size="md" px={6} py={6}>
+          <Button size="md" px={6} py={6} onClick={handleSendMessage}>
             Send Message
           </Button>
         </InputRightElement>
