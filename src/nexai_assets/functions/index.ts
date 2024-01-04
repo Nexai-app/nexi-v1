@@ -186,7 +186,7 @@ export const useGetConversation = () => {
             dispatch(clearConvo());
             for (let i = 0; i < data.length; i++) {
               var param: ConversationT = {
-                id: Number(data[i].createdAt),
+                id: Number(data[i].id),
                 connectionId: Number(data[i].connectionId),
                 sender: data[i].sender.toText(),
                 body: data[i].body,

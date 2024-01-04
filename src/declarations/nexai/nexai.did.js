@@ -34,6 +34,7 @@ export const idlFactory = ({ IDL }) => {
     'answer' : IDL.Text,
   });
   const MessageEntry = IDL.Record({
+    'id' : IDL.Nat,
     'body' : IDL.Text,
     'createdAt' : IDL.Int,
     'connectionId' : IDL.Nat,
@@ -97,7 +98,11 @@ export const idlFactory = ({ IDL }) => {
     'greet' : IDL.Func([IDL.Text], [IDL.Text], []),
     'logIn' : IDL.Func([], [IDL.Bool], ['query']),
     'makeManager' : IDL.Func([], [IDL.Bool], []),
-    'sendMessage' : IDL.Func([IDL.Principal, IDL.Text], [], ['oneway']),
+    'sendMessage' : IDL.Func(
+        [IDL.Principal, IDL.Text],
+        [IDL.Opt(IDL.Null)],
+        [],
+      ),
   });
   return Nexai;
 };

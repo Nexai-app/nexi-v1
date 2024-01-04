@@ -29,6 +29,7 @@ export interface ConnectionEntry {
 export type FloatMatrix = Array<FloatVector>;
 export type FloatVector = Array<number>;
 export interface MessageEntry {
+  'id' : bigint,
   'body' : string,
   'createdAt' : bigint,
   'connectionId' : bigint,
@@ -65,7 +66,7 @@ export interface Nexai {
   'greet' : ActorMethod<[string], string>,
   'logIn' : ActorMethod<[], boolean>,
   'makeManager' : ActorMethod<[], boolean>,
-  'sendMessage' : ActorMethod<[Principal, string], undefined>,
+  'sendMessage' : ActorMethod<[Principal, string], [] | [null]>,
 }
 export type Result = { 'ok' : string } |
   { 'err' : string };

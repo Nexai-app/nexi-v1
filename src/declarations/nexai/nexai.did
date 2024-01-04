@@ -47,13 +47,14 @@ type Nexai =
    greet: (text) -> (text);
    logIn: () -> (bool) query;
    makeManager: () -> (bool);
-   sendMessage: (principal, text) -> () oneway;
+   sendMessage: (principal, text) -> (opt null);
  };
 type MessageEntry = 
  record {
    body: text;
    connectionId: nat;
    createdAt: int;
+   id: nat;
    sender: principal;
  };
 type FloatVector = vec float64;

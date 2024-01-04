@@ -27,16 +27,17 @@ module {
 
     // connection Id is the key
     public type MessageEntry = {
+        id:Nat;
         connectionId: Nat;
         sender:Principal;
         body: Text;
         createdAt: Int;
     };
     public  type ConnectionType = {
-    id: Nat;
-    account1: Principal;
-    account2: Principal;
-    createdAt: Int;
+        id: Nat;
+        account1: Principal;
+        account2: Principal;
+        createdAt: Int;
 
   };
 

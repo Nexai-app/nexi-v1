@@ -117,7 +117,7 @@ type FloatMatrix = [FloatVector];
         ConnectionHashMap.put(connectionID, newConnection);
         connectionID := connectionID + 1;
         //create message with the connection Id
-        var newMessage = createMessage(newConnection.id, caller, body, Time.now()); 
+        var newMessage = createMessage(messageID, newConnection.id, caller, body, Time.now()); 
         MessageHashMap_.put(messageID, newMessage);
          messageID := messageID + 1;
          sent := true;
@@ -125,7 +125,7 @@ type FloatMatrix = [FloatVector];
     for ((i, j) in ConnectionHashMap.entries()) {
       if (((j.account1 == caller) and (j.account2 == account )) or ((j.account1 == account) and (j.account2 == caller )) ) {
         // THERE IS A CONNCETION PAIRING THIER CONVERSATION ALREADY
-        var newMessage = createMessage(j.id, caller, body, Time.now());
+        var newMessage = createMessage(messageID, j.id, caller, body, Time.now());
        MessageHashMap_.put(messageID, newMessage);
         messageID := messageID + 1;
         sent := true;
@@ -140,7 +140,7 @@ type FloatMatrix = [FloatVector];
         ConnectionHashMap.put(connectionID, newConnection);
         connectionID := connectionID + 1;
         //create message with the connection Id
-        var newMessage = createMessage(newConnection.id, caller, body, Time.now()); 
+        var newMessage = createMessage(messageID, newConnection.id, caller, body, Time.now()); 
         MessageHashMap_.put(messageID, newMessage);
          messageID := messageID + 1;
 
@@ -208,9 +208,9 @@ type FloatMatrix = [FloatVector];
   };
 
 
-  func createMessage(connectionId: Nat, sender : Principal, body : Text,  createdAt : Int) : MessageEntry {
+  func createMessage(id: Nat, connectionId: Nat, sender : Principal, body : Text,  createdAt : Int) : MessageEntry {
     {
-      connectionId;  sender; body; createdAt;
+      id; connectionId;  sender; body; createdAt;
     }
   };
 

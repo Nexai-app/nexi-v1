@@ -161,6 +161,10 @@ function ChatArea() {
   const [message, setMessage] = React.useState("");
   const { handleGetConversation } = useGetConversation();
 
+  const sortedConversation = conversation
+    .slice()
+    .sort((a, b) => a.id - b.id);
+
   React.useEffect(() => {
     if (customerPrincipal.length < 63) {
       return;
@@ -227,7 +231,7 @@ function ChatArea() {
               msOverflowStyle: "none", // Hide scrollbar for Internet Explorer and Edge
             }}
           >
-            {conversation?.map((c, index) => (
+            {sortedConversation?.map((c, index) => (
               <Flex
                 mb={3}
                 key={index}
