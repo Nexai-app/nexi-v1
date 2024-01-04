@@ -22,7 +22,6 @@ import { BiLogOut } from "react-icons/bi";
 import { ChatIcon } from "@chakra-ui/icons";
 import { AiOutlineBook } from "react-icons/ai";
 import FirstModal from "./TestBot/FirstModal";
-import { useUpdateProfile } from "../functions";
 // import Banner from "./Banner";
 
 const MainDashboard = () => {
@@ -39,7 +38,6 @@ const MainDashboard = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
   const [isFirstModalOpen, setIsFirstModalOpen] = useState(false);
-  const { updateProfile } = useUpdateProfile();
 
   const onCloseFirstModal = () => {
     setIsFirstModalOpen(false);
@@ -57,9 +55,6 @@ const MainDashboard = () => {
     setIsSecondModalOpen(true);
   };
 
-  useEffect(() => {
-    updateProfile();
-  }, []);
   const [overlay, setOverlay] = React.useState(<OverlayOne />);
 
   const logOut = () => {
