@@ -17,6 +17,7 @@ import {
   useGetConversation,
 } from "../../functions/index";
 import { Principal } from "@dfinity/principal";
+import DateFormatter from "../../utils/DateFormatter";
 import { useAppSelector } from "../../redux-toolkit/hooks";
 import { EnquiryT } from "../../redux-toolkit/types";
 import { AuthContext } from "../../context/AuthContext";
@@ -118,6 +119,13 @@ function index() {
   React.useEffect(() => {
     getEnquires();
   }, []);
+
+  //GET ENQUIRY EVERY 5 SECONDS
+
+  // setInterval(() => {
+  //   getEnquires();
+  // }, 5000);
+
   return (
     <Box w="100%">
       <Flex justifyContent={"space-between"}>
@@ -161,17 +169,26 @@ function ChatArea() {
     }
   }, [customerPrincipal]);
 
+  //GETCONVERSATION EVERY 5 SECONDS
+  // setInterval(() => {
+  //   if (customerPrincipal.length === 63) {
+  //     handleGetConversation(Principal.fromText(customerPrincipal));
+  //   }
+  // }, 5000);
+
   const handleSendMessage = () => {
     setSending(true);
     actor
       .sendMessage(Principal.fromText(customerPrincipal), message)
-      .then((data) => {
+      .then(() => {
+        setSending(false);
+        setMessage("");
         //TODO: save the message with redux instead of calling get message
         handleGetConversation(Principal.fromText(customerPrincipal));
-        setSending(false);
       })
       .catch((err) => {
         setSending(false);
+        setMessage("");
         console.debug("nexai", err);
       });
   };
@@ -179,66 +196,94 @@ function ChatArea() {
   return (
     <Box w="100%">
       {/* Header */}
-      <Box>
-        <Flex justify="space-between" gap={2} align="center" mb={4}>
-          <Flex gap={2} align="center">
-            <Avatar />
-            <Text mt={3}>Anonymous</Text>
-          </Flex>
-          <Box display="flex">
-            <Text>NX0001</Text>
+      {customerPrincipal.length === 63 ? (
+        <Box>
+          <Box>
+            <Flex
+              justify="space-between"
+              gap={2}
+              align="center"
+              mb={4}
+            >
+              <Flex gap={2} align="center">
+                <Avatar />
+                <Text mt={3}>Anonymous</Text>
+              </Flex>
+              <Box display="flex">
+                <Text>{customerPrincipal}</Text>
+              </Box>
+            </Flex>
           </Box>
-        </Flex>
-      </Box>
-      {/* chat body */}
-      <Box
-        h={"60vh"}
-        maxH={"60vh"}
-        overflowY={"scroll"}
-        css={{
-          "&::-webkit-scrollbar": {
-            display: "none", // Hide scrollbar for Chrome, Safari, and Opera
-          },
-          scrollbarWidth: "none", // Hide scrollbar for Firefox
-          msOverflowStyle: "none", // Hide scrollbar for Internet Explorer and Edge
-        }}
-      >
-        {conversation?.map((c, index) => (
-          <Flex
-            mb={3}
-            key={index}
-            justifyContent={
-              c.sender != user.principal ? "flex-start" : "flex-end"
-            }
+          {/* chat body */}
+          <Box
+            h={"60vh"}
+            maxH={"60vh"}
+            overflowY={"scroll"}
+            css={{
+              "&::-webkit-scrollbar": {
+                display: "none", // Hide scrollbar for Chrome, Safari, and Opera
+              },
+              scrollbarWidth: "none", // Hide scrollbar for Firefox
+              msOverflowStyle: "none", // Hide scrollbar for Internet Explorer and Edge
+            }}
           >
-            <MessageCard
-              sender={c.sender}
-              body={c.body}
-              time={c.createdAt}
-            />
-          </Flex>
-        ))}
-      </Box>
-      {/* input area */}
+            {conversation?.map((c, index) => (
+              <Flex
+                mb={3}
+                key={index}
+                justifyContent={
+                  c.sender != user.principal
+                    ? "flex-start"
+                    : "flex-end"
+                }
+              >
+                <MessageCard
+                  sender={c.sender}
+                  body={c.body}
+                  time={c.createdAt}
+                />
+              </Flex>
+            ))}
+          </Box>
+          {/* input area */}
 
-      <InputGroup h={"70px"} mt={2} size="lg" bg="#271732">
-        <Textarea
-          focusBorderColor="none"
-          _placeholder={{ paddingTop: "15px", color: "white" }}
-          borderColor={"none"}
-          pr="200px"
-          h={"70px"}
-          placeholder="Enter Message"
-          resize="none"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-        />
-        <InputRightElement w="150px" h={"70px"} mr="1.5rem">
-          <Button size="md" px={6} py={6} onClick={handleSendMessage}>
-            Send Message
-          </Button>
-        </InputRightElement>
-      </InputGroup>
+          <InputGroup h={"70px"} mt={2} size="lg" bg="#271732">
+            <Textarea
+              focusBorderColor="none"
+              _placeholder={{ paddingTop: "15px", color: "white" }}
+              borderColor={"none"}
+              pr="200px"
+              h={"70px"}
+              placeholder="Enter Message"
+              resize="none"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+            />
+            <InputRightElement w="150px" h={"70px"} mr="1.5rem">
+              <Button
+                size="md"
+                px={6}
+                py={6}
+                onClick={handleSendMessage}
+                isLoading={sending}
+                isDisabled={sending || message.length === 0}
+              >
+                Send Message
+              </Button>
+            </InputRightElement>
+          </InputGroup>
+        </Box>
+      ) : (
+        <Box
+          display="flex"
+          justifyContent={"center"}
+          alignItems="center"
+        >
+          <Text fontSize="38px" fontWeight="700" textAlign={"center"}>
+            Start a conversation by clicking on one of the Disputes :)
+          </Text>
+        </Box>
+      )}
     </Box>
   );
 }
@@ -256,7 +301,7 @@ function EnquiryList() {
   return (
     <Box w="30%">
       <Text fontSize="20px" fontWeight={"700"} mb={8}>
-        Enquires
+        Disputes
       </Text>
       <Box
         h={"60vh"}
@@ -278,6 +323,16 @@ function EnquiryList() {
             h="154px"
             w="348px"
             bg="#271732"
+            cursor="pointer"
+            transform="auto"
+            _hover={{
+              transform: `scale(1.09)`,
+              transition: "transform 0.3s ease",
+            }}
+            _active={{
+              transform: `scale(1.09)`,
+              transition: "transform 0.3s ease",
+            }}
             onClick={(e) =>
               handleSetActveConversation(d.id, d.account2)
             }
@@ -294,7 +349,7 @@ function EnquiryList() {
             <Box h="1px" w="full" bg="white" />
             {/* down part */}
             <Text mt={2} fontSize="10px">
-              {d.createdAt}
+              {DateFormatter(d.createdAt)}
             </Text>
 
             <Text fontSize="14px">{d.account2}</Text>
@@ -322,6 +377,7 @@ function MessageCard(props: MessageProp) {
       maxW="70%"
       px={7}
       py={4}
+      cursor="pointer"
       borderRadius={5}
       justifyContent={
         props.sender !== user.principal ? "flex-start" : "flex-end"
@@ -329,7 +385,7 @@ function MessageCard(props: MessageProp) {
     >
       <Text fontSize="14">{props.body}</Text>
       <Text fontSize="10" display="flex" justifyContent="flex-end">
-        {props.time}
+        {DateFormatter(props.time)}
       </Text>
     </Box>
   );
