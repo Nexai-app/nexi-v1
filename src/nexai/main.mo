@@ -24,9 +24,9 @@ import VDBTypes "./vdbTypes";
 
 shared ({ caller }) actor class Nexai() = {
 
-type FloatVector = [Float];
+  type FloatVector = [Float];
 
-type FloatMatrix = [FloatVector];
+  type FloatMatrix = [FloatVector];
 
   // types from types.mo file
   public type CompanyEntry = Types.CompanyEntry;
@@ -39,13 +39,12 @@ type FloatMatrix = [FloatVector];
   //for stability
   private stable var cardId : Nat = 1;
   // private  var vdbCanisterId: Text = "bw4dl-smaaa-aaaaa-qaacq-cai";
-  
+
   private stable var cardEntries : [(Nat, CardEntry)] = [];
   private stable var companyEntries : [(Principal, CompanyEntry)] = [];
 
   //production vdb
-    private  var vdbCanisterId: Text = "fnnlb-hqaaa-aaaao-a2igq-cai";
-
+  private var vdbCanisterId : Text = "fnnlb-hqaaa-aaaao-a2igq-cai";
 
   //create HashMaps
 
@@ -55,91 +54,90 @@ type FloatMatrix = [FloatVector];
   // let map = Map.fromIter<Text,Nat>(
   //   entries.vals(), 10, Text.equal, Text.hash);
 
-  public shared ({caller}) func getVDB_ID(cardID : Nat) : async Nat32{
+  public shared ({ caller }) func getVDB_ID(cardID : Nat) : async Nat32 {
     var result : Nat32 = 0;
     for ((card, entry) in CardHashMap.entries()) {
-      if (card == cardID){
+      if (card == cardID) {
         result := entry.vdbId;
       };
     };
     return result;
-  }; 
+  };
 
   //connect to the vector database
-  let vdb = actor(vdbCanisterId): actor { 
-        add_manager: (Principal) -> async Bool;
-        remove_manager: (Principal) -> async Bool; 
-        add_accesser: (Principal) ->  async Bool;
-        remove_accesser: (Principal) -> async Bool;
-        register: (Text) -> async  VDBTypes.Result_2;
-        build_index: (Nat32) -> async  VDBTypes.Result;
-        get_similar: (Nat32, FloatVector, Int32) -> async (VDBTypes.Result_1);
-        append_keys_values: (Nat32,FloatMatrix,  [Text]) -> async VDBTypes.Result;
-       }; 
+  let vdb = actor (vdbCanisterId) : actor {
+    add_manager : (Principal) -> async Bool;
+    remove_manager : (Principal) -> async Bool;
+    add_accesser : (Principal) -> async Bool;
+    remove_accesser : (Principal) -> async Bool;
+    register : (Text) -> async VDBTypes.Result_2;
+    build_index : (Nat32) -> async VDBTypes.Result;
+    get_similar : (Nat32, FloatVector, Int32) -> async (VDBTypes.Result_1);
+    append_keys_values : (Nat32, FloatMatrix, [Text]) -> async VDBTypes.Result;
+  };
 
-// SPECIAL FUNCS TO THE VDB
+  // SPECIAL FUNCS TO THE VDB
 
-public shared ({caller}) func makeManager(): async Bool {
-  try {
-    return let res = await vdb.add_manager(caller);
-  } catch err {
+  public shared ({ caller }) func makeManager() : async Bool {
+    try {
+      return let res = await vdb.add_manager(caller);
+    } catch err {
       throw (err);
-  }
-  
-};
+    };
 
-public func VDBRegister (description:Text): async VDBTypes.Result_2 {
-  let register = await vdb.register(description);
-  Debug.print(debug_show(register));
-  return register;
+  };
 
-};
+  public func VDBRegister(description : Text) : async VDBTypes.Result_2 {
+    let register = await vdb.register(description);
+    Debug.print(debug_show (register));
+    return register;
 
+  };
 
-// public  shared  ({ caller }) func createCompany() : async ?CompanyEntry {
-//    //firstly create comapny on the vdb
-//    let res = await VDBRegister(description);
+  // public  shared  ({ caller }) func createCompany() : async ?CompanyEntry {
+  //    //firstly create comapny on the vdb
+  //    let res = await VDBRegister(description);
 
-//   };
+  //   };
 
-public func VDBAddQandA (companyId:Nat32, keys:FloatMatrix, values:[Text]): async VDBTypes.Result {
-  // try {
- let qa = await vdb.append_keys_values(companyId, keys, values);
- Debug.print(debug_show(qa));
-  return qa;
-  //  } catch (err) {
-  //   throw Error.reject("Error communicating with the VDB");
-  //  }
-};
+  public func VDBAddQandA(companyId : Nat32, keys : FloatMatrix, values : [Text]) : async VDBTypes.Result {
+    // try {
+    let qa = await vdb.append_keys_values(companyId, keys, values);
+    Debug.print(debug_show (qa));
+    return qa;
+    //  } catch (err) {
+    //   throw Error.reject("Error communicating with the VDB");
+    //  }
+  };
 
-public func VDBBuildIndex (companyId: Nat32): async VDBTypes.Result {
-  let build = await vdb.build_index(companyId);
-  return build;
-} ;
+  public func VDBBuildIndex(companyId : Nat32) : async VDBTypes.Result {
+    let build = await vdb.build_index(companyId);
+    return build;
+  };
 
+  public func VDBGetSimilar(companyId : Nat32, question : FloatVector, limit : Int32) : async VDBTypes.Result_1 {
+    let similar = await vdb.get_similar(companyId, question, limit);
+    Debug.print(debug_show (similar));
+    return similar;
+  };
 
-public func VDBGetSimilar (companyId:Nat32, question: FloatVector, limit:Int32): async VDBTypes.Result_1{
-let similar = await vdb.get_similar(companyId, question, limit);
-  Debug.print(debug_show(similar));
-return similar;
-};
+  public shared ({ caller }) func CheckPrincipal() : async Principal {
+    caller;
+  };
 
-
-public shared ({ caller }) func CheckPrincipal() : async Principal {caller};
-
-  func _makeCompany(name : Text, email : Text, description:Text, vdbId:Nat32, createdAt : Int) : Types.CompanyEntry {
+  func _makeCompany(name : Text, email : Text, description : Text, vdbId : Nat32, createdAt : Int) : Types.CompanyEntry {
     {
       name : Text;
       email : Text;
-      description: Text;
-      vdbId: Nat32;
+      description : Text;
+      vdbId : Nat32;
       createdAt : Int;
     };
   };
 
-//TODO: call the VDBRegister inside this func and save the return entry into the hashmap
-//rather than calling the functions seperately on the frontend
-  public shared ({ caller }) func createCompany(name : Text, email : Text, description:Text, vdbId:Nat32) : async ?CompanyEntry {
+  //TODO: call the VDBRegister inside this func and save the return entry into the hashmap
+  //rather than calling the functions seperately on the frontend
+  public shared ({ caller }) func createCompany(name : Text, email : Text, description : Text, vdbId : Nat32) : async ?CompanyEntry {
     var newUser : Bool = true;
 
     for ((i, j) in CompanyHashMap.entries()) {
@@ -172,7 +170,7 @@ public shared ({ caller }) func CheckPrincipal() : async Principal {caller};
   public func greet(name : Text) : async Text {
     return "Hello, " # name # "!";
   };
-  
+
   //Edit company details
 
   //LogIn
@@ -192,34 +190,29 @@ public shared ({ caller }) func CheckPrincipal() : async Principal {caller};
    *
    */
 
-
   func _createQCard(vdbId : Nat32, question : Text, answer : Text) : CardEntry {
     { vdbId : Nat32; question : Text; answer : Text };
   };
 
-  public shared ({ caller }) func createQCard(question : Text, answer : Text,keys:FloatMatrix, values:[Text]) : async Result.Result<Text, Text> {
+  public shared ({ caller }) func createQCard(question : Text, answer : Text, keys : FloatMatrix, values : [Text]) : async Result.Result<Text, Text> {
 
     // var res: CardEntry = {};
     //find the CompanyEntry by the caller == companyEntry.principal
     for ((i, j) in CompanyHashMap.entries()) {
       if (i == caller) {
 
-        
-        var savetovdb =  await VDBAddQandA(j.vdbId, keys, values);
-        var buildIndex =  await VDBBuildIndex(j.vdbId);
-        Debug.print(debug_show(savetovdb));
+        var savetovdb = await VDBAddQandA(j.vdbId, keys, values);
+        var buildIndex = await VDBBuildIndex(j.vdbId);
+        Debug.print(debug_show (savetovdb));
         var res_ = CardHashMap.put(cardId, _createQCard(j.vdbId, question, answer));
         Debug.print(debug_show (cardId)); // added a debug_print to let the user know what card id their card has
         cardId := cardId + 1;
-        
 
       };
-      
+
     };
     return #ok("Card successfuly created , your id is " # Nat.toText(cardId));
   };
-
-  
 
   public shared ({ caller }) func getAnAnswer(id : Nat) : async ?CardEntry {
 
@@ -235,39 +228,39 @@ public shared ({ caller }) func CheckPrincipal() : async Principal {caller};
     };
 
   };
-  
+
   // edit and delete functions
 
-  public shared func editQCard(cardId: Nat, updatedQuestion: Text, updatedAnswer: Text) : async () {
+  public shared func editQCard(cardId : Nat, updatedQuestion : Text, updatedAnswer : Text) : async () {
     var card = CardHashMap.get(cardId);
-      switch(card){
-        case (null) {};
-        case(?card){
-          var newCard : CardEntry = {
-            vdbId = card.vdbId; 
-            question = updatedQuestion; 
-            answer = updatedAnswer;
-          };
-          CardHashMap.put(cardId, newCard);
+    switch (card) {
+      case (null) {};
+      case (?card) {
+        var newCard : CardEntry = {
+          vdbId = card.vdbId;
+          question = updatedQuestion;
+          answer = updatedAnswer;
         };
-        
+        CardHashMap.put(cardId, newCard);
       };
-      // "You have successfully edited whatever";
+
+    };
+    // "You have successfully edited whatever";
   };
-    
+
   // delete function
-  public shared func deleteQCard (cardId: Nat): async () {
+  public shared func deleteQCard(cardId : Nat) : async () {
     CardHashMap.delete(cardId);
     // return ();
   };
 
-    // -----------------------------------____________________-----------------------------
+  // -----------------------------------____________________-----------------------------
 
   public shared query ({ caller }) func getAllQCards(id : Nat32) : async ?[CardEntry] {
     do ? {
       var buff = Buffer.Buffer<CardEntry>(0);
       for ((i, j) in CardHashMap.entries()) {
-        if (j.vdbId == id){
+        if (j.vdbId == id) {
           buff.add(j);
         };
       };
@@ -276,10 +269,9 @@ public shared ({ caller }) func CheckPrincipal() : async Principal {caller};
     };
   };
 
-  public  shared query ({ caller }) func getCompanyProfile() : async ?CompanyEntry {
-   return CompanyHashMap.get(caller);
+  public shared query ({ caller }) func getCompanyProfile() : async ?CompanyEntry {
+    return CompanyHashMap.get(caller);
   };
-
 
   // stable UPGRADING
   system func preupgrade() {
@@ -293,7 +285,6 @@ public shared ({ caller }) func CheckPrincipal() : async Principal {caller};
 
     CompanyHashMap := HashMap.fromIter<Principal, CompanyEntry>(companyEntries.vals(), 10, Principal.equal, Principal.hash);
     companyEntries := [];
-  }
+  };
 
 };
-
