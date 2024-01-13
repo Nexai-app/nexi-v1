@@ -9,6 +9,11 @@
         "init_guide": "null"
       }
     },
+    "nexai_llm": {
+      "candid": "src/nexai_llm/nexai_llm.did",
+      "package": "nexai_llm",
+      "type": "rust"
+    },
     "external": {
       "main": "src/external/main.mo",
       "type": "motoko",
@@ -33,6 +38,6 @@
       "packtool": ""
     }
   },
-  "dfx": "0.15.0",
+  "dfx": "0.15.1",
   "version": 1
 }

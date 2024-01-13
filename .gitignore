@@ -16,3 +16,6 @@ dist/
 
 
 src/declarations
+
+# Rust
+target/
