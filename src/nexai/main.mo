@@ -47,7 +47,7 @@ type FloatMatrix = [FloatVector];
 
 
   
-  private  var vdbCanisterId: Text = "be2us-64aaa-aaaaa-qaabq-cai";
+  private  var vdbCanisterId: Text = "br5f7-7uaaa-aaaaa-qaaca-cai";
   
   private stable var cardEntries : [(Nat, CardEntry)] = [];
   private stable var companyEntries : [(Principal, CompanyEntry)] = [];
@@ -214,82 +214,12 @@ type FloatMatrix = [FloatVector];
     }
   };
 
-  // public shared ({caller}) func sendMessage(account : Principal, body : Text, id : ?Text) : () {
-  //   let principal = CompanyHashMap.get(caller);
-  //   switch(principal) {
-  //     case(null){
-  //       switch(id){
-  //         // when there is no conversation ID,(id) create a new message and a new conversation
-  //         case(null){
-  //           var idx : Text = Principal.toText(account) # Nat.toText(conversationID) # Principal.toText(caller);
-  //           var message = createMessage(account, caller, body, messageID, Time.now());
-  //           messageID += 1;
-  //           var conversation : Conversation = await createConversation(?idx, [message]);
-  //           MessageHashMap.put(idx, conversation);
-  //         }; case (?id) {
-  //        // when there is conversation ID, find the conversation by the (id) and append to the array
-  //           var conversation = MessageHashMap.get(id);
-            
-  //           switch(conversation) {
-  //             case(null) { };
-  //             case(?conversation) { 
-  //               var message = createMessage(account, caller, body, messageID, Time.now());
-  //               var updateMessage = {
-  //                 conversationID = conversation.conversationID;
-  //                 messages = Array.append(conversation.messages, [message])
-  //               };
-  //               var update = MessageHashMap.replace(id, updateMessage);
-  //               messageID += 1;
-  //              };
-  //           };
-  //         };
-  //       }   
-  //     }; 
-  //     case (?principal){
-  //       switch(id) {
-  //         case(null) { };
-  //         case(?id) { 
-  //           var conversation = MessageHashMap.get(id);
-  //           switch(conversation) {
-  //             case(null) { };
-  //             case(?conversation) { 
-                
-  //               var message = createMessage(account, caller, body, messageID, Time.now());
-  //               var updateMessage = {
-  //                 conversationID = conversation.conversationID;
-  //                 messages = Array.append(conversation.messages, [message])
-  //               };
-  //               var update = MessageHashMap.replace(id, updateMessage);
-  //               messageID += 1;
-  //             };
-  //           };
-  //         };
-  //       };
-  //     };
-  //   };
-  // }; 
+
 
   public func getMessage(id : Nat) : async ?MessageEntry {
     MessageHashMap_.get(id);
   };
 
-
-    // assert(caller != receiver);
-    // var message = createMessage()
-
-  //  func createConversation(conversationID : ?Text, messages : [Message]) : async Conversation {
-  //   {
-  //     conversationID;
-  //     messages;
-  //   }
-  // };
-
-
-  // func createMessage(company : Principal, customer : Principal, body : Text, id : Nat, time : Int) : Message {
-  //   {
-  //     id; customer; body; company; time;
-  //   }
-  // };
 
   //connect to the vector database
   let vdb = actor(vdbCanisterId): actor { 
@@ -353,6 +283,8 @@ return similar;
 
 public shared query ({ caller }) func CheckPrincipal() : async Principal {caller};
 
+
+//TOD): make documentId field a migrate
   func _makeCompany(name : Text, email : Text, description:Text, vdbId:Nat32, createdAt : Int) : Types.CompanyEntry {
     {
       name : Text;
@@ -360,7 +292,12 @@ public shared query ({ caller }) func CheckPrincipal() : async Principal {caller
       description: Text;
       vdbId: Nat32;
       createdAt : Int;
+      documentId: ?Int;
     };
+  };
+
+  public shared ({caller}) func createDocumentId (id:Nat) : Nat {
+
   };
 
 //TODO: call the VDBRegister inside this func and save the return entry into the hashmap
@@ -379,7 +316,7 @@ public shared query ({ caller }) func CheckPrincipal() : async Principal {caller
     };
     //This basically means there is a new user
     if (newUser == true) {
-      CompanyHashMap.put(caller, _makeCompany(name, email, description, vdbId, Time.now()));
+      CompanyHashMap.put(caller, _makeCompany(name, email, description, vdbId, Time.now(), null));
 
     };
 

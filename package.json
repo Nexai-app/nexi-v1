@@ -16,10 +16,10 @@
     "copy:types": "rsync -avr .dfx/$(echo ${DFX_NETWORK:-'**'})/canisters/** --exclude='assets/' --exclude='idl/' --exclude='*.wasm' --exclude='*.most'"
   },
   "devDependencies": {
-    "@dfinity/agent": "0.15.4",
-    "@dfinity/auth-client": "^0.15.4",
-    "@dfinity/candid": "0.15.4",
-    "@dfinity/principal": "0.15.4",
+    "@dfinity/agent": "^0.20.2",
+    "@dfinity/auth-client": "^0.20.2",
+    "@dfinity/candid": "^0.20.2",
+    "@dfinity/principal": "^0.20.2",
     "@types/react": "^18.0.33",
     "@types/react-dom": "^18.0.11",
     "@vitejs/plugin-react": "^3.1.0",
@@ -51,7 +51,7 @@
     "@chakra-ui/icons": "^2.0.18",
     "@chakra-ui/react": "^2.5.5",
     "@dfinity/authentication": "^0.14.2",
-    "@dfinity/identity": "^0.15.4",
+    "@dfinity/identity": "^0.20.2",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@fontsource/poppins": "^4.5.10",

@@ -1,13 +1,28 @@
 import React, { useState } from "react";
 import { Actor, Identity, ActorSubclass } from "@dfinity/agent";
 import { AuthClient } from "@dfinity/auth-client";
-import { canisterId, createActor } from "../../declarations/nexai";
+import { createActor } from "../../declarations/nexai";
+import {
+  // canisterId as vdbCanisterId,
+  createActor as vdbCreateActor,
+} from "../../vector-database-icp/src/declarations/vector_database_backend";
+import { _SERVICE as _vdbSERVICE } from "../../vector-database-icp/src/declarations/vector_database_backend/vector_database_backend.did";
 import { useLocation, useNavigate } from "react-router-dom";
 import { _SERVICE } from "../../declarations/nexai/nexai.did";
+
+/* 
+ERROR WITH GETTING CANISTER ID FROM DECLARATION SO WE DO IT MANUALLY
+Canister ID is required, but received undefined instead. 
+If you are using automatically generated declarations, 
+this may be because your 
+application is not setting the canister ID in process.env correctly. */
+const vdbCanisterId = "br5f7-7uaaa-aaaaa-qaaca-cai";
+const canisterId = "avqkn-guaaa-aaaaa-qaaea-cai";
 
 export const AuthContext = React.createContext<{
   Auth: any;
   actor: ActorSubclass<_SERVICE> | undefined;
+  vdbActor: ActorSubclass<_vdbSERVICE> | undefined;
   setActor: any;
   iiAuth: boolean;
   setIIAuth: any;
@@ -30,6 +45,7 @@ export const AuthContext = React.createContext<{
 }>({
   Auth: undefined,
   actor: undefined,
+  vdbActor: undefined,
   setActor: undefined,
   iiAuth: false,
   setIIAuth: false,
@@ -54,6 +70,8 @@ export const AuthContext = React.createContext<{
 export const AuthProvider = ({ children }) => {
   // const tour_ = useContext(ShepherdTourContext);
   const [actor, setActor] = useState<ActorSubclass<_SERVICE>>();
+  const [vdbActor, setVdbActor] =
+    useState<ActorSubclass<_vdbSERVICE>>();
   const [iiAuth, setIIAuth] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
   const [pipelineInit, setPipelineInit] = useState(false);
@@ -131,7 +149,14 @@ export const AuthProvider = ({ children }) => {
         identity,
       },
     });
+
+    const vdb_actor = vdbCreateActor(vdbCanisterId as string, {
+      agentOptions: {
+        identity,
+      },
+    });
     setActor(whoami_actor);
+    setVdbActor(vdb_actor);
 
     // Invalidate identity then render login when user goes idle
     authClient.idleManager?.registerCallback(() => {
@@ -167,6 +192,7 @@ export const AuthProvider = ({ children }) => {
         setUseLLM,
         customerPrincipal,
         setCustomerPrincipal,
+        vdbActor,
       }}
     >
       {children}

@@ -12,5 +12,9 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true /* Specify JSX code generation: 'preserve', 'react-native', or 'react'. */
   },
-  "include": ["src/**/*", "custom.d.ts"]
+  "include": ["src/**/*", "custom.d.ts"],
+  "exclude": [
+    "src/vector_database_icp/**",
+    "src/vector-database-icp/**"
+  ]
 }

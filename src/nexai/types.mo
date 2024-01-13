@@ -13,6 +13,7 @@ module {
         description: Text;
         vdbId: Nat32;
         createdAt : Int;
+        documentId:?Int;
         // onBoarding : Bool;
         // isAdmin : Bool;
     };
