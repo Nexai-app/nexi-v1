@@ -3,7 +3,10 @@ import {
   Box,
   Button,
   Flex,
+<<<<<<< HEAD
   Heading,
+=======
+>>>>>>> bd5c0f7 ([fix/feat] - nav bar ui adjustemnt / initailized  chat section design)
   Hide,
   Input,
   InputGroup,
