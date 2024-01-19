@@ -74,7 +74,7 @@ const App = () => {
     };
 
     runOnMounth();
-    // call();
+    call();
   }, []);
 
   if (actorRestated) {

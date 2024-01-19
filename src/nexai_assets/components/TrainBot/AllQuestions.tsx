@@ -54,11 +54,7 @@ const AllQuestions = () => {
     callMe();
   }, []);
   return (
-<<<<<<< HEAD
-    <Box mt={8} color="white">
-=======
     <Box color="white">
->>>>>>> af1cec8 ([feat] - added more navigations  to the sidebar)
       <Box>
         <Flex justify="center" direction="column" align="center">
           <Flex

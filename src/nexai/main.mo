@@ -47,7 +47,7 @@ type FloatMatrix = [FloatVector];
 
 
   
-  private  var vdbCanisterId: Text = "br5f7-7uaaa-aaaaa-qaaca-cai";
+  private  var vdbCanisterId: Text = "bw4dl-smaaa-aaaaa-qaacq-cai";
   
   private stable var cardEntries : [(Nat, CardEntry)] = [];
   private stable var companyEntries : [(Principal, CompanyEntry)] = [];
@@ -285,7 +285,7 @@ public shared query ({ caller }) func CheckPrincipal() : async Principal {caller
 
 
 //TOD): make documentId field a migrate
-  func _makeCompany(name : Text, email : Text, description:Text, vdbId:Nat32, createdAt : Int) : Types.CompanyEntry {
+  func _makeCompany(name : Text, email : Text, description:Text, vdbId:Nat32, createdAt : Int, documentId: ?Int) : Types.CompanyEntry {
     {
       name : Text;
       email : Text;
@@ -296,9 +296,9 @@ public shared query ({ caller }) func CheckPrincipal() : async Principal {caller
     };
   };
 
-  public shared ({caller}) func createDocumentId (id:Nat) : Nat {
+  // public shared ({caller}) func createDocumentId (id:Nat) : Nat {
 
-  };
+  // };
 
 //TODO: call the VDBRegister inside this func and save the return entry into the hashmap
 //rather than calling the functions seperately on the frontend
@@ -435,6 +435,7 @@ public shared query ({ caller }) func CheckPrincipal() : async Principal {caller
           email = editedMail;
           description = editedDescription;
           createdAt = company.createdAt;
+          documentId = null;
         };
         CompanyHashMap.put(caller, editedCompany);
       };

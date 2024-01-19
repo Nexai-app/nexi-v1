@@ -12,6 +12,7 @@ function TrainWithDocs() {
     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
   );
   const newDocs = docs.split(".", 500);
+  const [docId, setDocId] = React.useState();
 
   // save document in vdb
   // save each question and answer directly to the vector database into the vector database with docuemt id as the vlaue
@@ -23,13 +24,13 @@ function TrainWithDocs() {
     vdbActor
       .store_one_document(profile.vdbId, docs)
       .then((data) => {
+        setDocId(data["Ok"]);
         console.log("data", data);
+        exec();
       })
       .catch((err) => {
         console.log("err", err);
       });
-    exec();
-    console.log("saving each question");
   };
 
   const exec = async () => {
@@ -40,7 +41,7 @@ function TrainWithDocs() {
           await vdbActor.append_keys_values(
             profile.vdbId,
             [embeddedQ],
-            [doc]
+            [BigInt(0)]
           );
           await vdbActor.build_index(1);
           console.log("saved and built pair", doc);

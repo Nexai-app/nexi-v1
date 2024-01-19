@@ -3,10 +3,7 @@ import {
   Box,
   Button,
   Flex,
-<<<<<<< HEAD
   Heading,
-=======
->>>>>>> bd5c0f7 ([fix/feat] - nav bar ui adjustemnt / initailized  chat section design)
   Hide,
   Input,
   InputGroup,
@@ -24,96 +21,6 @@ import DateFormatter from "../../utils/DateFormatter";
 import { useAppSelector } from "../../redux-toolkit/hooks";
 import { EnquiryT } from "../../redux-toolkit/types";
 import { AuthContext } from "../../context/AuthContext";
-
-type ChatType = {
-  sender: SenderType;
-  message: string;
-};
-
-type EnquiryType = {
-  id: string;
-  time: string;
-  message: string;
-};
-
-enum SenderType {
-  "me",
-  "anonymous",
-}
-
-const dummyChat: ChatType[] = [
-  {
-    sender: SenderType["anonymous"],
-    message:
-      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Architecto, impedit!",
-  },
-  {
-    sender: SenderType["me"],
-    message:
-      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Architecto, impedit!",
-  },
-  {
-    sender: SenderType["anonymous"],
-    message:
-      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Architecto, impedit!",
-  },
-
-  {
-    sender: SenderType["me"],
-    message:
-      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Architecto, impedit!",
-  },
-  {
-    sender: SenderType["me"],
-    message:
-      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Architecto, impedit!",
-  },
-  {
-    sender: SenderType["me"],
-    message:
-      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Architecto, impedit!",
-  },
-  {
-    sender: SenderType["me"],
-    message:
-      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Architecto, impedit!",
-  },
-];
-
-const dummyEnquires: EnquiryType[] = [
-  {
-    id: "NX001",
-    message:
-      "Lorem ipsum dolor sit /amet consectetur aoreet/ auctor aliquam tincidunt males",
-    time: "12.32pm",
-  },
-  {
-    id: "NX002",
-    message:
-      "Lorem ipsum dolor sit /amet consectetur aoreet/ auctor aliquam tincidunt males",
-    time: "12.32pm",
-  },
-  {
-    id: "NX003",
-    message:
-      "Lorem ipsum dolor sit /amet consectetur aoreet/ auctor aliquam tincidunt males",
-    time: "12.32pm",
-  },
-
-  {
-    id: "NX003",
-    message:
-      "Lorem ipsum dolor sit /amet consectetur aoreet/ auctor aliquam tincidunt males",
-    time: "12.32pm",
-  },
-
-  {
-    id: "NX003",
-    message:
-      "Lorem ipsum dolor sit /amet consectetur aoreet/ auctor aliquam tincidunt males",
-    time: "12.32pm",
-  },
-];
 
 function index() {
   const { getEnquires } = useGetAllConnections();
@@ -203,21 +110,115 @@ function ChatArea() {
   return (
     <Box w="100%">
       {/* Header */}
-      <Box>
-        <Flex justify="space-between" gap={2} align="center" mb={4}>
-          <Flex gap={2} align="center">
-            <Avatar />
-            <Text mt={3}>Anonymous</Text>
-          </Flex>
-          <Box display="flex">
-            <Text>NX0001</Text>
+      {customerPrincipal.length === 63 ? (
+        <Box>
+          <Box>
+            <Flex
+              justify="space-between"
+              gap={2}
+              align="center"
+              mb={4}
+            >
+              <Flex gap={2} align="center">
+                <Avatar />
+                <Text mt={3}>Anonymous</Text>
+              </Flex>
+              <Box display="flex">
+                <Text>{customerPrincipal}</Text>
+              </Box>
+            </Flex>
           </Box>
-        </Flex>
-      </Box>
-      {/* chat body */}
+          {/* chat body */}
+          <Box
+            h={"60vh"}
+            maxH={"60vh"}
+            overflowY={"scroll"}
+            css={{
+              "&::-webkit-scrollbar": {
+                display: "none", // Hide scrollbar for Chrome, Safari, and Opera
+              },
+              scrollbarWidth: "none", // Hide scrollbar for Firefox
+              msOverflowStyle: "none", // Hide scrollbar for Internet Explorer and Edge
+            }}
+          >
+            {sortedConversation?.map((c, index) => (
+              <Flex
+                mb={3}
+                key={index}
+                justifyContent={
+                  c.sender != user.principal
+                    ? "flex-start"
+                    : "flex-end"
+                }
+              >
+                <MessageCard
+                  sender={c.sender}
+                  body={c.body}
+                  time={c.createdAt}
+                />
+              </Flex>
+            ))}
+          </Box>
+          {/* input area */}
+
+          <InputGroup h={"70px"} mt={2} size="lg" bg="#271732">
+            <Textarea
+              focusBorderColor="none"
+              _placeholder={{ paddingTop: "15px", color: "white" }}
+              borderColor={"none"}
+              pr="200px"
+              h={"70px"}
+              placeholder="Enter Message"
+              resize="none"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+            />
+            <InputRightElement w="150px" h={"70px"} mr="1.5rem">
+              <Button
+                size="md"
+                px={6}
+                py={6}
+                onClick={handleSendMessage}
+                isLoading={sending}
+                isDisabled={sending || message.length === 0}
+              >
+                Send Message
+              </Button>
+            </InputRightElement>
+          </InputGroup>
+        </Box>
+      ) : (
+        <Box
+          display="flex"
+          justifyContent={"center"}
+          alignItems="center"
+        >
+          <Text fontSize="38px" fontWeight="700" textAlign={"center"}>
+            Start a conversation by clicking on one of the Disputes :)
+          </Text>
+        </Box>
+      )}
+    </Box>
+  );
+}
+
+function EnquiryList() {
+  const enquiry = useAppSelector((state) => state.enquiry);
+  const { setCustomerPrincipal } = React.useContext(AuthContext);
+
+  const handleSetActveConversation = (
+    id: number,
+    principal: string
+  ) => {
+    setCustomerPrincipal(principal);
+  };
+  return (
+    <Box w="30%">
+      <Text fontSize="20px" fontWeight={"700"} mb={8}>
+        Disputes
+      </Text>
       <Box
-        h={"70vh"}
-        maxH={"70vh"}
+        h={"60vh"}
         overflowY={"scroll"}
         css={{
           "&::-webkit-scrollbar": {
@@ -227,44 +228,50 @@ function ChatArea() {
           msOverflowStyle: "none", // Hide scrollbar for Internet Explorer and Edge
         }}
       >
-        {dummyChat.map((c, index) => (
-          <Flex
-            mb={3}
-            key={index}
-            justifyContent={
-              c.sender == SenderType["anonymous"]
-                ? "flex-start"
-                : "flex-end"
+        {enquiry?.map((d: EnquiryT) => (
+          <Box
+            px={8}
+            key={d.id}
+            mb={6}
+            py={6}
+            h="154px"
+            w="348px"
+            bg="#271732"
+            cursor="pointer"
+            transform="auto"
+            _hover={{
+              transform: `scale(1.09)`,
+              transition: "transform 0.3s ease",
+            }}
+            _active={{
+              transform: `scale(1.09)`,
+              transition: "transform 0.3s ease",
+            }}
+            onClick={(e) =>
+              handleSetActveConversation(d.id, d.account2)
             }
           >
-            <MessageCard sender={c.sender} />
-          </Flex>
+            {/* top part */}
+            <Flex justifyContent={"space-between"}>
+              <Flex gap={3}>
+                <Avatar size="sm" />
+                <Text>Anonymous</Text>
+              </Flex>
+              <Text>{d.id}</Text>
+            </Flex>
+            {/* break */}
+            <Box h="1px" w="full" bg="white" />
+            {/* down part */}
+            <Text mt={2} fontSize="10px">
+              {DateFormatter(d.createdAt)}
+            </Text>
+
+            <Text fontSize="14px">{d.account2}</Text>
+          </Box>
         ))}
       </Box>
-      {/* input area */}
-
-      <InputGroup h={"70px"} mt={2} size="lg" bg="#271732">
-        <Textarea
-          focusBorderColor="none"
-          _placeholder={{ marginY: "30px", color: "white" }}
-          borderColor={"none"}
-          pr="200px"
-          h={"70px"}
-          placeholder="Enter Message"
-          resize="none"
-        />
-        <InputRightElement w="150px" h={"70px"} mr="1.5rem">
-          <Button size="md" px={6} py={6}>
-            Send Message
-          </Button>
-        </InputRightElement>
-      </InputGroup>
     </Box>
   );
-}
-
-function MessageList() {
-  return <Box w="30%">message list</Box>;
 }
 
 type MessageProp = {
