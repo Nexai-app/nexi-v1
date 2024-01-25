@@ -25,6 +25,7 @@ const App = () => {
   const { updateProfile } = useUpdateProfile();
   const { init } = useInitTransformers();
   const { initLLM } = useInitLLM();
+  // const { updateProfile } = useUpdateProfile();
 
   const toast = useToast({
     containerStyle: {

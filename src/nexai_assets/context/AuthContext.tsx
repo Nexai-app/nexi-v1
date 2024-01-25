@@ -7,6 +7,11 @@ import {
   createActor as vdbCreateActor,
 } from "../../vector-database-icp/src/declarations/vector_database_backend";
 import { _SERVICE as _vdbSERVICE } from "../../vector-database-icp/src/declarations/vector_database_backend/vector_database_backend.did";
+// import {
+//   // canisterId as vdbCanisterId,
+//   createActor as vdbCreateActor,
+// } from "../../vector_database_backend";
+// import { _SERVICE as _vdbSERVICE } from "../../vector_database_backend/vector_database_backend.did";
 import { useLocation, useNavigate } from "react-router-dom";
 import { _SERVICE } from "../../declarations/nexai/nexai.did";
 
@@ -16,7 +21,7 @@ Canister ID is required, but received undefined instead.
 If you are using automatically generated declarations, 
 this may be because your 
 application is not setting the canister ID in process.env correctly. */
-const vdbCanisterId = "bw4dl-smaaa-aaaaa-qaacq-cai";
+const vdbCanisterId = "br5f7-7uaaa-aaaaa-qaaca-cai";
 const canisterId = "avqkn-guaaa-aaaaa-qaaea-cai";
 
 export const AuthContext = React.createContext<{
@@ -44,6 +49,9 @@ export const AuthContext = React.createContext<{
   setCustomerPrincipal: any;
   openChat: boolean;
   setOpenChat: any;
+  trainMode: boolean;
+  setTrainMode: any;
+  handleChangeTrainMode: any;
 }>({
   Auth: undefined,
   actor: undefined,
@@ -68,7 +76,10 @@ export const AuthContext = React.createContext<{
   customerPrincipal: "",
   setCustomerPrincipal: undefined,
   openChat: false,
-  setOpenChat: undefined
+  setOpenChat: undefined,
+  trainMode: true,
+  setTrainMode: undefined,
+  handleChangeTrainMode: undefined,
 });
 
 export const AuthProvider = ({ children }) => {
@@ -90,6 +101,7 @@ export const AuthProvider = ({ children }) => {
   const [customerPrincipal, setCustomerPrincipal] =
     React.useState("");
   const [openChat, setOpenChat] = React.useState(false)
+  const [trainMode, setTrainMode] = React.useState(true);
 
   // const { trackEvent } = useMatomo();
 
@@ -173,6 +185,10 @@ export const AuthProvider = ({ children }) => {
     setIIAuth((prevState) => prevState !== prevState);
   };
 
+  const handleChangeTrainMode = (e: any) => {
+    setTrainMode(e.target.checked);
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -199,7 +215,10 @@ export const AuthProvider = ({ children }) => {
         setCustomerPrincipal,
         vdbActor,
         openChat,
-        setOpenChat
+        setOpenChat,
+        trainMode,
+        setTrainMode,
+        handleChangeTrainMode,
       }}
     >
       {children}

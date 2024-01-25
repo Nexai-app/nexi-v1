@@ -18,7 +18,6 @@ import { AiFillHome } from "react-icons/ai";
 import { BsJournalCode, BsPeopleFill } from "react-icons/bs";
 import { FaChalkboardTeacher } from "react-icons/fa";
 import { RiChat2Fill } from "react-icons/ri";
-import { useUpdateProfile } from "../../../functions";
 
 export const MenuNavigation = [
   {
@@ -147,11 +146,6 @@ function index() {
   const navigate = useNavigate();
   const { showSidebar, setShowSidebar } =
     React.useContext(LayoutContext);
-  const { updateProfile } = useUpdateProfile();
-
-  React.useEffect(() => {
-    updateProfile();
-  }, []);
 
   return (
     <Hide below="md">

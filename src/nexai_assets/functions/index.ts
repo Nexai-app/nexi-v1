@@ -79,6 +79,9 @@ export const useUpdateProfile = () => {
             };
             dispatch(addProfile(data));
             setLoading(false);
+            console.debug(
+              "[update profile fnc] - internal me was called"
+            );
             addQA();
           });
         })
