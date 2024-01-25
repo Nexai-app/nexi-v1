@@ -42,6 +42,8 @@ export const AuthContext = React.createContext<{
   setUseLLM: any;
   customerPrincipal: string;
   setCustomerPrincipal: any;
+  openChat: boolean;
+  setOpenChat: any;
 }>({
   Auth: undefined,
   actor: undefined,
@@ -65,6 +67,8 @@ export const AuthContext = React.createContext<{
   setUseLLM: undefined,
   customerPrincipal: "",
   setCustomerPrincipal: undefined,
+  openChat: false,
+  setOpenChat: undefined
 });
 
 export const AuthProvider = ({ children }) => {
@@ -85,6 +89,7 @@ export const AuthProvider = ({ children }) => {
   const [useLLM, setUseLLM] = useState(false);
   const [customerPrincipal, setCustomerPrincipal] =
     React.useState("");
+  const [openChat, setOpenChat] = React.useState(false)
 
   // const { trackEvent } = useMatomo();
 
@@ -193,6 +198,8 @@ export const AuthProvider = ({ children }) => {
         customerPrincipal,
         setCustomerPrincipal,
         vdbActor,
+        openChat,
+        setOpenChat
       }}
     >
       {children}

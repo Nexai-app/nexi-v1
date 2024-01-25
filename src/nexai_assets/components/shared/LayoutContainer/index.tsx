@@ -23,7 +23,7 @@ type LayoutContextProps = {
 
 export const LayoutContext = createContext<LayoutContextProps>({
   showSidebar: true,
-  setShowSidebar: () => {},
+  setShowSidebar: () => { },
 });
 //  const base = ['/home']
 const LayoutContainer: FC<Props> = ({ children }) => {
@@ -44,10 +44,11 @@ const LayoutContainer: FC<Props> = ({ children }) => {
           pt={10}
           ml={{ md: "15%" }}
           w={{ md: "85%" }}
-          px={{ base: "30px", md: "33px" }}
+          px={{ base: "10px", md: "11px" }}
           bg="#341A41"
           h={{ base: "500px", sm: "100%" }}
-          pb="30px"
+          py="5px"
+
           pos="relative"
         >
           {children}

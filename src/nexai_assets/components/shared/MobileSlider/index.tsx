@@ -26,7 +26,7 @@ function index() {
         <Box
           display={{ base: "flex", md: "none" }}
           justifyContent="flex-end"
-          m={8}
+          m={4}
           onClick={onOpen}
           color="white"
         >

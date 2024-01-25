@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Flex, Text, Button, Textarea } from "@chakra-ui/react";
+import { Box, Flex, Text, Button, Textarea, FormControl, FormLabel, Input } from "@chakra-ui/react";
 import { AuthContext } from "../../context/AuthContext";
 import { useAppSelector } from "../../redux-toolkit/hooks";
 import { useEmbeddQ } from "../../functions/ml";
@@ -8,9 +8,11 @@ function TrainWithDocs() {
   const profile = useAppSelector((state) => state.profile);
   const { vdbActor } = React.useContext(AuthContext);
   const { call, embeddedQ } = useEmbeddQ();
-  const [docs, setDocs] = React.useState(
-    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
-  );
+  const [docs, setDocs] = React.useState("");
+  const [train, setTrain] = React.useState({
+    question: "",
+    answer: ""
+  });
   const newDocs = docs.split(".", 500);
   const [docId, setDocId] = React.useState();
 
@@ -51,19 +53,19 @@ function TrainWithDocs() {
       }
     });
   };
-  const get = async () => {
-    newDocs.forEach(async (doc) => {
-      await call(doc);
-      if (embeddedQ[0].length == 384) {
-        const val = await vdbActor.get_similar(
-          profile.vdbId,
-          embeddedQ,
-          1
-        );
-        console.log("answer to", doc, "IS", val);
-      }
-    });
-  };
+  // const get = async () => {
+  //   newDocs.forEach(async (doc) => {
+  //     await call(doc);
+  //     if (embeddedQ[0].length == 384) {
+  //       const val = await vdbActor.get_similar(
+  //         profile.vdbId,
+  //         embeddedQ,
+  //         1
+  //       );
+  //       console.log("answer to", doc, "IS", val);
+  //     }
+  //   });
+  // };
 
   console.log(docs.split("." || ",", 500));
   return (
@@ -106,29 +108,51 @@ function TrainWithDocs() {
             </Text>
           </Box>
         </Flex>
-        <Box>
-          <Textarea
-            value={docs}
-            onChange={(e) => {
-              setDocs(e.target.value);
-            }}
-            placeholder="your docs"
-            // width={{ base: "350px", md: "600px" }}
-            // height="full"
-          />
+        <Box
+          w={`60%`}
+        >
+          <Box>
+            <FormControl mb={`40px`}>
+              <FormLabel>Question</FormLabel>
+              <Input
+                name="name"
+                value={train.question}
+                onChange={(e) => {
+                  setTrain((previous) => ({
+                    ...previous,
+                    question: e.target.value
+                  }))
+                }}
+                placeholder="Input your question here"
+                height="60px"
+                px={`5`}
+              />
+            </FormControl>
+          </Box>
+          <Box>
+            <FormControl mb={`40px`}>
+              <FormLabel>Answer</FormLabel>
+              <Textarea
+                name="name"
+                value={train.answer}
+                onChange={(e) => {
+                  setTrain((previous) => ({
+                    ...previous,
+                    answer: e.target.value
+                  }))
+                }}
+                placeholder="Type your answer here"
+                height="60px"
+                px={`5`}
+              />
+            </FormControl>
+          </Box>
           <Button
             onClick={() => {
               save();
             }}
           >
-            Submit
-          </Button>
-          <Button
-            onClick={() => {
-              save();
-            }}
-          >
-            GEt
+            Save
           </Button>
         </Box>
       </Flex>

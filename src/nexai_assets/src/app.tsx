@@ -15,6 +15,7 @@ import { useAppSelector } from "../redux-toolkit/hooks";
 import { useUpdateProfile } from "../functions";
 import { useInitTransformers } from "../functions/ml";
 import { useInitLLM } from "../functions/webLlm";
+import LoadingScreen from "../components/LoadingScreen";
 
 const App = () => {
   const { handleAuthenticated, setIIAuth, actor } =
@@ -89,6 +90,7 @@ const App = () => {
           <Route path="my-questions" element={<AllQuestion />} />
           <Route path="integration" element={<IntegrationPage />} />
           <Route path="chat" element={<Chat />} />
+          {/* <Route path="loading" element={<LoadingScreen isLoading />} /> */}
         </Routes>
       </React.Fragment>
     );
