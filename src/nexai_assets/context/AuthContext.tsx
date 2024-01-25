@@ -2,11 +2,16 @@ import React, { useState } from "react";
 import { Actor, Identity, ActorSubclass } from "@dfinity/agent";
 import { AuthClient } from "@dfinity/auth-client";
 import { createActor } from "../../declarations/nexai";
+// import {
+//   // canisterId as vdbCanisterId,
+//   createActor as vdbCreateActor,
+// } from "../../vector-database-icp/src/declarations/vector_database_backend";
+// import { _SERVICE as _vdbSERVICE } from "../../vector-database-icp/src/declarations/vector_database_backend/vector_database_backend.did";
 import {
   // canisterId as vdbCanisterId,
   createActor as vdbCreateActor,
-} from "../../vector-database-icp/src/declarations/vector_database_backend";
-import { _SERVICE as _vdbSERVICE } from "../../vector-database-icp/src/declarations/vector_database_backend/vector_database_backend.did";
+} from "../../vector_database_backend";
+import { _SERVICE as _vdbSERVICE } from "../../vector_database_backend/vector_database_backend.did";
 import { useLocation, useNavigate } from "react-router-dom";
 import { _SERVICE } from "../../declarations/nexai/nexai.did";
 
@@ -16,8 +21,8 @@ Canister ID is required, but received undefined instead.
 If you are using automatically generated declarations, 
 this may be because your 
 application is not setting the canister ID in process.env correctly. */
-const vdbCanisterId = "bw4dl-smaaa-aaaaa-qaacq-cai";
-const canisterId = "avqkn-guaaa-aaaaa-qaaea-cai";
+const vdbCanisterId = "by6od-j4aaa-aaaaa-qaadq-cai";
+const canisterId = "a3shf-5eaaa-aaaaa-qaafa-cai";
 
 export const AuthContext = React.createContext<{
   Auth: any;

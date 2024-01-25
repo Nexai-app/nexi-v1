@@ -2,15 +2,22 @@ import React from "react";
 import { Box, Flex, Text, Button, Textarea } from "@chakra-ui/react";
 import { AuthContext } from "../../context/AuthContext";
 import { useAppSelector } from "../../redux-toolkit/hooks";
-import { useEmbeddQ } from "../../functions/ml";
+import { useEmbeddQ, useEmbeddQuestion } from "../../functions/ml";
 
 function TrainWithDocs() {
   const profile = useAppSelector((state) => state.profile);
   const { vdbActor } = React.useContext(AuthContext);
-  const { call, embeddedQ } = useEmbeddQ();
+  // const { call, embeddedQ } = useEmbeddQ();
   const [docs, setDocs] = React.useState(
     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
   );
+  const {
+    embedd,
+    embeddedText,
+    loading: mlLoading,
+    answer_arr,
+  } = useEmbeddQuestion();
+  const { embeddedQ, call } = useEmbeddQ();
   const newDocs = docs.split(".", 500);
   const [docId, setDocId] = React.useState();
 
@@ -20,30 +27,30 @@ function TrainWithDocs() {
   // show a very detailed screen to show the progress (that's when ther is ui) for now, just use console.log
   //
 
-  const save = () => {
-    vdbActor
-      .store_one_document(profile.vdbId, docs)
-      .then((data) => {
-        setDocId(data["Ok"]);
-        console.log("data", data);
-        exec();
-      })
-      .catch((err) => {
-        console.log("err", err);
-      });
-  };
+  // const save = () => {
+  //   vdbActor
+  //     .append_keys_values(profile.vdbId, docs)
+  //     .then((data) => {
+  //       setDocId(data["Ok"]);
+  //       console.log("data", data);
+  //       exec();
+  //     })
+  //     .catch((err) => {
+  //       console.log("err", err);
+  //     });
+  // };
 
   const exec = async () => {
     newDocs.forEach(async (doc) => {
       try {
-        await call(doc);
-        if (embeddedQ[0].length == 384) {
+        await embedd(doc, docs);
+        if (embeddedText[0].length == 384) {
           await vdbActor.append_keys_values(
-            profile.vdbId,
-            [embeddedQ],
-            [BigInt(0)]
+            profile?.vdbId,
+            [embeddedText[0]],
+            [docs]
           );
-          await vdbActor.build_index(1);
+          await vdbActor.build_index(profile?.vdbId);
           console.log("saved and built pair", doc);
         }
       } catch (err) {
@@ -55,12 +62,14 @@ function TrainWithDocs() {
     newDocs.forEach(async (doc) => {
       await call(doc);
       if (embeddedQ[0].length == 384) {
-        const val = await vdbActor.get_similar(
-          profile.vdbId,
-          embeddedQ,
-          1
-        );
-        console.log("answer to", doc, "IS", val);
+        const val = await vdbActor
+          .get_similar(profile.vdbId, embeddedQ[0], 1)
+          .then((val) => {
+            console.log("[Answer from get similar]", val);
+          })
+          .catch((err) => {
+            console.log("[Error from get similar]", err);
+          });
       }
     });
   };
@@ -118,14 +127,14 @@ function TrainWithDocs() {
           />
           <Button
             onClick={() => {
-              save();
+              exec();
             }}
           >
             Submit
           </Button>
           <Button
             onClick={() => {
-              save();
+              get();
             }}
           >
             GEt

@@ -10,6 +10,7 @@ import { Box, Flex } from "@chakra-ui/react";
 import Sidebar from "../Sidebar";
 //   import LayoutHeader from "@components/shared/layout/LayoutHeader";
 import MobileSlider from "../MobileSlider";
+import { useUpdateProfile } from "../../../functions";
 
 type Props = {
   children: ReactNode;
@@ -28,6 +29,15 @@ export const LayoutContext = createContext<LayoutContextProps>({
 //  const base = ['/home']
 const LayoutContainer: FC<Props> = ({ children }) => {
   const [showSidebar, setShowSidebar] = useState(false);
+  const { updateProfile } = useUpdateProfile();
+
+  React.useEffect(() => {
+    const fetchProfile = async () => {
+      await updateProfile();
+      console.debug("[update profile fnc] - i was called");
+    };
+    fetchProfile();
+  }, []);
 
   return (
     <LayoutContext.Provider
