@@ -9,7 +9,7 @@ export { idlFactory } from "./nexai.did.js";
  * process.env.CANISTER_ID_<CANISTER_NAME_UPPERCASE>
  * beginning in dfx 0.15.0
  */
-export const canisterId = "a3shf-5eaaa-aaaaa-qaafa-cai";
+export const canisterId = "avqkn-guaaa-aaaaa-qaaea-cai";
 // process.env.CANISTER_ID_NEXAI ||
 // process.env.NEXAI_CANISTER_ID;
 

@@ -47,7 +47,7 @@ type FloatMatrix = [FloatVector];
 
 
   
-  private  var vdbCanisterId: Text = "by6od-j4aaa-aaaaa-qaadq-cai";
+  private  var vdbCanisterId: Text = "br5f7-7uaaa-aaaaa-qaaca-cai";
   
   private stable var cardEntries : [(Nat, CardEntry)] = [];
   private stable var companyEntries : [(Principal, CompanyEntry)] = [];

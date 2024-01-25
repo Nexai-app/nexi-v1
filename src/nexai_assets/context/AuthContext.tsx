@@ -21,8 +21,8 @@ Canister ID is required, but received undefined instead.
 If you are using automatically generated declarations, 
 this may be because your 
 application is not setting the canister ID in process.env correctly. */
-const vdbCanisterId = "by6od-j4aaa-aaaaa-qaadq-cai";
-const canisterId = "a3shf-5eaaa-aaaaa-qaafa-cai";
+const vdbCanisterId = "br5f7-7uaaa-aaaaa-qaaca-cai";
+const canisterId = "avqkn-guaaa-aaaaa-qaaea-cai";
 
 export const AuthContext = React.createContext<{
   Auth: any;
@@ -47,6 +47,9 @@ export const AuthContext = React.createContext<{
   setUseLLM: any;
   customerPrincipal: string;
   setCustomerPrincipal: any;
+  trainMode: boolean;
+  setTrainMode: any;
+  handleChangeTrainMode: any;
 }>({
   Auth: undefined,
   actor: undefined,
@@ -70,6 +73,9 @@ export const AuthContext = React.createContext<{
   setUseLLM: undefined,
   customerPrincipal: "",
   setCustomerPrincipal: undefined,
+  trainMode: true,
+  setTrainMode: undefined,
+  handleChangeTrainMode: undefined,
 });
 
 export const AuthProvider = ({ children }) => {
@@ -90,6 +96,7 @@ export const AuthProvider = ({ children }) => {
   const [useLLM, setUseLLM] = useState(false);
   const [customerPrincipal, setCustomerPrincipal] =
     React.useState("");
+  const [trainMode, setTrainMode] = React.useState(true);
 
   // const { trackEvent } = useMatomo();
 
@@ -173,6 +180,10 @@ export const AuthProvider = ({ children }) => {
     setIIAuth((prevState) => prevState !== prevState);
   };
 
+  const handleChangeTrainMode = (e: any) => {
+    setTrainMode(e.target.checked);
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -198,6 +209,9 @@ export const AuthProvider = ({ children }) => {
         customerPrincipal,
         setCustomerPrincipal,
         vdbActor,
+        trainMode,
+        setTrainMode,
+        handleChangeTrainMode,
       }}
     >
       {children}
