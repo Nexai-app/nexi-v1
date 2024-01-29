@@ -123,7 +123,6 @@ shared ({ caller }) actor class Nexai() = {
             MessageHashMap_.put(messageID, newMessage);
             messageID := messageID + 1;
             sent := true;
-
           };
         };
       };
@@ -137,7 +136,6 @@ shared ({ caller }) actor class Nexai() = {
         var newMessage = createMessage(messageID, newConnection.id, caller, body, Time.now());
         MessageHashMap_.put(messageID, newMessage);
         messageID := messageID + 1;
-
       };
     };
   };
@@ -150,7 +148,6 @@ shared ({ caller }) actor class Nexai() = {
       if (((j.account1 == caller) and (j.account2 == account)) or ((j.account1 == account) and (j.account2 == caller))) {
         for ((k, l) in MessageHashMap_.entries()) {
           if (l.connectionId == j.id) {
-
             msgs.add(l);
           };
         };
@@ -184,7 +181,6 @@ shared ({ caller }) actor class Nexai() = {
         };
       };
       buff.toArray();
-
     };
   };
   //to get all messages between two users
