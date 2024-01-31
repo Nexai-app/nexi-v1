@@ -18,12 +18,19 @@ import Nat64 "mo:base/Nat64";
 import Blob "mo:base/Blob";
 import Float "mo:base/Float";
 import Int32 "mo:base/Int32";
+import Nat8 "mo:base/Nat8";
 
+import AccountIdentifier "mo:principal/AccountIdentifier";
+
+import ICPLedger "canister:icp_ledger";
+
+import LedgerTypes "./ledgertypes";
+import Utils "./utils";
 import Types "./types";
 import VDBTypes "./vdbTypes";
 import Message "message";
 
-shared ({ caller }) actor class Nexai() = {
+shared ({ caller }) actor class Nexai() = this{
 
   type FloatVector = [Float];
 
@@ -444,6 +451,63 @@ shared ({ caller }) actor class Nexai() = {
 
     };
   };
+
+  type ICP = {
+    e8s : Nat;
+  };
+
+  public func toSubaccount(p : Principal) : async Blob {
+    // p blob size can vary, but 29 bytes as most. We preserve it'subaccount size in result blob
+    // and it'subaccount data itself so it can be deserialized back to p
+    let bytes = Blob.toArray(Principal.toBlob(p));
+    let size = bytes.size();
+
+    assert size <= 29;
+
+    let a = Array.tabulate<Nat8>(
+      32,
+      func(i : Nat) : Nat8 {
+        if (i + size < 31) {
+          0;
+        } else if (i + size == 31) {
+          Nat8.fromNat(size);
+        } else {
+          bytes[i + size - 32];
+        };
+      },
+    );
+    Blob.fromArray(a);
+  };
+
+  public func toAccount({ caller : Principal; canister : Principal }) : async LedgerTypes.Account {
+    {
+      owner = canister;
+      subaccount = ?(await toSubaccount(caller));
+    };
+  };
+
+  public shared ({ caller }) func icp_balance_dfx() : async LedgerTypes.Tokens {
+    await ICPLedger.account_balance_dfx({
+      account = AccountIdentifier.toText(AccountIdentifier.fromPrincipal(caller, null))
+      });
+  };
+
+  public shared ({ caller }) func icp_balance() : async Nat {
+        let account : LedgerTypes.Account =  Utils.toAccount({
+          caller = caller;
+          canister = Principal.fromActor(this);
+        });
+        await ICPLedger.icrc1_balance_of({
+          owner = caller;
+          subaccount = null;
+        });
+    };
+
+
+
+    public shared ({ caller }) func transferICP(to : ICPLedger.Account) {
+
+    };
 
   public shared query ({ caller }) func getCompanyProfile() : async ?CompanyEntry {
     return CompanyHashMap.get(caller);

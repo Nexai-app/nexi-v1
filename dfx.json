@@ -10,6 +10,7 @@
         "init_guide": "null"
       }
     },
+
     "external": {
       "main": "src/external/main.mo",
       "type": "motoko",
@@ -41,10 +42,11 @@
       "type": "assets"
     }
   },
+
   "defaults": {
     "build": {
       "args": "",
-      "packtool": ""
+      "packtool": "vessel sources"
     }
   },
 
