@@ -3,7 +3,7 @@
     "nexai": {
       "main": "src/nexai/main.mo",
       "type": "motoko",
-      "dependencies": [],
+      "dependencies": ["icp_ledger"],
       "pullable": {
         "wasm_url": "https://github.com/Nexai-app/nexi-v1/releases/download/latest/nexai.wasm",
         "dependencies": ["fnnlb-hqaaa-aaaao-a2igq-cai"],
@@ -19,6 +19,17 @@
         "wasm_url": "https://github.com/Nexai-app/nexi-v1/releases/download/latest/external.wasm",
         "dependencies": ["aol7b-vqaaa-aaaak-aepsq-cai"],
         "init_guide": "null"
+      }
+    },
+
+    "icp_ledger": {
+      "type": "custom",
+      "candid": "https://raw.githubusercontent.com/dfinity/ic/d87954601e4b22972899e9957e800406a0a6b929/rs/rosetta-api/icp_ledger/ledger.did",
+      "wasm": "https://download.dfinity.systems/ic/d87954601e4b22972899e9957e800406a0a6b929/canisters/ledger-canister.wasm.gz",
+      "remote": {
+        "id": {
+          "ic": "ryjl3-tyaaa-aaaaa-aaaba-cai"
+        }
       }
     },
 
