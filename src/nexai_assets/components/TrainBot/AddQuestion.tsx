@@ -93,7 +93,7 @@ const AddQuestions = () => {
             fontWeight="700"
             fontFamily="Poppins"
           >
-            Train Your Bot
+            Train Manually
           </Text>
           <Box
             display="flex"

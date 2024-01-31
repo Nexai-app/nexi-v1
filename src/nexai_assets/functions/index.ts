@@ -16,15 +16,18 @@ import {
   EnquiryT,
   QuestionAnswerT,
 } from "../redux-toolkit/types";
+// import {
+//   ConnectionEntry,
+//   MessageEntry,
+// } from "../../declarations/nexai/nexai.did";
 import {
   ConnectionEntry,
   MessageEntry,
-} from "../../declarations/nexai/nexai.did";
+} from "../../vector_database_backend/vector_database_backend.did";
 import {
   addEnquiry,
   clearEnqury,
 } from "../redux-toolkit/slice/EnquirySlice";
-import { Principal } from "@dfinity/principal";
 import {
   addConvo,
   clearConvo,
@@ -79,9 +82,6 @@ export const useUpdateProfile = () => {
             };
             dispatch(addProfile(data));
             setLoading(false);
-            console.debug(
-              "[update profile fnc] - internal me was called"
-            );
             addQA();
           });
         })
@@ -141,30 +141,38 @@ const useAddQA = () => {
 
 export const useGetAllConnections = () => {
   const [loading, setLoading] = useState(false);
-  const { actor } = useContext(AuthContext);
+  const { vdbActor, actor } = useContext(AuthContext);
   const user = useAppSelector((state) => state.profile);
   const dispatch = useAppDispatch();
   try {
     const getEnquires = () => {
       actor
-        ?.getAllConnections()
-        .then((connections: [ConnectionEntry[]]) => {
-          if (connections) {
-            dispatch(clearEnqury());
-            var c = connections[0];
-            for (let i = 0; i < c.length; i++) {
-              var data: EnquiryT = {
-                id: Number(c[i].id),
-                account1: c[i].account1.toText(),
-                account2: c[i].account2.toText(),
-                createdAt: Number(c[i].createdAt),
-              };
-              dispatch(addEnquiry(data));
-            }
-          }
+        ?.CheckPrincipal()
+        .then((principal) => {
+          vdbActor
+            ?.get_all_connections(principal.toText())
+            .then((connections: ConnectionEntry[]) => {
+              if (connections) {
+                dispatch(clearEnqury());
+                var c = connections;
+                for (let i = 0; i < c.length; i++) {
+                  var data: EnquiryT = {
+                    id: Number(c[i].id),
+                    account1: c[i].account1,
+                    account2: c[i].account2,
+                    createdAt: Number(c[i].created_at),
+                  };
+                  dispatch(addEnquiry(data));
+                }
+              }
+            })
+            .catch((err) => {
+              console.error("[nexai]", err);
+              setLoading(false);
+            });
         })
         .catch((err) => {
-          console.debug("[nexai]", err);
+          console.error("[nexai]", err);
           setLoading(false);
         });
     };
@@ -177,23 +185,23 @@ export const useGetAllConnections = () => {
 
 export const useGetConversation = () => {
   const [loading, setLoading] = useState(false);
-  const { actor } = useContext(AuthContext);
+  const { actor, vdbActor } = useContext(AuthContext);
   const user = useAppSelector((state) => state.profile);
   const dispatch = useAppDispatch();
   try {
-    const handleGetConversation = (principal: Principal) => {
-      actor
-        ?.getMessages(principal)
+    const handleGetConversation = (principal: string) => {
+      vdbActor
+        ?.get_messages(principal)
         .then((data: [MessageEntry]) => {
           if (data) {
             dispatch(clearConvo());
             for (let i = 0; i < data.length; i++) {
               var param: ConversationT = {
                 id: Number(data[i].id),
-                connectionId: Number(data[i].connectionId),
-                sender: data[i].sender.toText(),
+                connectionId: Number(data[i].connection_id),
+                sender: data[i].sender,
                 body: data[i].body,
-                createdAt: Number(data[i].createdAt),
+                createdAt: Number(data[i].created_at),
               };
               dispatch(addConvo(param));
               console.log(data);

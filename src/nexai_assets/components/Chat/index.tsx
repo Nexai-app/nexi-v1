@@ -11,7 +11,7 @@ import {
   Show,
   Text,
   Textarea,
-  Image
+  Image,
 } from "@chakra-ui/react";
 import React from "react";
 import {
@@ -42,16 +42,11 @@ function index() {
   // }, 5000);
 
   return (
-    <Box
-      w="100%"
-      minH={`95vh`}
-    >
-      <Box
-        h={`14vh`}
-      >
+    <Box w="100%" minH={`95vh`}>
+      <Box h={`14vh`}>
         <Flex
           justifyContent={"space-between"}
-        // pb={3}
+          // pb={3}
         >
           <Heading>Messages</Heading>
           {/* <Hide below="md">
@@ -66,12 +61,9 @@ function index() {
         <Flex
           justify={`end`}
           align={`center`}
-        // pb={3}
+          // pb={3}
         >
-          <Heading
-            size={`lg`}
-            mb={0}
-          >
+          <Heading size={`lg`} mb={0}>
             Enquiries
           </Heading>
           <Flex
@@ -83,21 +75,13 @@ function index() {
             align={`center`}
             ms={3}
           >
-            <Text
-              color={`#341A41`}
-              mb={0}
-              fontWeight={700}
-            >
+            <Text color={`#341A41`} mb={0} fontWeight={700}>
               {enquiry.length}
             </Text>
           </Flex>
         </Flex>
       </Box>
-      <Flex
-        justify="space-between"
-        h={`80vh`}
-        overflow={`scroll`}
-      >
+      <Flex justify="space-between" h={`80vh`} overflow={`scroll`}>
         <Hide below="md">
           <ChatArea />
           <Box w="1px" mx={8} bg={"#929191B2"} />
@@ -115,7 +99,8 @@ function index() {
 export default index;
 
 function ChatArea() {
-  const { customerPrincipal, actor, setOpenChat } = React.useContext(AuthContext);
+  const { customerPrincipal, actor, vdbActor, setOpenChat } =
+    React.useContext(AuthContext);
   const user = useAppSelector((state) => state.profile);
   const conversation = useAppSelector((state) => state.conversation);
   const [sending, setSending] = React.useState(false);
@@ -130,7 +115,7 @@ function ChatArea() {
     if (customerPrincipal.length < 63) {
       return;
     } else {
-      handleGetConversation(Principal.fromText(customerPrincipal));
+      handleGetConversation(customerPrincipal);
     }
   }, [customerPrincipal]);
 
@@ -143,13 +128,13 @@ function ChatArea() {
 
   const handleSendMessage = () => {
     setSending(true);
-    actor
-      .sendMessage(Principal.fromText(customerPrincipal), message)
+    vdbActor
+      .send_message(customerPrincipal, message, BigInt(50))
       .then(() => {
         setSending(false);
         setMessage("");
         //TODO: save the message with redux instead of calling get message
-        handleGetConversation(Principal.fromText(customerPrincipal));
+        handleGetConversation(customerPrincipal);
       })
       .catch((err) => {
         setSending(false);
@@ -159,15 +144,9 @@ function ChatArea() {
   };
 
   return (
-    <Box
-      w="100%"
-      h={`70vh`}
-      overflow={`scroll`}
-    >
+    <Box w="100%" h={`70vh`} overflow={`scroll`}>
       {/* Header */}
-      <Show
-        below="md"
-      >
+      <Show below="md">
         <Flex
           bg={`#fff`}
           borderRadius={5}
@@ -178,14 +157,11 @@ function ChatArea() {
           mb={3}
           p={2}
           onClick={(e) => {
-            setOpenChat(false)
+            setOpenChat(false);
           }}
         >
           <Image src={`BackArrow.svg`} />
-          <Text
-            color={`#314A41`}
-            mb={0}
-          >
+          <Text color={`#314A41`} mb={0}>
             Go Back
           </Text>
         </Flex>
@@ -211,16 +187,16 @@ function ChatArea() {
           {/* chat body */}
           <Flex
             direction="column"
-            flex="1"  // This will make it take the remaining vertical height
-          // overflowY="scroll"
-          // h={"calc(60vh - 50px"}
-          // css={{
-          //   "&::-webkit-scrollbar": {
-          //     display: "none", // Hide scrollbar for Chrome, Safari, and Opera
-          //   },
-          //   scrollbarWidth: "none", // Hide scrollbar for Firefox
-          //   msOverflowStyle: "none", // Hide scrollbar for Internet Explorer and Edge
-          // }}
+            flex="1" // This will make it take the remaining vertical height
+            // overflowY="scroll"
+            // h={"calc(60vh - 50px"}
+            // css={{
+            //   "&::-webkit-scrollbar": {
+            //     display: "none", // Hide scrollbar for Chrome, Safari, and Opera
+            //   },
+            //   scrollbarWidth: "none", // Hide scrollbar for Firefox
+            //   msOverflowStyle: "none", // Hide scrollbar for Internet Explorer and Edge
+            // }}
           >
             {sortedConversation?.map((c, index) => (
               <Flex
@@ -255,7 +231,10 @@ function ChatArea() {
               <InputGroup h={"100%"} mt={2} size="lg" bg="#271732">
                 <Textarea
                   focusBorderColor="none"
-                  _placeholder={{ paddingTop: "15px", color: "white" }}
+                  _placeholder={{
+                    paddingTop: "15px",
+                    color: "white",
+                  }}
                   borderColor={"none"}
                   // p={5}
                   pe="200px"
@@ -268,7 +247,12 @@ function ChatArea() {
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                 />
-                <InputRightElement w="150px" h={"100%"} alignItems={`center`} mr="1.5rem">
+                <InputRightElement
+                  w="150px"
+                  h={"100%"}
+                  alignItems={`center`}
+                  mr="1.5rem"
+                >
                   <Button
                     size="md"
                     px={6}
@@ -297,7 +281,10 @@ function ChatArea() {
               <InputGroup h={"100%"} size="lg" bg="#271732">
                 <Textarea
                   focusBorderColor="none"
-                  _placeholder={{ paddingTop: "15px", color: "white" }}
+                  _placeholder={{
+                    paddingTop: "15px",
+                    color: "white",
+                  }}
                   borderColor={"none"}
                   // p={5}
                   pe="70px"
@@ -348,15 +335,16 @@ function ChatArea() {
 
 function EnquiryList() {
   const enquiry = useAppSelector((state) => state.enquiry);
-  const { setCustomerPrincipal, setOpenChat } = React.useContext(AuthContext);
+  const { setCustomerPrincipal, setOpenChat } =
+    React.useContext(AuthContext);
 
   const handleSetActveConversation = (
     id: number,
     principal: string
   ) => {
     setCustomerPrincipal(principal);
-    setOpenChat(true)
-    console.log('open')
+    setOpenChat(true);
+    console.log("open");
   };
   return (
     <Box w={`100%`}>

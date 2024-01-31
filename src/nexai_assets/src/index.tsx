@@ -4,7 +4,7 @@ import "./index.css";
 import App from "./app";
 import { HashRouter } from "react-router-dom";
 import { ChakraProvider } from "@chakra-ui/react";
-import { AuthProvider } from "../context/AuthContext";
+import AppContext from "../context";
 import { Provider } from "react-redux";
 import { Toaster } from "react-hot-toast";
 import theme from "../theme/index";
@@ -25,9 +25,12 @@ import "@fontsource/poppins/400.css";
 import "@fontsource/poppins/500.css";
 import "@fontsource/poppins/600.css";
 import "@fontsource/poppins/700.css";
+
 // import { Assistant } from "nexai-assistant";
 
-const root = ReactDOM.createRoot(document.getElementById("app") as HTMLElement);
+const root = ReactDOM.createRoot(
+  document.getElementById("app") as HTMLElement
+);
 root.render(
   <React.StrictMode>
     <HashRouter>
@@ -37,10 +40,10 @@ root.render(
           theme={theme}
           toastOptions={{ defaultOptions: { position: "top" } }}
         >
-          <AuthProvider>
+          <AppContext>
             <App />
             {/* <Assistant color="blue" companyName="Gift Coin" companyId={1} loading={true} newMessage={{ sender: "nexai", text: "never give up" }} /> */}
-          </AuthProvider>
+          </AppContext>
         </ChakraProvider>
       </Provider>
     </HashRouter>

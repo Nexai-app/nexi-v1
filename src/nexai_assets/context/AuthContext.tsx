@@ -2,16 +2,16 @@ import React, { useState } from "react";
 import { Actor, Identity, ActorSubclass } from "@dfinity/agent";
 import { AuthClient } from "@dfinity/auth-client";
 import { createActor } from "../../declarations/nexai";
-import {
-  // canisterId as vdbCanisterId,
-  createActor as vdbCreateActor,
-} from "../../vector-database-icp/src/declarations/vector_database_backend";
-import { _SERVICE as _vdbSERVICE } from "../../vector-database-icp/src/declarations/vector_database_backend/vector_database_backend.did";
 // import {
 //   // canisterId as vdbCanisterId,
 //   createActor as vdbCreateActor,
-// } from "../../vector_database_backend";
-// import { _SERVICE as _vdbSERVICE } from "../../vector_database_backend/vector_database_backend.did";
+// } from "../../vector-database-icp/src/declarations/vector_database_backend";
+// import { _SERVICE as _vdbSERVICE } from "../../vector-database-icp/src/declarations/vector_database_backend/vector_database_backend.did";
+import {
+  // canisterId as vdbCanisterId,
+  createActor as vdbCreateActor,
+} from "../../vector_database_backend";
+import { _SERVICE as _vdbSERVICE } from "../../vector_database_backend/vector_database_backend.did";
 import { useLocation, useNavigate } from "react-router-dom";
 import { _SERVICE } from "../../declarations/nexai/nexai.did";
 
@@ -22,7 +22,7 @@ If you are using automatically generated declarations,
 this may be because your 
 application is not setting the canister ID in process.env correctly. */
 const vdbCanisterId = "br5f7-7uaaa-aaaaa-qaaca-cai";
-const canisterId = "avqkn-guaaa-aaaaa-qaaea-cai";
+const canisterId = "by6od-j4aaa-aaaaa-qaadq-cai";
 
 export const AuthContext = React.createContext<{
   Auth: any;
@@ -49,9 +49,6 @@ export const AuthContext = React.createContext<{
   setCustomerPrincipal: any;
   openChat: boolean;
   setOpenChat: any;
-  trainMode: boolean;
-  setTrainMode: any;
-  handleChangeTrainMode: any;
 }>({
   Auth: undefined,
   actor: undefined,
@@ -77,9 +74,6 @@ export const AuthContext = React.createContext<{
   setCustomerPrincipal: undefined,
   openChat: false,
   setOpenChat: undefined,
-  trainMode: true,
-  setTrainMode: undefined,
-  handleChangeTrainMode: undefined,
 });
 
 export const AuthProvider = ({ children }) => {
@@ -100,8 +94,7 @@ export const AuthProvider = ({ children }) => {
   const [useLLM, setUseLLM] = useState(false);
   const [customerPrincipal, setCustomerPrincipal] =
     React.useState("");
-  const [openChat, setOpenChat] = React.useState(false)
-  const [trainMode, setTrainMode] = React.useState(true);
+  const [openChat, setOpenChat] = React.useState(false);
 
   // const { trackEvent } = useMatomo();
 
@@ -185,10 +178,6 @@ export const AuthProvider = ({ children }) => {
     setIIAuth((prevState) => prevState !== prevState);
   };
 
-  const handleChangeTrainMode = (e: any) => {
-    setTrainMode(e.target.checked);
-  };
-
   return (
     <AuthContext.Provider
       value={{
@@ -216,9 +205,6 @@ export const AuthProvider = ({ children }) => {
         vdbActor,
         openChat,
         setOpenChat,
-        trainMode,
-        setTrainMode,
-        handleChangeTrainMode,
       }}
     >
       {children}
