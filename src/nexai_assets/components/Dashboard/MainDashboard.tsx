@@ -15,13 +15,15 @@ import {
   ModalOverlay,
   IconButton,
   useDisclosure,
+  Grid,
 } from "@chakra-ui/react";
-import LineChart from "./LineChart";
-import BarChart from "./BarChart";
+import LineChart from "../LineChart";
+import BarChart from "../BarChart";
 import { BiLogOut } from "react-icons/bi";
 import { ChatIcon } from "@chakra-ui/icons";
 import { AiOutlineBook } from "react-icons/ai";
-import FirstModal from "./TestBot/FirstModal";
+import FirstModal from "../TestBot/FirstModal";
+import Card from "./Card";
 // import Banner from "./Banner";
 
 const MainDashboard = () => {
@@ -68,7 +70,7 @@ const MainDashboard = () => {
         {isLargerThan991 ? (
           <>
             {/* <Banner /> */}
-            <Heading>Home</Heading>
+            <Heading>Dashboard</Heading>
 
             <Flex alignItems="center" py="10px">
               <Box fontSize="14px">
@@ -107,6 +109,13 @@ const MainDashboard = () => {
                   onClose={onCloseFirstModal}
                 />
               </Box>
+            </Flex>
+            <Flex justify={"center"} align="center" my={8}>
+              <Grid templateColumns="repeat(2, 1fr)" gap={4}>
+                <Card name={"Number of Disputes"} value={23} />
+                <Card name={"Number of Disputes"} value={23} />
+                <Card name={"Number of Disputes"} value={23} />
+              </Grid>
             </Flex>
             <Box>
               <LineChart />
@@ -169,6 +178,13 @@ const MainDashboard = () => {
                   onClose={onCloseFirstModal}
                 />
               </Box>
+            </Flex>
+            <Flex justify={"space-evenly"} align={"Center"} my={6}>
+              <Grid templateColumns="repeat(4, 1fr)" gap={8}>
+                <Card name={"Number of Disputes"} value={23} />
+                <Card name={"Settled Disputes"} value={23} />
+                <Card name={"Pending Disputes"} value={23} />
+              </Grid>
             </Flex>
             <Box>
               <LineChart />
