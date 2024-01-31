@@ -489,8 +489,24 @@ shared ({ caller }) actor class Nexai() = this{
   public shared ({ caller }) func icp_balance_dfx() : async LedgerTypes.Tokens {
     await ICPLedger.account_balance_dfx({
       account = AccountIdentifier.toText(AccountIdentifier.fromPrincipal(caller, null))
-      });
+    });
   };
+
+  public func transferICP(to : Text, amount : LedgerTypes.Tokens, created_at_time : LedgerTypes.TimeStamp) : async Nat64 {
+        await ICPLedger.send_dfx({
+            to = to;
+            fee = { e8s = 10_000 }; //0.0001 ICP
+            memo = 0;
+            from_subaccount = null;
+            created_at_time = ?created_at_time;
+            amount = amount
+        })
+    };
+
+  public query ({ caller }) func getMyAccountIdentifier() : async Text {
+        AccountIdentifier.toText(AccountIdentifier.fromPrincipal(caller, null))
+    };
+
 
   public shared ({ caller }) func icp_balance() : async Nat {
         let account : LedgerTypes.Account =  Utils.toAccount({
@@ -503,11 +519,6 @@ shared ({ caller }) actor class Nexai() = this{
         });
     };
 
-
-
-    public shared ({ caller }) func transferICP(to : ICPLedger.Account) {
-
-    };
 
   public shared query ({ caller }) func getCompanyProfile() : async ?CompanyEntry {
     return CompanyHashMap.get(caller);
