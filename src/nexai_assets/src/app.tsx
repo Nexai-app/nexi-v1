@@ -15,7 +15,7 @@ import { useAppSelector } from "../redux-toolkit/hooks";
 import { useUpdateProfile } from "../functions";
 import { useInitTransformers } from "../functions/ml";
 import { useInitLLM } from "../functions/webLlm";
-import LoadingScreen from "../components/LoadingScreen";
+import LoadingScreen from "../components/TrainBot/LoadingScreen";
 import WalletPage from "../pages/WalletPage";
 
 const App = () => {
@@ -93,6 +93,10 @@ const App = () => {
           <Route path="integration" element={<IntegrationPage />} />
           <Route path="chat" element={<Chat />} />
           <Route path="wallet" element={<WalletPage />} />
+          <Route
+            path="loading"
+            element={<LoadingScreen isLoading={false} />}
+          />
         </Routes>
       </React.Fragment>
     );

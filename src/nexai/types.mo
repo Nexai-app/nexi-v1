@@ -4,7 +4,6 @@ import Text "mo:base/Text";
 import Bool "mo:base/Bool";
 import Principal "mo:base/Principal"
 
-
 module {
 
     public type CompanyEntry = {
@@ -18,28 +17,28 @@ module {
         // isAdmin : Bool;
     };
 
-    // add cards(custom questions that the company can ask)
+  // add cards(custom questions that the company can ask)
 
-    public type CardEntry = {
-        vdbId : Nat32;
-        question : Text; /*P how do i transfer my btc friom my wallet*/
-        answer : Text /* just sleep and your btc would be transfered*/;
-    };
+  public type CardEntry = {
+    vdbId : Nat32;
+    question : Text; /*P how do i transfer my btc friom my wallet*/
+    answer : Text /* just sleep and your btc would be transfered*/;
+  };
 
-    // connection Id is the key
-    public type MessageEntry = {
-        id:Nat;
-        connectionId: Nat;
-        sender:Principal;
-        body: Text;
-        createdAt: Int;
-    };
-    public  type ConnectionType = {
-        id: Nat;
-        account1: Principal;
-        account2: Principal;
-        createdAt: Int;
+  // connection Id is the key
+  public type MessageEntry = {
+    id : Nat;
+    connectionId : Nat;
+    sender : Principal;
+    body : Text;
+    createdAt : Int;
+  };
 
+  public type ConnectionType = {
+    id : Nat;
+    account1 : Principal;
+    account2 : Principal;
+    createdAt : Int;
   };
 
 };

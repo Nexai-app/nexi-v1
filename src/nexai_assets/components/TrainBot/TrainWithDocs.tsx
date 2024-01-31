@@ -1,29 +1,31 @@
 import React from "react";
-import { Box, Flex, Text, Button, Textarea, FormControl, FormLabel, Input } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Text,
+  Button,
+  Textarea,
+  FormControl,
+  FormLabel,
+  useToast,
+} from "@chakra-ui/react";
 import { AuthContext } from "../../context/AuthContext";
 import { useAppSelector } from "../../redux-toolkit/hooks";
 import { useEmbeddQ, useEmbeddQuestion } from "../../functions/ml";
+import { TrainBotContext } from "../../context/TrainBotContext";
 
 function TrainWithDocs() {
   const profile = useAppSelector((state) => state.profile);
   const { vdbActor } = React.useContext(AuthContext);
-  const [train, setTrain] = React.useState({
-    question: "",
-    answer: ""
-  });
-  // const { call, embeddedQ } = useEmbeddQ();
+  const { setDocUploaded, uploading, setUploading, setUploadError } =
+    React.useContext(TrainBotContext);
   const [docs, setDocs] = React.useState(
     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
   );
-  const {
-    embedd,
-    embeddedText,
-    loading: mlLoading,
-    answer_arr,
-  } = useEmbeddQuestion();
+  const { embedd, embeddedText } = useEmbeddQuestion();
   const { embeddedQ, call } = useEmbeddQ();
-  const newDocs = docs.split(".", 500);
-  const [docId, setDocId] = React.useState();
+  const newDocs = docs.split(".", 1000);
+  const toast = useToast();
 
   // save document in vdb
   // save each question and answer directly to the vector database into the vector database with docuemt id as the vlaue
@@ -31,21 +33,9 @@ function TrainWithDocs() {
   // show a very detailed screen to show the progress (that's when ther is ui) for now, just use console.log
   //
 
-  // const save = () => {
-  //   vdbActor
-  //     .append_keys_values(profile.vdbId, docs)
-  //     .then((data) => {
-  //       setDocId(data["Ok"]);
-  //       console.log("data", data);
-  //       exec();
-  //     })
-  //     .catch((err) => {
-  //       console.log("err", err);
-  //     });
-  // };
-
-  const exec = async () => {
+  const handleSubmit = async () => {
     newDocs.forEach(async (doc) => {
+      setUploading(true);
       try {
         await embedd(doc, docs);
         if (embeddedText[0].length == 384) {
@@ -58,7 +48,16 @@ function TrainWithDocs() {
           await vdbActor.build_index(profile?.vdbId);
           console.log("saved and built pair", doc);
         }
+        setUploading(false);
+        setDocUploaded(true);
       } catch (err) {
+        toast({
+          status: "error",
+          title:
+            "Error saving document, please try again or contact support.",
+        });
+        setUploading(false);
+        setUploadError(true);
         console.log(err);
       }
     });
@@ -68,18 +67,17 @@ function TrainWithDocs() {
       await call(doc);
       if (embeddedQ[0].length == 384) {
         const val = await vdbActor
-          .get_similar(profile.vdbId, embeddedQ[0], 1)
+          .get_similar(profile.vdbId, doc, embeddedQ[0], 1)
           .then((val) => {
-            console.log("[Answer from get similar]", val);
+            console.debug("[Nexai]", val);
           })
           .catch((err) => {
-            console.log("[Error from get similar]", err);
+            console.debug("[Nexai]", err);
           });
       }
     });
   };
 
-  console.log(docs.split("." || ",", 500));
   return (
     <Box mt={8} color="white">
       <Flex justify="center" direction="column" align="center">
@@ -88,6 +86,7 @@ function TrainWithDocs() {
           justify="center"
           direction="column"
           w="full"
+          textAlign="center"
         >
           <Text
             mb={4}
@@ -95,7 +94,7 @@ function TrainWithDocs() {
             fontWeight="700"
             fontFamily="Poppins"
           >
-            Train Your Assistant
+            Train With Company's Docs
           </Text>
           <Box
             display="flex"
@@ -108,64 +107,42 @@ function TrainWithDocs() {
               fontWeight="400"
               fontFamily="Public Sans"
             >
-              upload a well detailed document about your company, all
-              of it.
+              simply upload a document containing all about your
+              product, the services you offer, frequently asked
+              questions and so on and let Nexai do the Miracle.
             </Text>
+
             <Text
               fontSize={{ base: "12px", md: "18px" }}
               fontWeight="400"
               fontFamily="Public Sans"
             >
-              Let your AI answer your custoomers while you sleep
+              your personal assistant learns from any relevant
+              information you provide here to answer potential
+              questions.
             </Text>
           </Box>
         </Flex>
-        <Box
-          w={`60%`}
-        >
+        <Box w={{ base: "80%", md: `60%` }}>
           <Box>
-            <FormControl mb={`40px`}>
-              <FormLabel>Question</FormLabel>
-              <Input
-                name="name"
-                value={train.question}
-                onChange={(e) => {
-                  setTrain((previous) => ({
-                    ...previous,
-                    question: e.target.value
-                  }))
-                }}
-                placeholder="Input your question here"
-                height="60px"
-                px={`5`}
-              />
-            </FormControl>
-          </Box>
-          <Box>
-            <FormControl mb={`40px`}>
-              <FormLabel>Answer</FormLabel>
+            <FormControl my={`40px`}>
+              <FormLabel>let's have it...</FormLabel>
               <Textarea
                 name="name"
-                value={train.answer}
+                value={docs}
                 onChange={(e) => {
-                  setTrain((previous) => ({
-                    ...previous,
-                    answer: e.target.value
-                  }))
+                  setDocs(e.target.value);
                 }}
-                placeholder="Type your answer here"
-                height="60px"
+                placeholder="Type your company's info here..."
+                height="200px"
                 px={`5`}
               />
             </FormControl>
           </Box>
-          <Button
-            onClick={() => {
-              exec();
-            }}
-          >
-            Save
-          </Button>
+          <Flex justify={"flex-end"}>
+            <Button onClick={handleSubmit}>Train</Button>
+            <Button onClick={get}>Get</Button>
+          </Flex>
         </Box>
       </Flex>
     </Box>
