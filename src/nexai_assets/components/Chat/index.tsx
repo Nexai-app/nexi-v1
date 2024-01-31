@@ -45,6 +45,13 @@ function index() {
     <Box
       w="100%"
       minH={`95vh`}
+      css={{
+        "&::-webkit-scrollbar": {
+          display: "none", // Hide scrollbar for Chrome, Safari, and Opera
+        },
+        scrollbarWidth: "none", // Hide scrollbar for Firefox
+        msOverflowStyle: "none", // Hide scrollbar for Internet Explorer and Edge
+      }}
     >
       <Box
         h={`14vh`}
@@ -99,7 +106,9 @@ function index() {
         overflow={`scroll`}
       >
         <Hide below="md">
-          <ChatArea />
+          <Box w={`150vw`}>
+            <ChatArea />
+          </Box>
           <Box w="1px" mx={8} bg={"#929191B2"} />
           <EnquiryList />
         </Hide>
@@ -163,6 +172,13 @@ function ChatArea() {
       w="100%"
       h={`70vh`}
       overflow={`scroll`}
+      css={{
+        "&::-webkit-scrollbar": {
+          display: "none", // Hide scrollbar for Chrome, Safari, and Opera
+        },
+        scrollbarWidth: "none", // Hide scrollbar for Firefox
+        msOverflowStyle: "none", // Hide scrollbar for Internet Explorer and Edge
+      }}
     >
       {/* Header */}
       <Show
@@ -241,32 +257,44 @@ function ChatArea() {
             ))}
           </Flex>
           {/* input area */}
-          <Box
-            position="fixed"
-            bottom={0}
-            // left={0}
-            right={0}
-            p={4}
-            w={`85vw`}
-            maxH={`12vh`}
-            h={`150px`}
-          >
-            <Hide below="md">
-              <InputGroup h={"100%"} mt={2} size="lg" bg="#271732">
+          <Hide below="md">
+            <Box
+              position="fixed"
+              bottom={0}
+              // left={0}
+              right={0}
+              p={0}
+              w={`85vw`}
+              maxH={`12vh`}
+              h={`220px`}
+              alignItems={`center`}
+              css={{
+                "&::-webkit-scrollbar": {
+                  display: "none", // Hide scrollbar for Chrome, Safari, and Opera
+                },
+                scrollbarWidth: "none", // Hide scrollbar for Firefox
+                msOverflowStyle: "none", // Hide scrollbar for Internet Explorer and Edge
+              }}
+            >
+              <InputGroup h={"100%"} size="lg" bg="#271732">
                 <Textarea
                   focusBorderColor="none"
                   _placeholder={{ paddingTop: "15px", color: "white" }}
                   borderColor={"none"}
-                  // p={5}
+                  p={1}
                   pe="200px"
                   alignItems={`center`}
                   justifyItems={`center`}
                   minH={`100%`}
+                  h={`80px`}
                   // maxH={`10vh`}
-                  placeholder="Enter Message"
+                  // placeholder="Enter Message"
                   resize="none"
                   value={message}
-                  onChange={(e) => setMessage(e.target.value)}
+                  onChange={(e) => {
+                    setMessage(e.target.value)
+                    console.log(e.target.value)
+                  }}
                 />
                 <InputRightElement w="150px" h={"100%"} alignItems={`center`} mr="1.5rem">
                   <Button
@@ -281,19 +309,50 @@ function ChatArea() {
                   </Button>
                 </InputRightElement>
               </InputGroup>
-            </Hide>
-          </Box>
-          <Box
-            position="fixed"
-            bottom={0}
-            // left={0}
-            right={0}
-            p={2}
-            w={`100%`}
-            maxH={`12vh`}
-            h={`180px`}
-          >
-            <Show below="md">
+            </Box>
+          </Hide>
+          {/* <InputGroup>
+            <Textarea
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              style={{
+                position: "sticky",
+                bottom: 0,
+                background: "#271732",
+                padding: "10px"
+              }}
+            />
+            <InputRightElement w="150px" h={"100%"} alignItems={`center`} mr="1.5rem">
+              <Button
+                size="md"
+                px={6}
+                py={6}
+                onClick={handleSendMessage}
+                isLoading={sending}
+                isDisabled={sending || message.length === 0}
+              >
+                Send Message
+              </Button>
+            </InputRightElement>
+          </InputGroup> */}
+          <Hide above="md">
+            <Box
+              position="fixed"
+              bottom={0}
+              // left={0}
+              right={0}
+              p={2}
+              w={`100%`}
+              maxH={`12vh`}
+              h={`150px`}
+              css={{
+                "&::-webkit-scrollbar": {
+                  display: "none", // Hide scrollbar for Chrome, Safari, and Opera
+                },
+                scrollbarWidth: "none", // Hide scrollbar for Firefox
+                msOverflowStyle: "none", // Hide scrollbar for Internet Explorer and Edge
+              }}
+            >
               <InputGroup h={"100%"} size="lg" bg="#271732">
                 <Textarea
                   focusBorderColor="none"
@@ -318,8 +377,8 @@ function ChatArea() {
                 >
                   <Button
                     size="sm"
-                    px={1.5}
-                    py={1}
+                    px={7}
+                    py={5}
                     onClick={handleSendMessage}
                     isLoading={sending}
                     isDisabled={sending || message.length === 0}
@@ -328,8 +387,8 @@ function ChatArea() {
                   </Button>
                 </InputRightElement>
               </InputGroup>
-            </Show>
-          </Box>
+            </Box>
+          </Hide>
         </Box>
       ) : (
         <Box

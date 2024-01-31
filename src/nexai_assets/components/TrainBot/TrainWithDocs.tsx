@@ -52,7 +52,8 @@ function TrainWithDocs() {
           await vdbActor.append_keys_values(
             profile?.vdbId,
             [embeddedText[0]],
-            [docs]
+            answer_arr
+            // [docs]
           );
           await vdbActor.build_index(profile?.vdbId);
           console.log("saved and built pair", doc);

@@ -130,6 +130,28 @@ export const MenuNavigation = [
     title: "Trainings",
     route: "/my-questions",
   },
+  {
+    icon: {
+      inactive: (
+        <Icon
+          as={RiChat2Fill}
+          boxSize={6}
+          alignSelf={`center`}
+          mr={`15px`}
+        />
+      ),
+      active: (
+        <Icon
+          as={RiChat2Fill}
+          boxSize={6}
+          alignSelf={`center`}
+          mr={`15px`}
+        />
+      ),
+    },
+    title: "Wallet",
+    route: "/wallet",
+  },
 ];
 
 type NavType = {
