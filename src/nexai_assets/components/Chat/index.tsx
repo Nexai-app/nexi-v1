@@ -53,12 +53,10 @@ function index() {
         msOverflowStyle: "none", // Hide scrollbar for Internet Explorer and Edge
       }}
     >
-      <Box
-        h={`14vh`}
-      >
+      <Box h={`14vh`}>
         <Flex
           justifyContent={"space-between"}
-        // pb={3}
+          // pb={3}
         >
           <Heading>Messages</Heading>
           {/* <Hide below="md">
@@ -73,7 +71,7 @@ function index() {
         <Flex
           justify={`end`}
           align={`center`}
-        // pb={3}
+          // pb={3}
         >
           <Heading size={`lg`} mb={0}>
             Enquiries
@@ -213,15 +211,15 @@ function ChatArea() {
           <Flex
             direction="column"
             flex="1" // This will make it take the remaining vertical height
-          // overflowY="scroll"
-          // h={"calc(60vh - 50px"}
-          // css={{
-          //   "&::-webkit-scrollbar": {
-          //     display: "none", // Hide scrollbar for Chrome, Safari, and Opera
-          //   },
-          //   scrollbarWidth: "none", // Hide scrollbar for Firefox
-          //   msOverflowStyle: "none", // Hide scrollbar for Internet Explorer and Edge
-          // }}
+            // overflowY="scroll"
+            // h={"calc(60vh - 50px"}
+            // css={{
+            //   "&::-webkit-scrollbar": {
+            //     display: "none", // Hide scrollbar for Chrome, Safari, and Opera
+            //   },
+            //   scrollbarWidth: "none", // Hide scrollbar for Firefox
+            //   msOverflowStyle: "none", // Hide scrollbar for Internet Explorer and Edge
+            // }}
           >
             {sortedConversation?.map((c, index) => (
               <Flex
@@ -280,8 +278,8 @@ function ChatArea() {
                   resize="none"
                   value={message}
                   onChange={(e) => {
-                    setMessage(e.target.value)
-                    console.log(e.target.value)
+                    setMessage(e.target.value);
+                    console.log(e.target.value);
                   }}
                 />
                 <InputRightElement

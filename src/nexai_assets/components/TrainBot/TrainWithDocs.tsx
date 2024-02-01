@@ -19,9 +19,8 @@ function TrainWithDocs() {
   const { vdbActor } = React.useContext(AuthContext);
   const { setDocUploaded, uploading, setUploading, setUploadError } =
     React.useContext(TrainBotContext);
-  const [docs, setDocs] = React.useState(
-    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
-  );
+  const [docs, setDocs] = React.useState("");
+  console.log(docs);
   const { embedd, embeddedText } = useEmbeddQuestion();
   const { embeddedQ, call } = useEmbeddQ();
   const newDocs = docs.split(".", 1000);
@@ -140,8 +139,13 @@ function TrainWithDocs() {
             </FormControl>
           </Box>
           <Flex justify={"flex-end"}>
-            <Button onClick={handleSubmit}>Train</Button>
-            <Button onClick={get}>Get</Button>
+            <Button
+              isDisabled={docs.length < 1000}
+              onClick={handleSubmit}
+            >
+              Train
+            </Button>
+            {/* <Button onClick={get}>Get</Button> */}
           </Flex>
         </Box>
       </Flex>

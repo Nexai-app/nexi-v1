@@ -7,9 +7,12 @@ import {
   Text,
   Hide,
   Show,
+  Button,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { AiOutlineCopy } from "react-icons/ai";
-import { useAppSelector } from "../redux-toolkit/hooks";
+import { useAppSelector } from "../../redux-toolkit/hooks";
+import IntegrationModal from "./Modal";
 
 const int = [
   {
@@ -207,6 +210,7 @@ const int = [
 
 function Integration() {
   const profile = useAppSelector((state) => state.profile);
+  const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <Box>
       <Heading>Integration</Heading>
@@ -267,6 +271,11 @@ function Integration() {
                 <Text>Company Email: {profile?.email}</Text>
                 <Text>Principal: {profile?.principal}</Text>
               </Box>
+              <Flex justify={"center"}>
+                <Button mt={3} px={3} py={2} onClick={onOpen}>
+                  Test Integration
+                </Button>
+              </Flex>
             </Show>
           </Box>
         </Box>
@@ -277,9 +286,18 @@ function Integration() {
         {/* Video */}
         <Hide below="md">
           <Box px={8} w="30%">
-            <Text fontSize="20px" fontWeight="700">
-              Watch Video
-            </Text>
+            <Flex
+              justify={"space-between"}
+              alignItems={"center"}
+              my={3}
+            >
+              <Text fontSize="20px" fontWeight="700" pt={5}>
+                Integration Details
+              </Text>
+              <Button px={4} py={2} onClick={onOpen}>
+                Test Integration
+              </Button>
+            </Flex>
             <Box dir="column">
               <Text>Company Id: {profile?.vdbId}</Text>
               <Text>Company Name: {profile?.name}</Text>
@@ -287,6 +305,7 @@ function Integration() {
               <Text>Company Email: {profile?.email}</Text>
               <Text>Principal: {profile?.principal}</Text>
             </Box>
+
             {/*    <AspectRatio maxW="560px" ratio={1}>
               <iframe
                 title="Introverts for you"
@@ -297,6 +316,14 @@ function Integration() {
           </Box>
         </Hide>
       </Flex>
+      {isOpen && (
+        <IntegrationModal
+          isOpen={isOpen}
+          onOpen={onOpen}
+          onClose={onClose}
+          status={"false"}
+        />
+      )}
     </Box>
   );
 }

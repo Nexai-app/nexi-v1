@@ -24,6 +24,8 @@ import { ChatIcon } from "@chakra-ui/icons";
 import { AiOutlineBook } from "react-icons/ai";
 import FirstModal from "../TestBot/FirstModal";
 import Card from "./Card";
+import { useGetAllConnections } from "../../functions/index";
+import { useAppSelector } from "../../redux-toolkit/hooks";
 // import Banner from "./Banner";
 
 const MainDashboard = () => {
@@ -36,6 +38,12 @@ const MainDashboard = () => {
       backdropFilter="blur(1px) hue-rotate(0deg)"
     />
   );
+
+  const { getEnquires } = useGetAllConnections();
+
+  React.useEffect(() => {
+    getEnquires();
+  }, []);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
@@ -58,6 +66,7 @@ const MainDashboard = () => {
   };
 
   const [overlay, setOverlay] = React.useState(<OverlayOne />);
+  const enquiry = useAppSelector((state) => state.enquiry);
 
   const logOut = () => {
     localStorage.clear();
@@ -112,7 +121,10 @@ const MainDashboard = () => {
             </Flex>
             <Flex justify={"center"} align="center" my={8}>
               <Grid templateColumns="repeat(2, 1fr)" gap={4}>
-                <Card name={"Number of Disputes"} value={23} />
+                <Card
+                  name={"Number of Disputes"}
+                  value={enquiry.length}
+                />
                 <Card name={"Number of Disputes"} value={23} />
                 <Card name={"Number of Disputes"} value={23} />
               </Grid>
@@ -181,7 +193,10 @@ const MainDashboard = () => {
             </Flex>
             <Flex justify={"space-evenly"} align={"Center"} my={6}>
               <Grid templateColumns="repeat(4, 1fr)" gap={8}>
-                <Card name={"Number of Disputes"} value={23} />
+                <Card
+                  name={"Number of Disputes"}
+                  value={enquiry.length}
+                />
                 <Card name={"Settled Disputes"} value={23} />
                 <Card name={"Pending Disputes"} value={23} />
               </Grid>
