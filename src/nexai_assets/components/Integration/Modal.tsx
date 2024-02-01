@@ -10,9 +10,9 @@ import {
 } from "@chakra-ui/react";
 
 type IntegrationModalT = {
-  onClose: () => void;
   isOpen: boolean;
   onOpen: () => void;
+  onClose: () => void;
   status: "loading" | "true" | "false";
 };
 

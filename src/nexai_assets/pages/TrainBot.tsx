@@ -1,8 +1,6 @@
 import React from "react";
-import { Box, Flex, Text } from "@chakra-ui/react";
+import { Box, Flex, Text, Switch } from "@chakra-ui/react";
 import LayoutContainer from "../components/shared/LayoutContainer";
-import Toggle from "react-toggle";
-import "react-toggle/style.css";
 import AddQuestions from "../components/TrainBot/AddQuestion";
 import TrainWithDocs from "../components/TrainBot/TrainWithDocs";
 import { TrainBotContext } from "../context/TrainBotContext";
@@ -29,12 +27,18 @@ function TrainBot() {
             </Box>
           ) : (
             <Box>
-              <Flex>
-                <Toggle
+              <Flex gap={3} align="center">
+                <Switch
+                  size={"lg"}
+                  id={"toggle"}
+                  colorScheme={"purple"}
                   onChange={(e: any) => handleChangeTrainMode(e)}
-                  checked={trainMode}
+                  defaultChecked
+                  isChecked={trainMode}
                 />
-                <Text>{trainMode ? options[0] : options[1]}</Text>
+                <Text mt={3}>
+                  {trainMode ? options[0] : options[1]}
+                </Text>
               </Flex>
               {trainMode ? <TrainWithDocs /> : <AddQuestions />}
             </Box>

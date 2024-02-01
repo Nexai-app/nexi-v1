@@ -272,7 +272,13 @@ function Integration() {
                 <Text>Principal: {profile?.principal}</Text>
               </Box>
               <Flex justify={"center"}>
-                <Button mt={3} px={3} py={2} onClick={onOpen}>
+                <Button
+                  mt={3}
+                  px={3}
+                  py={2}
+                  color="#341A41"
+                  onClick={onOpen}
+                >
                   Test Integration
                 </Button>
               </Flex>
@@ -285,6 +291,7 @@ function Integration() {
         </Hide>
         {/* Video */}
         <Hide below="md">
+          {/* TODO: make it flex inverse and ddirection column when screen is average */}
           <Box px={8} w="30%">
             <Flex
               justify={"space-between"}
@@ -294,7 +301,7 @@ function Integration() {
               <Text fontSize="20px" fontWeight="700" pt={5}>
                 Integration Details
               </Text>
-              <Button px={4} py={2} onClick={onOpen}>
+              <Button px={4} py={2} onClick={onOpen} color="#341A41">
                 Test Integration
               </Button>
             </Flex>
