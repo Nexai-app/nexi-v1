@@ -21,7 +21,7 @@ import WalletPage from "../pages/WalletPage";
 const App = () => {
   const { handleAuthenticated, setIIAuth, actor } =
     useContext(AuthContext);
-  const [actorRestated, setActorRestated] = useState<boolean>(true);
+  const [actorRestated, setActorRestated] = useState<boolean>(false);
   const profile = useAppSelector((state) => state.profile);
   const { updateProfile } = useUpdateProfile();
   const { init } = useInitTransformers();
@@ -76,7 +76,7 @@ const App = () => {
       }
     };
 
-    // runOnMounth();
+    runOnMounth();
     call();
   }, []);
 

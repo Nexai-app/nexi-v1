@@ -21,8 +21,8 @@ Canister ID is required, but received undefined instead.
 If you are using automatically generated declarations, 
 this may be because your 
 application is not setting the canister ID in process.env correctly. */
-const vdbCanisterId = "asrmz-lmaaa-aaaaa-qaaeq-cai";
-const canisterId = "bd3sg-teaaa-aaaaa-qaaba-cai";
+const vdbCanisterId = "a3shf-5eaaa-aaaaa-qaafa-cai";
+const canisterId = "be2us-64aaa-aaaaa-qaabq-cai";
 
 export const AuthContext = React.createContext<{
   Auth: any;

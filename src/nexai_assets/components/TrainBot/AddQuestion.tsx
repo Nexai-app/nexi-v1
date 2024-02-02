@@ -150,13 +150,6 @@ const AddQuestions = () => {
               </Button>
               <Button
                 onClick={handleSubmit}
-                bg="white"
-                color={`#341A41`}
-                border={`1px white solid`}
-                _hover={{
-                  backgroundColor: "transparent",
-                  color: "white",
-                }}
                 isLoading={submitting}
                 isDisabled={submitting}
               >

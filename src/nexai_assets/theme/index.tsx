@@ -17,10 +17,20 @@ const theme = extendTheme({
     global: {
       body: {
         bg: "#341A41",
-        // backgroundSize: "cover",
-        // backgroundRepeat: "no-repeat",
-        // backgroundPosition: "center",
         color: "white",
+      },
+    },
+  },
+  components: {
+    Button: {
+      baseStyle: {
+        bg: "white",
+        color: `#341A41`,
+        border: `1px white solid`,
+        _hover: {
+          backgroundColor: "transparent",
+          color: "white",
+        },
       },
     },
   },
