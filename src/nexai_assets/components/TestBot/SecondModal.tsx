@@ -29,6 +29,7 @@ import { BeatLoader } from "react-spinners";
 import { useInteractBot } from "../../functions/webLlm";
 import toast from "react-hot-toast";
 import { removeReply } from "../../redux-toolkit/slice/llmSlice";
+import { useEmbeddQ, useEmbeddQuestion } from "../../functions/ml";
 
 type ChatType = {
   sender: "you" | "nexai";
@@ -36,7 +37,7 @@ type ChatType = {
 };
 
 function SecondModal({ isOpen, onClose }) {
-  const { actor, llmBoolStatus, useLLM } = useContext(AuthContext);
+  const { vdbActor } = useContext(AuthContext);
   const [inputMessage, setInputMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [chat, setChat] = useState<ChatType[]>([]);
@@ -46,6 +47,7 @@ function SecondModal({ isOpen, onClose }) {
   const reply = useAppSelector((state) => state.llm);
   const user = useAppSelector((state) => state.profile);
   const dispatch = useAppDispatch();
+  const { embeddedQ, call } = useEmbeddQ();
 
   const OverlayOne = () => (
     <ModalOverlay
@@ -70,11 +72,57 @@ function SecondModal({ isOpen, onClose }) {
       event.preventDefault();
       // userInput = inputMessage
       // console.log(userInput)
-      // handleSendChat();
+      handleSendChat();
+    }
+  };
+
+  console.log("loading status", loading);
+  const handleSendChat = async () => {
+    try {
+      var myMess: ChatType = {
+        sender: "you",
+        text: inputMessage,
+      };
+      chat.push(myMess);
+      setLoading(true);
+
+      await call(inputMessage);
+      if (embeddedQ[0].length == 384) {
+        vdbActor
+          .hello_openai2(profile.vdbId, inputMessage, embeddedQ[0], 1)
+          .then((val: any) => {
+            const parsedVal = JSON.parse(val.Ok);
+            myMess = {
+              sender: "nexai",
+              text: parsedVal.choices[0].message.content,
+            };
+            chat.push(myMess);
+
+            console.log("[nexai-openai-parsedVal]", parsedVal);
+            console.log("[nexai-openai-unparsedVal]", val);
+            setLoading(false);
+          })
+          .catch((err: any) => {
+            setLoading(false);
+            toast.error(err.message);
+            console.error("[nexai-openai", err);
+          });
+      }
+    } catch (err: any) {
+      toast.error(err.message);
+      setLoading(false);
+      console.error("[nexai-openai", err);
     }
   };
 
   const [overlay, setOverlay] = React.useState(<OverlayOne />);
+
+  useEffect(() => {
+    if (scrollableRef.current) {
+      scrollableRef.current.scrollTop =
+        scrollableRef.current.scrollHeight;
+    }
+  }, [chat]);
 
   return (
     <Modal isCentered isOpen={isOpen} onClose={onClose}>
@@ -143,7 +191,7 @@ function SecondModal({ isOpen, onClose }) {
                 size="sm"
                 bg={`#341A41`}
                 color={`white`}
-                // onClick={handleSendChat}
+                onClick={handleSendChat}
                 isLoading={loading} // Use isLoading to handle loading state
                 isDisabled={loading} // Disable the button when loading
                 colorScheme="gray" // Change the color scheme to gray for the disabled state

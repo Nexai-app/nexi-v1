@@ -18,7 +18,6 @@ import {
   useGetAllConnections,
   useGetConversation,
 } from "../../functions/index";
-import { Principal } from "@dfinity/principal";
 import DateFormatter from "../../utils/DateFormatter";
 import { useAppSelector } from "../../redux-toolkit/hooks";
 import { EnquiryT } from "../../redux-toolkit/types";
@@ -26,7 +25,6 @@ import { AuthContext } from "../../context/AuthContext";
 
 function index() {
   const { getEnquires } = useGetAllConnections();
-  const { handleGetConversation } = useGetConversation();
 
   React.useEffect(() => {
     getEnquires();
@@ -42,61 +40,36 @@ function index() {
   // }, 5000);
 
   return (
-    <Box
-      w="100%"
-      minH={`95vh`}
-      css={{
-        "&::-webkit-scrollbar": {
-          display: "none", // Hide scrollbar for Chrome, Safari, and Opera
-        },
-        scrollbarWidth: "none", // Hide scrollbar for Firefox
-        msOverflowStyle: "none", // Hide scrollbar for Internet Explorer and Edge
-      }}
-    >
-      <Box h={`14vh`}>
-        <Flex
-          justifyContent={"space-between"}
-          // pb={3}
-        >
-          <Heading>Messages</Heading>
-          {/* <Hide below="md">
-            <Box
-              bg="#271732"
-              h="56px"
-              w="346px"
-              borderRadius={"10px"}
-            />
-          </Hide> */}
-        </Flex>
-        <Flex
-          justify={`end`}
-          align={`center`}
-          // pb={3}
-        >
-          <Heading size={`lg`} mb={0}>
-            Enquiries
-          </Heading>
-          <Flex
-            borderRadius={`full`}
-            w={`25px`}
-            h={`25px`}
-            bg={`#fff`}
-            justify={`center`}
-            align={`center`}
-            ms={3}
-          >
-            <Text color={`#341A41`} mb={0} fontWeight={700}>
-              {enquiry.length}
-            </Text>
-          </Flex>
+    <Box w="100%">
+      <Box h={"14vh"}>
+        <Heading>Messages</Heading>
+        <Flex justify={`end`} align={`center`}>
+          <Show below="md">
+            <Heading size={`lg`} mb={0}>
+              Enquiries
+            </Heading>
+            <Flex
+              borderRadius={`full`}
+              w={`25px`}
+              h={`25px`}
+              bg={`#fff`}
+              justify={`center`}
+              align={`center`}
+              ms={3}
+            >
+              <Text color={`#341A41`} mb={0} fontWeight={700}>
+                {enquiry.length}
+              </Text>
+            </Flex>
+          </Show>
         </Flex>
       </Box>
-      <Flex justify="space-between" h={`80vh`} overflow={`scroll`}>
+      <Flex justify="space-between" overflow={`scroll`}>
         <Hide below="md">
           <Box w={`150vw`}>
             <ChatArea />
           </Box>
-          <Box w="1px" mx={8} bg={"#929191B2"} />
+          <Box w="1px" mx={8} bg={"#929191B2"} h={"85vh"} />
           <EnquiryList />
         </Hide>
         <Show below="md">
@@ -151,24 +124,13 @@ function ChatArea() {
       .catch((err) => {
         setSending(false);
         setMessage("");
-        console.debug("nexai", err);
+        console.debug("[nexai]", err);
       });
   };
 
   return (
-    <Box
-      w="100%"
-      h={`70vh`}
-      overflow={`scroll`}
-      css={{
-        "&::-webkit-scrollbar": {
-          display: "none", // Hide scrollbar for Chrome, Safari, and Opera
-        },
-        scrollbarWidth: "none", // Hide scrollbar for Firefox
-        msOverflowStyle: "none", // Hide scrollbar for Internet Explorer and Edge
-      }}
-    >
-      {/* Header */}
+    <Box w="100%">
+      {/* Header ON MOBILE */}
       <Show below="md">
         <Flex
           bg={`#fff`}
@@ -210,16 +172,17 @@ function ChatArea() {
           {/* chat body */}
           <Flex
             direction="column"
-            flex="1" // This will make it take the remaining vertical height
-            // overflowY="scroll"
-            // h={"calc(60vh - 50px"}
-            // css={{
-            //   "&::-webkit-scrollbar": {
-            //     display: "none", // Hide scrollbar for Chrome, Safari, and Opera
-            //   },
-            //   scrollbarWidth: "none", // Hide scrollbar for Firefox
-            //   msOverflowStyle: "none", // Hide scrollbar for Internet Explorer and Edge
-            // }}
+            // flex="1" // This will make it take the remaining vertical height
+            h={"60vh"}
+            maxH={"60vh"}
+            overflowY={"scroll"}
+            css={{
+              "&::-webkit-scrollbar": {
+                display: "none", // Hide scrollbar for Chrome, Safari, and Opera
+              },
+              scrollbarWidth: "none", // Hide scrollbar for Firefox
+              msOverflowStyle: "none", // Hide scrollbar for Internet Explorer and Edge
+            }}
           >
             {sortedConversation?.map((c, index) => (
               <Flex
@@ -239,70 +202,10 @@ function ChatArea() {
               </Flex>
             ))}
           </Flex>
+
           {/* input area */}
-          <Hide below="md">
-            <Box
-              position="fixed"
-              bottom={0}
-              // left={0}
-              right={0}
-              p={0}
-              w={`85vw`}
-              maxH={`12vh`}
-              h={`220px`}
-              alignItems={`center`}
-              css={{
-                "&::-webkit-scrollbar": {
-                  display: "none", // Hide scrollbar for Chrome, Safari, and Opera
-                },
-                scrollbarWidth: "none", // Hide scrollbar for Firefox
-                msOverflowStyle: "none", // Hide scrollbar for Internet Explorer and Edge
-              }}
-            >
-              <InputGroup h={"100%"} size="lg" bg="#271732">
-                <Textarea
-                  focusBorderColor="none"
-                  _placeholder={{
-                    paddingTop: "15px",
-                    color: "white",
-                  }}
-                  borderColor={"none"}
-                  p={1}
-                  pe="200px"
-                  alignItems={`center`}
-                  justifyItems={`center`}
-                  minH={`100%`}
-                  h={`80px`}
-                  // maxH={`10vh`}
-                  // placeholder="Enter Message"
-                  resize="none"
-                  value={message}
-                  onChange={(e) => {
-                    setMessage(e.target.value);
-                    console.log(e.target.value);
-                  }}
-                />
-                <InputRightElement
-                  w="150px"
-                  h={"100%"}
-                  alignItems={`center`}
-                  mr="1.5rem"
-                >
-                  <Button
-                    size="md"
-                    px={6}
-                    py={6}
-                    onClick={handleSendMessage}
-                    isLoading={sending}
-                    isDisabled={sending || message.length === 0}
-                  >
-                    Send Message
-                  </Button>
-                </InputRightElement>
-              </InputGroup>
-            </Box>
-          </Hide>
-          {/* <InputGroup>
+
+          <InputGroup /* h={"70px"} mt={2} size="lg" bg="#271732" */>
             <Textarea
               value={message}
               onChange={(e) => setMessage(e.target.value)}
@@ -310,10 +213,15 @@ function ChatArea() {
                 position: "sticky",
                 bottom: 0,
                 background: "#271732",
-                padding: "10px"
+                padding: "10px",
               }}
             />
-            <InputRightElement w="150px" h={"100%"} alignItems={`center`} mr="1.5rem">
+            <InputRightElement
+              w="150px"
+              h={"100%"}
+              alignItems={`center`}
+              mr="1.5rem"
+            >
               <Button
                 size="md"
                 px={6}
@@ -325,64 +233,7 @@ function ChatArea() {
                 Send Message
               </Button>
             </InputRightElement>
-          </InputGroup> */}
-          <Hide above="md">
-            <Box
-              position="fixed"
-              bottom={0}
-              // left={0}
-              right={0}
-              p={2}
-              w={`100%`}
-              maxH={`12vh`}
-              h={`150px`}
-              css={{
-                "&::-webkit-scrollbar": {
-                  display: "none", // Hide scrollbar for Chrome, Safari, and Opera
-                },
-                scrollbarWidth: "none", // Hide scrollbar for Firefox
-                msOverflowStyle: "none", // Hide scrollbar for Internet Explorer and Edge
-              }}
-            >
-              <InputGroup h={"100%"} size="lg" bg="#271732">
-                <Textarea
-                  focusBorderColor="none"
-                  _placeholder={{
-                    paddingTop: "15px",
-                    color: "white",
-                  }}
-                  borderColor={"none"}
-                  // p={5}
-                  pe="70px"
-                  alignItems={`center`}
-                  justifyItems={`center`}
-                  minH={`100%`}
-                  // maxH={`10vh`}
-                  placeholder="Enter Message"
-                  resize="none"
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                />
-                <InputRightElement
-                  w="14%"
-                  mr="1.5rem"
-                  h={"100%"}
-                  alignItems={`center`}
-                >
-                  <Button
-                    size="sm"
-                    px={7}
-                    py={5}
-                    onClick={handleSendMessage}
-                    isLoading={sending}
-                    isDisabled={sending || message.length === 0}
-                  >
-                    Send
-                  </Button>
-                </InputRightElement>
-              </InputGroup>
-            </Box>
-          </Hide>
+          </InputGroup>
         </Box>
       ) : (
         <Box
@@ -410,13 +261,27 @@ function EnquiryList() {
   ) => {
     setCustomerPrincipal(principal);
     setOpenChat(true);
-    console.log("open");
   };
   return (
     <Box w={`100%`}>
-      {/* <Text fontSize="20px" fontWeight={"700"} mb={8}>
-        Enquiry list
-      </Text> */}
+      <Flex>
+        <Text fontSize="20px" fontWeight={"700"} mb={8}>
+          Enquiries
+        </Text>
+        <Flex
+          borderRadius={`full`}
+          w={`25px`}
+          h={`25px`}
+          bg={`#fff`}
+          justify={`center`}
+          align={`center`}
+          ms={3}
+        >
+          <Text color={`#341A41`} mb={0} fontWeight={700}>
+            {enquiry.length}
+          </Text>
+        </Flex>
+      </Flex>
       <Box
         h={"60vh"}
         overflowY={"scroll"}
@@ -435,16 +300,15 @@ function EnquiryList() {
             mb={6}
             py={6}
             h="154px"
-            // w="348px"
             bg="#271732"
             cursor="pointer"
             transform="auto"
             _hover={{
-              transform: `scale(1.09)`,
+              transform: `scale(1.05)`,
               transition: "transform 0.3s ease",
             }}
             _active={{
-              transform: `scale(1.45)`,
+              transform: `scale(1.09)`,
               transition: "transform 0.3s ease",
             }}
             onClick={(e) =>

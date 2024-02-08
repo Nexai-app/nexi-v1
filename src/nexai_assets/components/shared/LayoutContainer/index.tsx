@@ -24,7 +24,7 @@ type LayoutContextProps = {
 
 export const LayoutContext = createContext<LayoutContextProps>({
   showSidebar: true,
-  setShowSidebar: () => { },
+  setShowSidebar: () => {},
 });
 //  const base = ['/home']
 const LayoutContainer: FC<Props> = ({ children }) => {
@@ -51,14 +51,13 @@ const LayoutContainer: FC<Props> = ({ children }) => {
         <Sidebar />
         <MobileSlider />
         <Box
-          pt={10}
+          mt={12}
           ml={{ md: "15%" }}
           w={{ md: "85%" }}
           px={{ base: "10px", md: "11px" }}
           bg="#341A41"
           h={{ base: "500px", sm: "100%" }}
           py="5px"
-
           pos="relative"
         >
           {children}

@@ -61,21 +61,21 @@ function TrainWithDocs() {
       }
     });
   };
-  const get = async () => {
-    newDocs.forEach(async (doc) => {
-      await call(doc);
-      if (embeddedQ[0].length == 384) {
-        const val = await vdbActor
-          .get_similar(profile.vdbId, doc, embeddedQ[0], 1)
-          .then((val) => {
-            console.debug("[Nexai]", val);
-          })
-          .catch((err) => {
-            console.debug("[Nexai]", err);
-          });
-      }
-    });
-  };
+  // const get = async () => {
+  //   newDocs.forEach(async (doc) => {
+  //     await call(doc);
+  //     if (embeddedQ[0].length == 384) {
+  //       const val = await vdbActor
+  //         .get_similar(profile.vdbId, doc, embeddedQ[0], 1)
+  //         .then((val) => {
+  //           console.debug("[Nexai]", val);
+  //         })
+  //         .catch((err) => {
+  //           console.debug("[Nexai]", err);
+  //         });
+  //     }
+  //   });
+  // };
 
   return (
     <Box mt={8} color="white">
