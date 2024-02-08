@@ -19,6 +19,7 @@ export type EnquiryT = {
   account1: string;
   account2: string;
   createdAt: number;
+  completed: boolean;
 };
 
 export type ConversationT = {

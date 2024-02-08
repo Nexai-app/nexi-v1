@@ -161,6 +161,7 @@ export const useGetAllConnections = () => {
                     account1: c[i].account1,
                     account2: c[i].account2,
                     createdAt: Number(c[i].created_at),
+                    completed: c[i].completed,
                   };
                   dispatch(addEnquiry(data));
                 }

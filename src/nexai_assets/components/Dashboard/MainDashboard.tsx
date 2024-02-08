@@ -68,6 +68,13 @@ const MainDashboard = () => {
   const [overlay, setOverlay] = React.useState(<OverlayOne />);
   const enquiry = useAppSelector((state) => state.enquiry);
 
+  const completedEnq = enquiry?.filter(
+    (enq) => enq.completed === true
+  );
+  const uncompletedEnq = enquiry?.filter(
+    (enq) => enq.completed === false
+  );
+
   const logOut = () => {
     localStorage.clear();
     window.location.reload();
@@ -125,8 +132,14 @@ const MainDashboard = () => {
                   name={"Number of Disputes"}
                   value={enquiry.length}
                 />
-                <Card name={"Number of Disputes"} value={23} />
-                <Card name={"Number of Disputes"} value={23} />
+                <Card
+                  name={"Settled Disputes"}
+                  value={completedEnq.length}
+                />
+                <Card
+                  name={"Pending Disputes"}
+                  value={uncompletedEnq.length}
+                />
               </Grid>
             </Flex>
             <Box>
@@ -197,8 +210,14 @@ const MainDashboard = () => {
                   name={"Number of Disputes"}
                   value={enquiry.length}
                 />
-                <Card name={"Settled Disputes"} value={23} />
-                <Card name={"Pending Disputes"} value={23} />
+                <Card
+                  name={"Settled Disputes"}
+                  value={completedEnq.length}
+                />
+                <Card
+                  name={"Pending Disputes"}
+                  value={uncompletedEnq.length}
+                />
               </Grid>
             </Flex>
             <Box>
