@@ -1,6 +1,10 @@
 import type { Principal } from '@dfinity/principal';
 import type { ActorMethod } from '@dfinity/agent';
 
+export interface Account {
+  'owner' : Principal,
+  'subaccount' : [] | [Uint8Array | number[]],
+}
 export interface CardEntry {
   'question' : string,
   'vdbId' : number,
@@ -12,6 +16,7 @@ export interface CompanyEntry {
   'createdAt' : bigint,
   'description' : string,
   'email' : string,
+  'documentId' : [] | [bigint],
 }
 export interface CompanyEntry__1 {
   'vdbId' : number,
@@ -19,6 +24,7 @@ export interface CompanyEntry__1 {
   'createdAt' : bigint,
   'description' : string,
   'email' : string,
+  'documentId' : [] | [bigint],
 }
 export interface ConnectionEntry {
   'id' : bigint,
@@ -37,6 +43,7 @@ export interface MessageEntry {
 }
 export interface Nexai {
   'CheckPrincipal' : ActorMethod<[], Principal>,
+  'Check_Principal' : ActorMethod<[Principal], Principal>,
   'VDBAddQandA' : ActorMethod<[number, FloatMatrix, Array<string>], Result__1>,
   'VDBBuildIndex' : ActorMethod<[number], Result__1>,
   'VDBGetSimilar' : ActorMethod<[number, FloatVector, number], Result_1>,
@@ -62,11 +69,20 @@ export interface Nexai {
   'getCompanyProfile' : ActorMethod<[], [] | [CompanyEntry]>,
   'getMessage' : ActorMethod<[bigint], [] | [MessageEntry]>,
   'getMessages' : ActorMethod<[Principal], Array<MessageEntry>>,
+  'getMyAccountIdentifier' : ActorMethod<[], string>,
   'getVDB_ID' : ActorMethod<[bigint], number>,
   'greet' : ActorMethod<[string], string>,
+  'icp_balance' : ActorMethod<[], bigint>,
+  'icp_balance_dfx' : ActorMethod<[], Tokens>,
   'logIn' : ActorMethod<[], boolean>,
   'makeManager' : ActorMethod<[], boolean>,
   'sendMessage' : ActorMethod<[Principal, string], [] | [null]>,
+  'toAccount' : ActorMethod<
+    [{ 'canister' : Principal, 'caller' : Principal }],
+    Account
+  >,
+  'toSubaccount' : ActorMethod<[Principal], Uint8Array | number[]>,
+  'transferICP' : ActorMethod<[string, Tokens, TimeStamp], bigint>,
 }
 export type Result = { 'ok' : string } |
   { 'err' : string };
@@ -76,4 +92,6 @@ export type Result_2 = { 'Ok' : number } |
   { 'Err' : string };
 export type Result__1 = { 'Ok' : null } |
   { 'Err' : string };
+export interface TimeStamp { 'timestamp_nanos' : bigint }
+export interface Tokens { 'e8s' : bigint }
 export interface _SERVICE extends Nexai {}

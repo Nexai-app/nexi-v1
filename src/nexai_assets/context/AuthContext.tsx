@@ -21,7 +21,7 @@ Canister ID is required, but received undefined instead.
 If you are using automatically generated declarations, 
 this may be because your 
 application is not setting the canister ID in process.env correctly. */
-const vdbCanisterId = "bw4dl-smaaa-aaaaa-qaacq-cai";
+const vdbCanisterId = "b77ix-eeaaa-aaaaa-qaada-cai";
 const canisterId = "asrmz-lmaaa-aaaaa-qaaeq-cai";
 
 export const AuthContext = React.createContext<{
@@ -49,6 +49,10 @@ export const AuthContext = React.createContext<{
   setCustomerPrincipal: any;
   openChat: boolean;
   setOpenChat: any;
+  connectionId: number;
+  setConnectionId: any;
+  conversationClosed: boolean;
+  setConversationClosed: any;
 }>({
   Auth: undefined,
   actor: undefined,
@@ -74,6 +78,10 @@ export const AuthContext = React.createContext<{
   setCustomerPrincipal: undefined,
   openChat: false,
   setOpenChat: undefined,
+  connectionId: undefined,
+  setConnectionId: undefined,
+  conversationClosed: false,
+  setConversationClosed: undefined,
 });
 
 export const AuthProvider = ({ children }) => {
@@ -95,6 +103,9 @@ export const AuthProvider = ({ children }) => {
   const [customerPrincipal, setCustomerPrincipal] =
     React.useState("");
   const [openChat, setOpenChat] = React.useState(false);
+  const [connectionId, setConnectionId] = React.useState<number>();
+  const [conversationClosed, setConversationClosed] =
+    useState<boolean>(false);
 
   // const { trackEvent } = useMatomo();
 
@@ -113,7 +124,7 @@ export const AuthProvider = ({ children }) => {
     }
 
     const loginButton = document.getElementById(
-      "loginButton"
+      "login"
     ) as HTMLButtonElement;
 
     const days = BigInt(1);
@@ -144,7 +155,8 @@ export const AuthProvider = ({ children }) => {
       identityProvider:
         process.env.DFX_NETWORK === "ic"
           ? "https://nfid.one" + AUTH_PATH
-          : process.env.LOCAL_II_CANISTER,
+          : // : process.env.LOCAL_II_CANISTER,
+            `http://rdmx6-jaaaa-aaaaa-aaadq-cai.localhost:4943`,
       // Maximum authorization expiration is 8 days
       maxTimeToLive: days * hours * nanoseconds,
     });
@@ -205,6 +217,10 @@ export const AuthProvider = ({ children }) => {
         vdbActor,
         openChat,
         setOpenChat,
+        connectionId,
+        setConnectionId,
+        conversationClosed,
+        setConversationClosed,
       }}
     >
       {children}

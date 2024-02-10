@@ -29,3 +29,8 @@ export type ConversationT = {
   body: string;
   createdAt: number;
 };
+
+export type WalletT = {
+  icpBalance: number;
+  accountIdentifier: string
+}

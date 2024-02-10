@@ -22,6 +22,7 @@ import DateFormatter from "../../utils/DateFormatter";
 import { useAppSelector } from "../../redux-toolkit/hooks";
 import { EnquiryT } from "../../redux-toolkit/types";
 import { AuthContext } from "../../context/AuthContext";
+import toast from "react-hot-toast";
 
 function index() {
   const { getEnquires } = useGetAllConnections();
@@ -84,12 +85,20 @@ function index() {
 export default index;
 
 function ChatArea() {
-  const { customerPrincipal, actor, vdbActor, setOpenChat } =
-    React.useContext(AuthContext);
+  const {
+    customerPrincipal,
+    // actor,
+    vdbActor,
+    setOpenChat,
+    connectionId,
+    conversationClosed,
+    setConversationClosed,
+  } = React.useContext(AuthContext);
   const user = useAppSelector((state) => state.profile);
   const conversation = useAppSelector((state) => state.conversation);
   const [sending, setSending] = React.useState(false);
   const [message, setMessage] = React.useState("");
+  const [closing, setClosing] = React.useState(false);
   const { handleGetConversation } = useGetConversation();
 
   const sortedConversation = conversation
@@ -128,6 +137,23 @@ function ChatArea() {
       });
   };
 
+  const handleCloseConvo = async () => {
+    try {
+      setClosing(true);
+      vdbActor
+        .set_connection_completed(BigInt(connectionId))
+        .then(() => {
+          setClosing(false);
+          toast.success("Conversation Closed");
+          setConversationClosed(true);
+        });
+    } catch (err: any) {
+      setClosing(false);
+      setMessage("");
+      console.debug("[nexai]", err);
+    }
+  };
+
   return (
     <Box w="100%">
       {/* Header ON MOBILE */}
@@ -164,8 +190,18 @@ function ChatArea() {
                 <Avatar />
                 <Text mt={3}>Anonymous</Text>
               </Flex>
-              <Box display="flex">
+              <Box display="flex" flexDirection="column">
                 <Text>{customerPrincipal}</Text>
+                {!conversationClosed && (
+                  <Button
+                    isLoading={closing}
+                    onClick={handleCloseConvo}
+                    py={4}
+                    px={4}
+                  >
+                    Close Conversation
+                  </Button>
+                )}
               </Box>
             </Flex>
           </Box>
@@ -204,36 +240,44 @@ function ChatArea() {
           </Flex>
 
           {/* input area */}
-
-          <InputGroup /* h={"70px"} mt={2} size="lg" bg="#271732" */>
-            <Textarea
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              style={{
-                position: "sticky",
-                bottom: 0,
-                background: "#271732",
-                padding: "10px",
-              }}
-            />
-            <InputRightElement
-              w="150px"
-              h={"100%"}
-              alignItems={`center`}
-              mr="1.5rem"
+          {conversationClosed ? (
+            <Flex justify={"center"}>
+              <Text fontSize={"24px"}>
+                You closed this conversation already
+              </Text>
+            </Flex>
+          ) : (
+            <InputGroup /* h={"70px"} mt={2} size="lg" bg="#271732" */
             >
-              <Button
-                size="md"
-                px={6}
-                py={6}
-                onClick={handleSendMessage}
-                isLoading={sending}
-                isDisabled={sending || message.length === 0}
+              <Textarea
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                style={{
+                  position: "sticky",
+                  bottom: 0,
+                  background: "#271732",
+                  padding: "10px",
+                }}
+              />
+              <InputRightElement
+                w="150px"
+                h={"100%"}
+                alignItems={`center`}
+                mr="1.5rem"
               >
-                Send Message
-              </Button>
-            </InputRightElement>
-          </InputGroup>
+                <Button
+                  size="md"
+                  px={6}
+                  py={6}
+                  onClick={handleSendMessage}
+                  isLoading={sending}
+                  isDisabled={sending || message.length === 0}
+                >
+                  Send Message
+                </Button>
+              </InputRightElement>
+            </InputGroup>
+          )}
         </Box>
       ) : (
         <Box
@@ -252,13 +296,20 @@ function ChatArea() {
 
 function EnquiryList() {
   const enquiry = useAppSelector((state) => state.enquiry);
-  const { setCustomerPrincipal, setOpenChat } =
-    React.useContext(AuthContext);
+  const {
+    setCustomerPrincipal,
+    setOpenChat,
+    setConnectionId,
+    setConversationClosed,
+  } = React.useContext(AuthContext);
 
   const handleSetActveConversation = (
     id: number,
-    principal: string
+    principal: string,
+    completed: boolean
   ) => {
+    setConnectionId(id);
+    setConversationClosed(completed);
     setCustomerPrincipal(principal);
     setOpenChat(true);
   };
@@ -312,7 +363,11 @@ function EnquiryList() {
               transition: "transform 0.3s ease",
             }}
             onClick={(e) =>
-              handleSetActveConversation(d.id, d.account2)
+              handleSetActveConversation(
+                d.id,
+                d.account2,
+                d.completed
+              )
             }
           >
             {/* top part */}

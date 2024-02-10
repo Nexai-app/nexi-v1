@@ -9,13 +9,12 @@ export { idlFactory } from "./nexai.did.js";
  * process.env.CANISTER_ID_<CANISTER_NAME_UPPERCASE>
  * beginning in dfx 0.15.0
  */
-export const canisterId = "asrmz-lmaaa-aaaaa-qaaeq-cai";
-// process.env.CANISTER_ID_NEXAI ||
-// process.env.NEXAI_CANISTER_ID;
+export const canisterId =
+  process.env.CANISTER_ID_NEXAI ||
+  process.env.NEXAI_CANISTER_ID;
 
 export const createActor = (canisterId, options = {}) => {
-  const agent =
-    options.agent || new HttpAgent({ ...options.agentOptions });
+  const agent = options.agent || new HttpAgent({ ...options.agentOptions });
 
   if (options.agent && options.agentOptions) {
     console.warn(

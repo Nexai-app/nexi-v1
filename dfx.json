@@ -10,6 +10,10 @@
         "init_guide": "null"
       }
     },
+    "internet_identity": {
+      "type": "pull",
+      "id": "rdmx6-jaaaa-aaaaa-aaadq-cai"
+    },
 
     "external": {
       "main": "src/external/main.mo",

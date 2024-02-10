@@ -13,6 +13,7 @@ export const idlFactory = ({ IDL }) => {
     'createdAt' : IDL.Int,
     'description' : IDL.Text,
     'email' : IDL.Text,
+    'documentId' : IDL.Opt(IDL.Int),
   });
   const Result = IDL.Variant({ 'ok' : IDL.Text, 'err' : IDL.Text });
   const CompanyEntry__1 = IDL.Record({
@@ -21,6 +22,7 @@ export const idlFactory = ({ IDL }) => {
     'createdAt' : IDL.Int,
     'description' : IDL.Text,
     'email' : IDL.Text,
+    'documentId' : IDL.Opt(IDL.Int),
   });
   const ConnectionEntry = IDL.Record({
     'id' : IDL.Nat,
@@ -40,8 +42,15 @@ export const idlFactory = ({ IDL }) => {
     'connectionId' : IDL.Nat,
     'sender' : IDL.Principal,
   });
+  const Tokens = IDL.Record({ 'e8s' : IDL.Nat64 });
+  const Account = IDL.Record({
+    'owner' : IDL.Principal,
+    'subaccount' : IDL.Opt(IDL.Vec(IDL.Nat8)),
+  });
+  const TimeStamp = IDL.Record({ 'timestamp_nanos' : IDL.Nat64 });
   const Nexai = IDL.Service({
     'CheckPrincipal' : IDL.Func([], [IDL.Principal], ['query']),
+    'Check_Principal' : IDL.Func([IDL.Principal], [IDL.Principal], []),
     'VDBAddQandA' : IDL.Func(
         [IDL.Nat32, FloatMatrix, IDL.Vec(IDL.Text)],
         [Result__1],
@@ -94,8 +103,11 @@ export const idlFactory = ({ IDL }) => {
         [IDL.Vec(MessageEntry)],
         ['query'],
       ),
+    'getMyAccountIdentifier' : IDL.Func([], [IDL.Text], ['query']),
     'getVDB_ID' : IDL.Func([IDL.Nat], [IDL.Nat32], []),
     'greet' : IDL.Func([IDL.Text], [IDL.Text], []),
+    'icp_balance' : IDL.Func([], [IDL.Nat], []),
+    'icp_balance_dfx' : IDL.Func([], [Tokens], []),
     'logIn' : IDL.Func([], [IDL.Bool], ['query']),
     'makeManager' : IDL.Func([], [IDL.Bool], []),
     'sendMessage' : IDL.Func(
@@ -103,6 +115,13 @@ export const idlFactory = ({ IDL }) => {
         [IDL.Opt(IDL.Null)],
         [],
       ),
+    'toAccount' : IDL.Func(
+        [IDL.Record({ 'canister' : IDL.Principal, 'caller' : IDL.Principal })],
+        [Account],
+        [],
+      ),
+    'toSubaccount' : IDL.Func([IDL.Principal], [IDL.Vec(IDL.Nat8)], []),
+    'transferICP' : IDL.Func([IDL.Text, Tokens, TimeStamp], [IDL.Nat64], []),
   });
   return Nexai;
 };

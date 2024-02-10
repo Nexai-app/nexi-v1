@@ -40,6 +40,9 @@ import DepositModal from "./Wallet/DepositModal";
 import WithdrawModal from "./Wallet/WithdrawModal";
 import ConvertModal from "./Wallet/ConvertModal";
 import TransferModal from "./Wallet/TransferModal";
+import { AuthContext } from "../context/AuthContext";
+import { useAppSelector } from "../redux-toolkit/hooks";
+// import {AppContext} from "../context/"
 // import copy from "./assets/copy.svg";
 // import right from "./assets/chevron-right.svg";
 // import left from "./assets/chevron-left.svg";
@@ -53,6 +56,7 @@ const Wallet = () => {
   const [isTransferModalOpen, setIsTransferModalOpen] =
     useState(false);
   const [balance, setBalance] = useState(true);
+  const profile = useAppSelector((state) => state.profile);
 
   const onCloseDepositModal = () => {
     setIsDepositModalOpen(false);
@@ -85,6 +89,49 @@ const Wallet = () => {
   const onOpenTransferModal = () => {
     setIsTransferModalOpen(true);
   };
+
+  const { actor } = React.useContext(AuthContext);
+
+  const getTheseThings = () => {
+    actor
+      .icp_balance_dfx()
+      .then((d) => {
+        console.debug("[icp_balance_dfx]", d);
+      })
+      .catch((err) => {
+        console.error("[icp_balance_dfx_err]", err);
+      });
+
+    actor
+      .icp_balance()
+      .then((d) => {
+        console.debug("[icp_balance]", d);
+      })
+      .catch((err) => {
+        console.error("[icp_balance_err]", err);
+      });
+
+    actor
+      .getMyAccountIdentifier()
+      .then((d) => {
+        console.debug("[getMyAccountIdentifier]", d);
+      })
+      .catch((err) => {
+        console.error("[getMyAccountIdentifier]", err);
+      });
+
+    //   actor
+    //   .transferICP( ,1,1)
+    //   .then((d) => {
+    //     console.debug("[transferICP]", d);
+    //   })
+    //   .catch((err) => {
+    //     console.error("[transferICP]", err);
+    //   });
+  };
+  React.useEffect(() => {
+    getTheseThings();
+  }, []);
 
   return (
     <Box p={7} bg={`#341A41`} color={`white`}>
@@ -130,7 +177,7 @@ const Wallet = () => {
                 </Flex>
                 <Flex>
                   <Text pe={2}>Principal ID:</Text>
-                  <Text>XXXXXXX</Text>
+                  <Text>{profile?.principal}</Text>
                 </Flex>
               </Box>
             ) : (

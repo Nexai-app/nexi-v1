@@ -1,3 +1,5 @@
+type Tokens = record {e8s: nat64;};
+type TimeStamp = record {timestamp_nanos: nat64;};
 type Result__1 = 
  variant {
    Err: text;
@@ -24,6 +26,7 @@ type Result =
 type Nexai = 
  service {
    CheckPrincipal: () -> (principal) query;
+   Check_Principal: (principal) -> (principal);
    VDBAddQandA: (nat32, FloatMatrix, vec text) -> (Result__1);
    VDBBuildIndex: (nat32) -> (Result__1);
    VDBGetSimilar: (nat32, FloatVector, int32) -> (Result_1);
@@ -43,11 +46,20 @@ type Nexai =
    getCompanyProfile: () -> (opt CompanyEntry) query;
    getMessage: (nat) -> (opt MessageEntry);
    getMessages: (principal) -> (vec MessageEntry) query;
+   getMyAccountIdentifier: () -> (text) query;
    getVDB_ID: (nat) -> (nat32);
    greet: (text) -> (text);
+   icp_balance: () -> (nat);
+   icp_balance_dfx: () -> (Tokens);
    logIn: () -> (bool) query;
    makeManager: () -> (bool);
    sendMessage: (principal, text) -> (opt null);
+   toAccount: (record {
+                 caller: principal;
+                 canister: principal;
+               }) -> (Account);
+   toSubaccount: (principal) -> (blob);
+   transferICP: (text, Tokens, TimeStamp) -> (nat64);
  };
 type MessageEntry = 
  record {
@@ -70,6 +82,7 @@ type CompanyEntry__1 =
  record {
    createdAt: int;
    description: text;
+   documentId: opt int;
    email: text;
    name: text;
    vdbId: nat32;
@@ -78,6 +91,7 @@ type CompanyEntry =
  record {
    createdAt: int;
    description: text;
+   documentId: opt int;
    email: text;
    name: text;
    vdbId: nat32;
@@ -87,5 +101,10 @@ type CardEntry =
    answer: text;
    question: text;
    vdbId: nat32;
+ };
+type Account = 
+ record {
+   owner: principal;
+   subaccount: opt blob;
  };
 service : () -> Nexai
