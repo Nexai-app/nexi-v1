@@ -24,3 +24,8 @@ dfx deploy icp_ledger --argument "(variant {Init =record {minting_account = \"${
 initial_values = vec { record {  \"${LEDGER_ACC}\";
 record { e8s=100_000_000_000 } } } ; archive_options = opt record {num_blocks_to_archive = 1000000; trigger_threshold = 1000000; \
   controller_id = principal  \"${ARCHIVE_CONTROLLER}\"; }; send_whitelist = vec {}}})" --specified-id ryjl3-tyaaa-aaaaa-aaaba-cai
+
+dfx deploy icp_index --specified-id qhbym-qaaaa-aaaaa-aaafq-cai --argument '(record {ledger_id = principal "ryjl3-tyaaa-aaaaa-aaaba-cai"})'
+
+dfx deploy
+

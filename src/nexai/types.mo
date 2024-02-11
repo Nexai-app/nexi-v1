@@ -15,6 +15,7 @@ module {
         documentId:?Int;
         // onBoarding : Bool;
         // isAdmin : Bool;
+        premium : ?Bool;
     };
 
   // add cards(custom questions that the company can ask)

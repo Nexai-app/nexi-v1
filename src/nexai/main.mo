@@ -23,6 +23,7 @@ import Nat8 "mo:base/Nat8";
 import AccountIdentifier "mo:principal/AccountIdentifier";
 
 import ICPLedger "canister:icp_ledger";
+// import ICPIndex "canister:icp_index";
 
 import LedgerTypes "./ledgertypes";
 import Utils "./utils";
@@ -30,7 +31,7 @@ import Types "./types";
 import VDBTypes "./vdbTypes";
 import Message "message";
 
-shared ({ caller }) actor class Nexai() = this{
+shared ({ caller }) actor class Nexai() = this {
 
   type FloatVector = [Float];
 
@@ -212,12 +213,9 @@ shared ({ caller }) actor class Nexai() = this{
     };
   };
 
-
-
   public func getMessage(id : Nat) : async ?MessageEntry {
     MessageHashMap_.get(id);
   };
-
 
   //connect to the vector database
   let vdb = actor (vdbCanisterId) : actor {
@@ -284,16 +282,16 @@ shared ({ caller }) actor class Nexai() = this{
     caller;
   };
 
-
-//TOD): make documentId field a migrate
-  func _makeCompany(name : Text, email : Text, description:Text, vdbId:Nat32, createdAt : Int, documentId: ?Int) : Types.CompanyEntry {
+  //TOD): make documentId field a migrate
+  func _makeCompany(name : Text, email : Text, description : Text, premium : ?Bool, vdbId : Nat32, createdAt : Int, documentId : ?Int) : Types.CompanyEntry {
     {
-      name : Text;
-      email : Text;
-      description : Text;
-      vdbId : Nat32;
-      createdAt : Int;
-      documentId: ?Int;
+      name;
+      email;
+      description;
+      vdbId;
+      createdAt;
+      documentId;
+      premium;
     };
   };
 
@@ -301,9 +299,9 @@ shared ({ caller }) actor class Nexai() = this{
 
   // };
 
-//TODO: call the VDBRegister inside this func and save the return entry into the hashmap
-//rather than calling the functions seperately on the frontend
-  public shared ({ caller }) func createCompany(name : Text, email : Text, description:Text, vdbId:Nat32) : async ?CompanyEntry {
+  //TODO: call the VDBRegister inside this func and save the return entry into the hashmap
+  //rather than calling the functions seperately on the frontend
+  public shared ({ caller }) func createCompany(name : Text, email : Text, description : Text, vdbId : Nat32) : async ?CompanyEntry {
     var newUser : Bool = true;
 
     for ((i, j) in CompanyHashMap.entries()) {
@@ -317,7 +315,7 @@ shared ({ caller }) actor class Nexai() = this{
     };
     //This basically means there is a new user
     if (newUser == true) {
-      CompanyHashMap.put(caller, _makeCompany(name, email, description, vdbId, Time.now(), null));
+      CompanyHashMap.put(caller, _makeCompany(name, email, description, ?false, vdbId, Time.now(), null));
 
     };
 
@@ -326,6 +324,37 @@ shared ({ caller }) actor class Nexai() = this{
 
   public shared query ({ caller }) func getAllCompanies() : async ([(Principal, Types.CompanyEntry)]) {
     Iter.toArray(CompanyHashMap.entries());
+  };
+
+  public shared ({ caller }) func set_premium(state : Bool) : async Bool{
+    var company = CompanyHashMap.get(caller);
+    switch (company) {
+      case (null) {};
+      case (?company) {
+        CompanyHashMap.put(caller, {
+          vdbId = company.vdbId;
+          name = company.name;
+          email = company.email;
+          description = company.description;
+          createdAt = company.createdAt;
+          documentId = company.documentId;
+          premium = ?state;
+        })
+      };
+    };
+    return state;
+  };
+
+  public shared query ({ caller }) func check_for_premium() : async ?Bool {
+    var state : ?Bool = ?false;
+    var company = CompanyHashMap.get(caller);
+    switch(company) {
+      case(null) {};
+      case(?company) { 
+        state := company.premium;
+      };
+    };
+    return state;
   };
 
   // public func Test(value : Nat) : async Nat {
@@ -431,6 +460,7 @@ shared ({ caller }) actor class Nexai() = this{
           description = editedDescription;
           createdAt = company.createdAt;
           documentId = null;
+          premium = company.premium;
         };
         CompanyHashMap.put(caller, editedCompany);
       };
@@ -488,37 +518,35 @@ shared ({ caller }) actor class Nexai() = this{
 
   public shared ({ caller }) func icp_balance_dfx() : async LedgerTypes.Tokens {
     await ICPLedger.account_balance_dfx({
-      account = AccountIdentifier.toText(AccountIdentifier.fromPrincipal(caller, null))
+      account = AccountIdentifier.toText(AccountIdentifier.fromPrincipal(caller, null));
     });
   };
 
   public func transferICP(to : Text, amount : LedgerTypes.Tokens, created_at_time : LedgerTypes.TimeStamp) : async Nat64 {
-        await ICPLedger.send_dfx({
-            to = to;
-            fee = { e8s = 10_000 }; //0.0001 ICP
-            memo = 0;
-            from_subaccount = null;
-            created_at_time = ?created_at_time;
-            amount = amount
-        })
-    };
+    await ICPLedger.send_dfx({
+      to = to;
+      fee = { e8s = 10_000 }; //0.0001 ICP
+      memo = 0;
+      from_subaccount = null;
+      created_at_time = ?created_at_time;
+      amount = amount;
+    });
+  };
 
   public query ({ caller }) func getMyAccountIdentifier() : async Text {
-        AccountIdentifier.toText(AccountIdentifier.fromPrincipal(caller, null))
-    };
-
+    AccountIdentifier.toText(AccountIdentifier.fromPrincipal(caller, null));
+  };
 
   public shared ({ caller }) func icp_balance() : async Nat {
-        let account : LedgerTypes.Account =  Utils.toAccount({
-          caller = caller;
-          canister = Principal.fromActor(this);
-        });
-        await ICPLedger.icrc1_balance_of({
-          owner = caller;
-          subaccount = null;
-        });
-    };
-
+    let account : LedgerTypes.Account = Utils.toAccount({
+      caller = caller;
+      canister = Principal.fromActor(this);
+    });
+    await ICPLedger.icrc1_balance_of({
+      owner = caller;
+      subaccount = null;
+    });
+  };
 
   public shared query ({ caller }) func getCompanyProfile() : async ?CompanyEntry {
     return CompanyHashMap.get(caller);

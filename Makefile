@@ -16,3 +16,6 @@ deploy:
 ##check for upstream changes in submodule
 update:
 	git submodule update --remote
+
+symbolic-link:
+	ln -s /Users/macbookpro/Documents/GitHub/vector-database-icp/src/declarations/vector_database_backend /Users/macbookpro/Documents/GitHub/nexi-v1/src
