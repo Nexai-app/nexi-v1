@@ -32,7 +32,7 @@ function FirstModal({ isOpen, onClose }) {
   // const { isOpen, onOpen, onClose } = useDisclosure()
   const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
   const [isFirstModalOpen, setIsFirstModalOpen] = useState(false);
-  const { setUseLLM } = useContext(AuthContext)
+  const { setUseLLM } = useContext(AuthContext);
 
   const onCloseSecondModal = () => {
     setIsSecondModalOpen(false);
@@ -62,12 +62,11 @@ function FirstModal({ isOpen, onClose }) {
             color="#341A41"
             onChange={(e) => {
               if (e.target.value === "option2") {
-                setUseLLM(true)
-                return
-              }
-              else if (e.target.value === "option1") {
-                setUseLLM(false)
-                return
+                setUseLLM(true);
+                return;
+              } else if (e.target.value === "option1") {
+                setUseLLM(false);
+                return;
               }
             }}
             // placeholder="Select option"
@@ -76,8 +75,8 @@ function FirstModal({ isOpen, onClose }) {
             bg={`transparent`}
             border={`1px #dccae3 solid`}
           >
-            <option value="option1">Default support</option>
-            <option value="option2">LLM support</option>
+            <option value="option1">Default Feature</option>
+            <option value="option2">Premium Feature</option>
           </Select>
         </ModalBody>
         <ModalFooter>

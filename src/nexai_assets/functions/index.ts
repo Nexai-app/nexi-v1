@@ -23,7 +23,7 @@ import {
 import {
   ConnectionEntry,
   MessageEntry,
-} from "../../vector_database_backend/vector_database_backend.did";
+} from "../../vector-database-icp/src/declarations/vector_database_backend/vector_database_backend.did";
 import {
   addEnquiry,
   clearEnqury,

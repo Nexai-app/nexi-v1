@@ -8,6 +8,7 @@ import {
   FormControl,
   FormLabel,
   useToast,
+  Badge,
 } from "@chakra-ui/react";
 import { AuthContext } from "../../context/AuthContext";
 import { useAppSelector } from "../../redux-toolkit/hooks";
@@ -125,7 +126,8 @@ function TrainWithDocs() {
         <Box w={{ base: "80%", md: `60%` }}>
           <Box>
             <FormControl my={`40px`}>
-              <FormLabel>let's have it...</FormLabel>
+              <Badge>PREMIUM</Badge>
+              <FormLabel pt={2}>let's have it...</FormLabel>
               <Textarea
                 name="name"
                 value={docs}
