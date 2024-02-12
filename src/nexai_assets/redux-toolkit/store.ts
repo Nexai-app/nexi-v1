@@ -3,6 +3,7 @@ import Profile from "./slice/ProfileSlice";
 import llm from "./slice/llmSlice";
 import Enquiry from "./slice/EnquirySlice";
 import Convo from "./slice/ConversationSlice";
+import Wallet from "./slice/WalletSlice";
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     llm,
     enquiry: Enquiry,
     conversation: Convo,
+    wallet: Wallet,
   },
 });
 

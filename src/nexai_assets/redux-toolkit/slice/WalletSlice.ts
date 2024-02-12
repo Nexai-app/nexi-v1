@@ -3,21 +3,29 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import { WalletT } from "../types";
 
 // Define the initial state using that type
-const initialState: WalletT = null;
+const initialState: WalletT = {
+  icpBalance: 0,
+  accountIdentifier: "",
+};
 
 export const WalletSlice = createSlice({
   name: "wallet",
   initialState,
   reducers: {
-    addEnquiry: (state, { payload }: PayloadAction<WalletT>) => {
-      // state.push(payload);
+    addICPBalance: (state, { payload }: PayloadAction<number>) => {
+      state.icpBalance = payload;
     },
-    clearEnqury: () => {
+    addAccIdentifier: (state, { payload }: PayloadAction<string>) => {
+      state.accountIdentifier = payload;
+    },
+
+    clearWallet: () => {
       return initialState;
     },
   },
 });
 
-export const { addEnquiry, clearEnqury } = WalletSlice.actions;
+export const { addAccIdentifier, addICPBalance, clearWallet } =
+  WalletSlice.actions;
 
 export default WalletSlice.reducer;

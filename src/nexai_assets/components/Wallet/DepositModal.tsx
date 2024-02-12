@@ -15,8 +15,12 @@ import {
   ModalFooter,
 } from "@chakra-ui/react";
 // import { AuthContext } from "../../context/AuthContext";
-
+import {
+  useAppSelector,
+} from "../../redux-toolkit/hooks";
 function DepositModal({ isOpen, onClose }) {
+  const wallet = useAppSelector((state) => state.wallet);
+
   const OverlayOne = () => (
     <ModalOverlay
       bg="#341A41.300"
@@ -44,9 +48,7 @@ function DepositModal({ isOpen, onClose }) {
         <ModalBody pt={5} color={`#271732`}>
           <Text fontSize={12}>Send ICP to this address</Text>
           <Input
-            placeholder="OxAbCdEf1234567890123456789aBCDeF98765432"
-            value={addy}
-            onChange={(e) => setAddy(e.target.value)}
+            value={wallet?.accountIdentifier}
             isReadOnly
           />
           <Text fontSize={12}>

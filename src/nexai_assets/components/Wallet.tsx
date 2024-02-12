@@ -1,16 +1,9 @@
-import React, { useEffect, useState } from "react";
-import {
-  Link as ReactRouterLink,
-  useNavigate,
-} from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Button,
   Flex,
   Heading,
-  Spacer,
-  useMediaQuery,
-  Icon,
   Link as Chakralink,
   ModalOverlay,
   IconButton,
@@ -30,23 +23,19 @@ import {
   Tr,
   Image,
 } from "@chakra-ui/react";
-// import LineChart from "./LineChart";
-// import BarChart from "./BarChart";
-// import { BiLogOut } from "react-icons/bi";
-// import { ChatIcon } from "@chakra-ui/icons";
-// import { AiOutlineBook } from "react-icons/ai";
-// import FirstModal from "./TestBot/FirstModal";
 import DepositModal from "./Wallet/DepositModal";
 import WithdrawModal from "./Wallet/WithdrawModal";
 import ConvertModal from "./Wallet/ConvertModal";
 import TransferModal from "./Wallet/TransferModal";
 import { AuthContext } from "../context/AuthContext";
-import { useAppSelector } from "../redux-toolkit/hooks";
-// import {AppContext} from "../context/"
-// import copy from "./assets/copy.svg";
-// import right from "./assets/chevron-right.svg";
-// import left from "./assets/chevron-left.svg";
-// import Banner from "./Banner";
+import {
+  useAppDispatch,
+  useAppSelector,
+} from "../redux-toolkit/hooks";
+import {
+  addAccIdentifier,
+  addICPBalance,
+} from "../redux-toolkit/slice/WalletSlice";
 
 const Wallet = () => {
   const [isDepositModalOpen, setIsDepositModalOpen] = useState(false);
@@ -57,6 +46,9 @@ const Wallet = () => {
     useState(false);
   const [balance, setBalance] = useState(true);
   const profile = useAppSelector((state) => state.profile);
+  const wallet = useAppSelector((state) => state.wallet);
+
+  const dispatch = useAppDispatch();
 
   const onCloseDepositModal = () => {
     setIsDepositModalOpen(false);
@@ -105,6 +97,7 @@ const Wallet = () => {
     actor
       .icp_balance()
       .then((d) => {
+        dispatch(addICPBalance(Number(d)));
         console.debug("[icp_balance]", d);
       })
       .catch((err) => {
@@ -114,6 +107,7 @@ const Wallet = () => {
     actor
       .getMyAccountIdentifier()
       .then((d) => {
+        dispatch(addAccIdentifier(d));
         console.debug("[getMyAccountIdentifier]", d);
       })
       .catch((err) => {
@@ -162,7 +156,7 @@ const Wallet = () => {
             position={`relative`}
             mx={4}
           >
-            <Heading>0000</Heading>
+            <Heading>{wallet?.icpBalance}</Heading>
             <Text>ICP Balance</Text>
 
             <Divider />
@@ -172,7 +166,7 @@ const Wallet = () => {
                 <Flex>
                   <Text pe={2}>Address:</Text>
                   <Text textOverflow="ellipsis" overflow={`hidden`}>
-                    0xAbCdEf1234567890123456789aBCDeF98765432
+                    {wallet?.accountIdentifier}
                   </Text>
                 </Flex>
                 <Flex>
@@ -207,22 +201,6 @@ const Wallet = () => {
                 </Button>
               </HStack>
             )}
-
-            {/* <Text
-                            onClick={(e) => setBalance(prev => !prev)}
-                            textDecor={`underline`}
-                            fontSize={12}
-                            cursor={`pointer`}
-                        >
-                            {balance ? "Convert?" : "Balance?"}
-                        </Text> */}
-
-            {/* <Image
-                            pos={`absolute`}
-                            bottom={0} 
-                            right={0} 
-                            src={`copy.svg`}
-                        /> */}
             {balance && (
               <Box pos={`absolute`} bottom={4} right={4}>
                 <img src={`copy.svg`} />

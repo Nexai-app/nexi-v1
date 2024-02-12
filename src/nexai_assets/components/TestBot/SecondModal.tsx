@@ -89,7 +89,12 @@ function SecondModal({ isOpen, onClose }) {
       await call(inputMessage);
       if (embeddedQ[0].length == 384) {
         vdbActor
-          .hello_openai2(profile.vdbId, inputMessage, embeddedQ[0], 1)
+          .get_ai_response(
+            profile.vdbId,
+            inputMessage,
+            embeddedQ[0],
+            1
+          )
           .then((val: any) => {
             const parsedVal = JSON.parse(val.Ok);
             myMess = {

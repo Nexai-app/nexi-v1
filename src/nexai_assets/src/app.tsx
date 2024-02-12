@@ -17,9 +17,10 @@ import { useInitTransformers } from "../functions/ml";
 import { useInitLLM } from "../functions/webLlm";
 import LoadingScreen from "../components/TrainBot/LoadingScreen";
 import WalletPage from "../pages/WalletPage";
+import { Assistant, AssistantProps } from "nexai-assistant";
 
 const App = () => {
-  const { handleAuthenticated, setIIAuth, actor } =
+  const { handleAuthenticated, setIIAuth, actor, vdbActor } =
     useContext(AuthContext);
   const [actorRestated, setActorRestated] = useState<boolean>(false);
   const profile = useAppSelector((state) => state.profile);
@@ -36,6 +37,12 @@ const App = () => {
 
   const navigate = useNavigate();
 
+  // const param: AssistantProps = {
+  //   actor: vdbActor,
+  //   color: "red",
+  //   companyId: 1,
+  //   companyName: "nexai",
+  // };
   useEffect(() => {
     // initializes the ml
     //initialize llm
@@ -98,11 +105,23 @@ const App = () => {
             element={<LoadingScreen isLoading={false} />}
           />
         </Routes>
+        {/* <Assistant
+          actor={vdbActor}
+          color="purple"
+          companyName="Nexai"
+          companyId={1}
+        /> */}
       </React.Fragment>
     );
   } else {
     return (
       <React.Fragment>
+        {/* <Assistant
+          actor={vdbActor}
+          color="purple"
+          companyName="Nexai"
+          companyId={1}
+        /> */}
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/we" element={<Lest />} />
