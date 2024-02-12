@@ -2,16 +2,16 @@ import React, { useState } from "react";
 import { Actor, Identity, ActorSubclass } from "@dfinity/agent";
 import { AuthClient } from "@dfinity/auth-client";
 import { createActor } from "../../declarations/nexai";
-// import {
-//   // canisterId as vdbCanisterId,
-//   createActor as vdbCreateActor,
-// } from "../../vector-database-icp/src/declarations/vector_database_backend";
-// import { _SERVICE as _vdbSERVICE } from "../../vector-database-icp/src/declarations/vector_database_backend/vector_database_backend.did";
 import {
   // canisterId as vdbCanisterId,
   createActor as vdbCreateActor,
-} from "../../vector_database_backend";
-import { _SERVICE as _vdbSERVICE } from "../../vector_database_backend/vector_database_backend.did";
+} from "../../vector-database-icp/src/declarations/vector_database_backend";
+import { _SERVICE as _vdbSERVICE } from "../../vector-database-icp/src/declarations/vector_database_backend/vector_database_backend.did";
+// import {
+// canisterId as vdbCanisterId,
+// createActor as vdbCreateActor,
+// } from "../../vector_database_backend";
+// import { _SERVICE as _vdbSERVICE } from "../../vector_database_backend/vector_database_backend.did";
 import { useLocation, useNavigate } from "react-router-dom";
 import { _SERVICE } from "../../declarations/nexai/nexai.did";
 
