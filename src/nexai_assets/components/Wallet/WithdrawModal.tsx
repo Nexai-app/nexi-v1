@@ -16,7 +16,10 @@ import {
   Button,
   ModalFooter,
 } from "@chakra-ui/react";
-// import { AuthContext } from "../../context/AuthContext";
+import { AuthContext } from "../../context/AuthContext";
+import { useAppSelector } from "../../redux-toolkit/hooks";
+import toast from "react-hot-toast";
+import { SendArgs } from "../../../declarations/icp_ledger/icp_ledger.did";
 
 function WithdrawModal({ isOpen, onClose }) {
   const OverlayOne = () => (
@@ -26,13 +29,47 @@ function WithdrawModal({ isOpen, onClose }) {
     />
   );
 
+  const wallet = useAppSelector((state) => state.wallet);
+  const { ICPLedgerActor, ICPIndexActor } = useContext(AuthContext);
+  const [withdrawing, setWithdrawing] = useState(false);
+
   const [withdraw, setwithdraw] = useState({
     address: "",
-    amount: "",
+    amount: 0,
   });
 
-  const [overlay, setOverlay] = React.useState(<OverlayOne />);
+  const handleWithdrawICP = () => {
+    if (withdraw.address.length < 10) {
+      return toast.error("Enter a valid address");
+    }
+    if (withdraw.amount > wallet.icpBalance) {
+      return toast.error("Insufficient Fund");
+    }
 
+    try {
+      var send_arg: SendArgs = {
+        to: withdraw.address,
+        fee: { e8s: BigInt(10000) },
+        memo: BigInt(1),
+        from_subaccount: [],
+        created_at_time: [],
+        amount: { e8s: BigInt(withdraw.amount * 100000000) },
+      };
+      setWithdrawing(true);
+      ICPLedgerActor.send_dfx(send_arg).then((d) => {
+        toast.success("Withdrawal Successful");
+        setWithdrawing(false);
+        onClose();
+      });
+    } catch (err) {
+      console.error("[nexai]", err);
+      setWithdrawing(false);
+      toast.error("something went wrong while withdrawing the ICP");
+    }
+  };
+
+  const [overlay, setOverlay] = React.useState(<OverlayOne />);
+  const parse = (val) => val.replace(/^\$/, "");
   return (
     <Modal isCentered isOpen={isOpen} onClose={onClose}>
       {overlay}
@@ -66,7 +103,7 @@ function WithdrawModal({ isOpen, onClose }) {
             onChange={(value) => {
               setwithdraw((prev) => ({
                 ...prev,
-                amount: value,
+                amount: parse(value),
               }));
             }}
           >
@@ -83,7 +120,8 @@ function WithdrawModal({ isOpen, onClose }) {
             color={`white`}
             py={5}
             px={8}
-            onClick={(e) => console.log(withdraw)}
+            isLoading={withdrawing}
+            onClick={handleWithdrawICP}
           >
             Send
           </Button>

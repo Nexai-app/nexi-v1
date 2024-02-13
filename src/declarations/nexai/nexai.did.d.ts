@@ -12,6 +12,7 @@ export interface CardEntry {
 }
 export interface CompanyEntry {
   'vdbId' : number,
+  'premium' : [] | [boolean],
   'name' : string,
   'createdAt' : bigint,
   'description' : string,
@@ -20,6 +21,7 @@ export interface CompanyEntry {
 }
 export interface CompanyEntry__1 {
   'vdbId' : number,
+  'premium' : [] | [boolean],
   'name' : string,
   'createdAt' : bigint,
   'description' : string,
@@ -48,6 +50,7 @@ export interface Nexai {
   'VDBBuildIndex' : ActorMethod<[number], Result__1>,
   'VDBGetSimilar' : ActorMethod<[number, FloatVector, number], Result_1>,
   'VDBRegister' : ActorMethod<[string], Result_2>,
+  'check_for_premium' : ActorMethod<[], [] | [boolean]>,
   'createCompany' : ActorMethod<
     [string, string, string, number],
     [] | [CompanyEntry]
@@ -77,6 +80,7 @@ export interface Nexai {
   'logIn' : ActorMethod<[], boolean>,
   'makeManager' : ActorMethod<[], boolean>,
   'sendMessage' : ActorMethod<[Principal, string], [] | [null]>,
+  'set_premium' : ActorMethod<[boolean], boolean>,
   'toAccount' : ActorMethod<
     [{ 'canister' : Principal, 'caller' : Principal }],
     Account

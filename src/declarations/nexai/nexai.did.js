@@ -9,6 +9,7 @@ export const idlFactory = ({ IDL }) => {
   const Result_2 = IDL.Variant({ 'Ok' : IDL.Nat32, 'Err' : IDL.Text });
   const CompanyEntry = IDL.Record({
     'vdbId' : IDL.Nat32,
+    'premium' : IDL.Opt(IDL.Bool),
     'name' : IDL.Text,
     'createdAt' : IDL.Int,
     'description' : IDL.Text,
@@ -18,6 +19,7 @@ export const idlFactory = ({ IDL }) => {
   const Result = IDL.Variant({ 'ok' : IDL.Text, 'err' : IDL.Text });
   const CompanyEntry__1 = IDL.Record({
     'vdbId' : IDL.Nat32,
+    'premium' : IDL.Opt(IDL.Bool),
     'name' : IDL.Text,
     'createdAt' : IDL.Int,
     'description' : IDL.Text,
@@ -63,6 +65,7 @@ export const idlFactory = ({ IDL }) => {
         [],
       ),
     'VDBRegister' : IDL.Func([IDL.Text], [Result_2], []),
+    'check_for_premium' : IDL.Func([], [IDL.Opt(IDL.Bool)], ['query']),
     'createCompany' : IDL.Func(
         [IDL.Text, IDL.Text, IDL.Text, IDL.Nat32],
         [IDL.Opt(CompanyEntry)],
@@ -115,6 +118,7 @@ export const idlFactory = ({ IDL }) => {
         [IDL.Opt(IDL.Null)],
         [],
       ),
+    'set_premium' : IDL.Func([IDL.Bool], [IDL.Bool], []),
     'toAccount' : IDL.Func(
         [IDL.Record({ 'canister' : IDL.Principal, 'caller' : IDL.Principal })],
         [Account],

@@ -7,6 +7,10 @@ import {
   createActor as vdbCreateActor,
 } from "../../vector-database-icp/src/declarations/vector_database_backend";
 import { _SERVICE as _vdbSERVICE } from "../../vector-database-icp/src/declarations/vector_database_backend/vector_database_backend.did";
+import { createActor as ICPLedgerCreateActor } from "../../declarations/icp_ledger";
+import { _SERVICE as _ICPLedgerSERVICE } from "../../declarations/icp_ledger/icp_ledger.did";
+import { createActor as ICPIndexCreateActor } from "../../declarations/icp_index";
+import { _SERVICE as _ICPIndexSERVICE } from "../../declarations/icp_index/icp_index.did";
 // import {
 // canisterId as vdbCanisterId,
 // createActor as vdbCreateActor,
@@ -23,11 +27,15 @@ this may be because your
 application is not setting the canister ID in process.env correctly. */
 const vdbCanisterId = "aovwi-4maaa-aaaaa-qaagq-cai";
 const canisterId = "asrmz-lmaaa-aaaaa-qaaeq-cai";
+const icpLedgerCanisterId = "ryjl3-tyaaa-aaaaa-aaaba-cai";
+const icpIndexCanisterId = "qhbym-qaaaa-aaaaa-aaafq-cai";
 
 export const AuthContext = React.createContext<{
   Auth: any;
   actor: ActorSubclass<_SERVICE> | undefined;
   vdbActor: ActorSubclass<_vdbSERVICE> | undefined;
+  ICPLedgerActor: ActorSubclass<_ICPLedgerSERVICE> | undefined;
+  ICPIndexActor: ActorSubclass<_ICPIndexSERVICE> | undefined;
   setActor: any;
   iiAuth: boolean;
   setIIAuth: any;
@@ -57,6 +65,8 @@ export const AuthContext = React.createContext<{
   Auth: undefined,
   actor: undefined,
   vdbActor: undefined,
+  ICPLedgerActor: undefined,
+  ICPIndexActor: undefined,
   setActor: undefined,
   iiAuth: false,
   setIIAuth: false,
@@ -89,6 +99,10 @@ export const AuthProvider = ({ children }) => {
   const [actor, setActor] = useState<ActorSubclass<_SERVICE>>();
   const [vdbActor, setVdbActor] =
     useState<ActorSubclass<_vdbSERVICE>>();
+  const [ICPLedgerActor, setICPLedgerActor] =
+    useState<ActorSubclass<_ICPLedgerSERVICE>>();
+  const [ICPIndexActor, setICPIndexActor] =
+    useState<ActorSubclass<_ICPIndexSERVICE>>();
   const [iiAuth, setIIAuth] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
   const [pipelineInit, setPipelineInit] = useState(false);
@@ -177,8 +191,23 @@ export const AuthProvider = ({ children }) => {
         identity,
       },
     });
+
+    const index_actor = ICPIndexCreateActor(icpIndexCanisterId, {
+      agentOptions: {
+        identity,
+      },
+    });
+
+    const ledger_actor = ICPLedgerCreateActor(icpLedgerCanisterId, {
+      agentOptions: {
+        identity,
+      },
+    });
+
     setActor(whoami_actor);
     setVdbActor(vdb_actor);
+    setICPIndexActor(index_actor);
+    setICPLedgerActor(ledger_actor);
 
     // Invalidate identity then render login when user goes idle
     authClient.idleManager?.registerCallback(() => {
@@ -221,6 +250,8 @@ export const AuthProvider = ({ children }) => {
         setConnectionId,
         conversationClosed,
         setConversationClosed,
+        ICPLedgerActor,
+        ICPIndexActor,
       }}
     >
       {children}

@@ -49,7 +49,7 @@
     },
 
     "nexai_assets": {
-      "dependencies": ["nexai", "icp_index"],
+      "dependencies": ["nexai", "icp_index", "icp_ledger"],
       "frontend": {
         "entrypoint": "src/nexai_assets/src/index.html"
       },

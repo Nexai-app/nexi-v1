@@ -31,6 +31,7 @@ type Nexai =
    VDBBuildIndex: (nat32) -> (Result__1);
    VDBGetSimilar: (nat32, FloatVector, int32) -> (Result_1);
    VDBRegister: (text) -> (Result_2);
+   check_for_premium: () -> (opt bool) query;
    createCompany: (text, text, text, nat32) -> (opt CompanyEntry);
    createQCard: (text, text, FloatMatrix, vec text) -> (Result);
    deleteQCard: (nat) -> ();
@@ -54,6 +55,7 @@ type Nexai =
    logIn: () -> (bool) query;
    makeManager: () -> (bool);
    sendMessage: (principal, text) -> (opt null);
+   set_premium: (bool) -> (bool);
    toAccount: (record {
                  caller: principal;
                  canister: principal;
@@ -85,6 +87,7 @@ type CompanyEntry__1 =
    documentId: opt int;
    email: text;
    name: text;
+   premium: opt bool;
    vdbId: nat32;
  };
 type CompanyEntry = 
@@ -94,6 +97,7 @@ type CompanyEntry =
    documentId: opt int;
    email: text;
    name: text;
+   premium: opt bool;
    vdbId: nat32;
  };
 type CardEntry = 

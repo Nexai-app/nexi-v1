@@ -97,7 +97,7 @@ const Wallet = () => {
     actor
       .icp_balance()
       .then((d) => {
-        dispatch(addICPBalance(Number(d)));
+        dispatch(addICPBalance(Number(d) / 100000000));
         console.debug("[icp_balance]", d);
       })
       .catch((err) => {
