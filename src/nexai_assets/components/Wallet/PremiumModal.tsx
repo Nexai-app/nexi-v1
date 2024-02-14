@@ -21,7 +21,7 @@ import { useAppSelector } from "../../redux-toolkit/hooks";
 import toast from "react-hot-toast";
 import { SendArgs } from "../../../declarations/icp_ledger/icp_ledger.did";
 
-function WithdrawModal({ isOpen, onClose }) {
+function PremiumModal({ isOpen, onClose }) {
   const OverlayOne = () => (
     <ModalOverlay
       bg="#341A41.300"
@@ -30,7 +30,8 @@ function WithdrawModal({ isOpen, onClose }) {
   );
 
   const wallet = useAppSelector((state) => state.wallet);
-  const { ICPLedgerActor, ICPIndexActor } = useContext(AuthContext);
+  const { ICPLedgerActor, ICPIndexActor, actor } =
+    useContext(AuthContext);
   const [withdrawing, setWithdrawing] = useState(false);
 
   const [withdraw, setwithdraw] = useState({
@@ -39,27 +40,25 @@ function WithdrawModal({ isOpen, onClose }) {
   });
 
   const handleWithdrawICP = () => {
-    if (withdraw.address.length < 10) {
-      return toast.error("Enter a valid address");
-    }
-    if (withdraw.amount > wallet.icpBalance) {
+    if (wallet.icpBalance < 0.2) {
       return toast.error("Insufficient Fund");
     }
-
     try {
       var send_arg: SendArgs = {
-        to: withdraw.address,
+        to: "f5d47c3e3dae4193a85c69bfe53faf0aec39effded62d30f8f8b2f0e738628ec",
         fee: { e8s: BigInt(10000) },
         memo: BigInt(1),
         from_subaccount: [],
         created_at_time: [],
-        amount: { e8s: BigInt(withdraw.amount * 100000000) },
+        amount: { e8s: BigInt(0.2 * 100000000) },
       };
       setWithdrawing(true);
       ICPLedgerActor.send_dfx(send_arg).then((d) => {
-        toast.success("Withdrawal Successful");
-        setWithdrawing(false);
-        onClose();
+        actor.set_premium(true).then((p) => {
+          toast.success("Premium Purchase Successful");
+          setWithdrawing(false);
+          onClose();
+        });
       });
     } catch (err) {
       console.error("[nexai]", err);
@@ -79,39 +78,26 @@ function WithdrawModal({ isOpen, onClose }) {
           bg={`#341A41`}
           color={"white"}
         >
-          Withdraw
+          Subscribe to Premium
         </ModalHeader>
         <ModalCloseButton color={`white`} />
         <ModalBody pt={5} color={`#271732`}>
-          <Text fontSize={12}>Receive Address</Text>
+          <Text fontSize={12}>Receiving Address</Text>
           <Input
-            placeholder="OxAbC..."
-            value={withdraw.address}
-            onChange={(e) => {
-              setwithdraw((prev) => ({
-                ...prev,
-                address: e.target.value,
-              }));
-            }}
+            value={
+              "f5d47c3e3dae4193a85c69bfe53faf0aec39effded62d30f8f8b2f0e738628ec"
+            }
+            isReadOnly
             mb={4}
           />
-          <Text fontSize={12}>Quantity</Text>
-          <NumberInput
-            min={0.01}
-            // placeholder='Min quantity: 0.01C.P'
-            value={withdraw.amount}
-            onChange={(value) => {
-              setwithdraw((prev) => ({
-                ...prev,
-                amount: parse(value),
-              }));
-            }}
-          >
-            <NumberInputField />
-          </NumberInput>
-          <Text fontSize={12}>
-            There is a transaction fee of 0.0001 ICP on every
-            transaction
+          <Text my={3}>
+            Nexai is excited to introduce a premium feature that
+            unlocks exclusive benefits for our users. For just 0.2
+            ICP, users gain access to a host of premium features,
+            enhancing their Nexai experience. From advanced analytics
+            to personalized assistance, the premium subscription
+            offers unparalleled value. Upgrade today and elevate your
+            Nexai experience
           </Text>
         </ModalBody>
         <ModalFooter>
@@ -124,7 +110,7 @@ function WithdrawModal({ isOpen, onClose }) {
             isLoading={withdrawing}
             onClick={handleWithdrawICP}
           >
-            Send
+            Subscribe
           </Button>
         </ModalFooter>
       </ModalContent>
@@ -132,4 +118,4 @@ function WithdrawModal({ isOpen, onClose }) {
   );
 }
 
-export default WithdrawModal;
+export default PremiumModal;

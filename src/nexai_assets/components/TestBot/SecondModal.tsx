@@ -96,6 +96,7 @@ function SecondModal({ isOpen, onClose }) {
             1
           )
           .then((val: any) => {
+            console.log(val);
             const parsedVal = JSON.parse(val.Ok);
             myMess = {
               sender: "nexai",

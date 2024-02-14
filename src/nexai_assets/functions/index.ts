@@ -79,6 +79,7 @@ export const useUpdateProfile = () => {
               description: profile[0].description,
               email: profile[0].email,
               principal: p.toText(),
+              premium: profile[0]?.premium[0],
             };
             dispatch(addProfile(data));
             setLoading(false);

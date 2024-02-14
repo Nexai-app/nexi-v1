@@ -69,6 +69,7 @@ function SignUpForm() {
               email,
               name: appName,
               description: desc,
+              premium: false
             };
             dispatch(addProfile(send));
             localStorage.setItem("vdbId", companyId);

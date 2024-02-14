@@ -7,6 +7,7 @@ export type ProfileT = {
   description: string;
   qA?: QuestionAnswerT[];
   principal?: string;
+  premium: boolean;
 };
 
 export type QuestionAnswerT = {
@@ -32,5 +33,13 @@ export type ConversationT = {
 
 export type WalletT = {
   icpBalance: number;
-  accountIdentifier: string
-}
+  accountIdentifier: string;
+};
+
+export type TransactionT = {
+  id: number;
+  createdAt: number;
+  amount: number;
+  fee: number;
+  to: string;
+};

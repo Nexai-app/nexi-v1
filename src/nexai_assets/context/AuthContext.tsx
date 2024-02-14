@@ -25,8 +25,16 @@ Canister ID is required, but received undefined instead.
 If you are using automatically generated declarations, 
 this may be because your 
 application is not setting the canister ID in process.env correctly. */
-const vdbCanisterId = "aovwi-4maaa-aaaaa-qaagq-cai";
-const canisterId = "asrmz-lmaaa-aaaaa-qaaeq-cai";
+
+//--------DEV----------
+const vdbCanisterId = "br5f7-7uaaa-aaaaa-qaaca-cai";
+const canisterId = "bd3sg-teaaa-aaaaa-qaaba-cai";
+//--------DEV----------
+
+//--------PRODUCTION----------
+// const vdbCanisterId = "fnnlb-hqaaa-aaaao-a2igq-cai";
+// const canisterId = "aol7b-vqaaa-aaaak-aepsq-cai";
+//--------PRODUCTION----------
 const icpLedgerCanisterId = "ryjl3-tyaaa-aaaaa-aaaba-cai";
 const icpIndexCanisterId = "qhbym-qaaaa-aaaaa-aaafq-cai";
 

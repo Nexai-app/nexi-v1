@@ -10,6 +10,7 @@ const initialState: ProfileT = {
   description: "",
   principal: "",
   qA: [],
+  premium: false,
 };
 
 export const profileSlice = createSlice({
@@ -22,6 +23,7 @@ export const profileSlice = createSlice({
       state.name = payload.name;
       state.description = payload.description;
       state.principal = payload.principal;
+      state.premium = payload.premium;
     },
     addQAPair: (
       state,
