@@ -74,7 +74,7 @@ In essence, Nexai is not just an assistant; it's an innovative solution, underpi
 - Milestone 3: Individual Canister Creation
   Objective: Implement the automatic creation of an individual canister for each company upon signing up, housing all company information, data, and customer data.
 
-- Milestone 4: Canister Funding with ckBTC and ckETH
+- Milestone 4: Canister Funding with ckBTC and ckETH and other tokens
   Objective: Enable users to fund their unique canisters using various stablecoins, integrating ckBTC and ckETH for flexible funding transactions.
 
 - Milestone 5: Enhanced Template Encryption
