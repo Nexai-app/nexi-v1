@@ -395,9 +395,9 @@ shared ({ caller }) actor class Nexai() = this {
       if (i == caller) {
 
         var savetovdb = await VDBAddQandA(j.vdbId, keys, values);
-        var buildIndex = await VDBBuildIndex(j.vdbId);
+        var _buildIndex = await VDBBuildIndex(j.vdbId);
         Debug.print(debug_show (savetovdb));
-        var res_ = CardHashMap.put(cardId, _createQCard(j.vdbId, question, answer));
+        var _res_ = CardHashMap.put(cardId, _createQCard(j.vdbId, question, answer));
         Debug.print(debug_show (cardId)); // added a debug_print to let the user know what card id their card has
         cardId := cardId + 1;
 
