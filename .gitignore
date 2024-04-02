@@ -13,6 +13,6 @@
 # frontend code
 node_modules/
 dist/
-
-
+.vessel
+./.vessel
 src/declarations

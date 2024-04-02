@@ -9,6 +9,8 @@ import Nat32 "mo:base/Nat32";
 import Nexais "../nexai/main";
 import Text "mo:base/Text";
 
+import Nexai2 "canister:nexai";
+
 
 import NexaiTypes "../nexai/types";
 import VDBTypes "../nexai/vdbTypes";
@@ -30,7 +32,11 @@ shared ({ caller }) actor class External() =  {
         getAllCompanies : () -> async ([(Principal, NexaiTypes.CompanyEntry)]); 
         greet : (Text) -> async Text;
         VDBGetSimilar : (Nat32, [Float], Int32) -> async (VDBTypes.Result_1);
+        CheckPrincipal : () -> async Principal;
+        Check_Principal : (Principal) -> async Principal;
     };
+
+
 
     let vdb = actor("fnnlb-hqaaa-aaaao-a2igq-cai") : actor { 
         add_manager: (Principal) -> async Bool;
@@ -46,6 +52,8 @@ shared ({ caller }) actor class External() =  {
     public func ExternalVDBGetSimilar (companyId:Nat32, question: FloatVector, limit:Int32): async VDBTypes.Result_1{
       await vdb.get_similar(companyId, question, limit);
     };
+
+   
 
    public func VDBBuildIndex (companyId: Nat32): async VDBTypes.Result {
        await vdb.build_index(companyId);
@@ -142,6 +150,26 @@ shared ({ caller }) actor class External() =  {
 
     public func Greet(name : Text) : async Text {
         await Nexai.greet(name);
+    };
+
+    public func Greet2(name : Text) : async Text {
+        await Nexai2.greet(name);
+    };
+
+    public func CheckPrincipal() : async Principal {
+        await Nexai.CheckPrincipal();
+    };
+
+     public func CheckPrincipal2() : async Principal {
+        await Nexai2.CheckPrincipal();
+    };
+
+    public shared ({ caller }) func Check_Principal() : async Principal {
+        await Nexai.Check_Principal(caller);
+    };
+
+     public shared ({ caller }) func Check_Principal2() : async Principal {
+      await Nexai2.Check_Principal(caller);
     };
 
     public func VDBGetSimilar(companyId:Nat32, question: [Float], limit:Int32): async VDBTypes.Result_1{

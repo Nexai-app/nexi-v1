@@ -1,21 +1,49 @@
 import React, { useState } from "react";
 import { Actor, Identity, ActorSubclass } from "@dfinity/agent";
 import { AuthClient } from "@dfinity/auth-client";
-import { canisterId, createActor } from "../../declarations/nexai";
+import { createActor } from "../../declarations/nexai";
+import {
+  // canisterId as vdbCanisterId,
+  createActor as vdbCreateActor,
+} from "../../vector-database-icp/src/declarations/vector_database_backend";
+import { _SERVICE as _vdbSERVICE } from "../../vector-database-icp/src/declarations/vector_database_backend/vector_database_backend.did";
+import { createActor as ICPLedgerCreateActor } from "../../declarations/icp_ledger";
+import { _SERVICE as _ICPLedgerSERVICE } from "../../declarations/icp_ledger/icp_ledger.did";
+import { createActor as ICPIndexCreateActor } from "../../declarations/icp_index";
+import { _SERVICE as _ICPIndexSERVICE } from "../../declarations/icp_index/icp_index.did";
+// import {
+// canisterId as vdbCanisterId,
+// createActor as vdbCreateActor,
+// } from "../../vector_database_backend";
+// import { _SERVICE as _vdbSERVICE } from "../../vector_database_backend/vector_database_backend.did";
 import { useLocation, useNavigate } from "react-router-dom";
 import { _SERVICE } from "../../declarations/nexai/nexai.did";
-// import { ShepherdTourContext } from "react-shepherd";
-// import { useMatomo } from "@datapunt/matomo-tracker-react";
-// import Onboarding from "../pages/Onboard/Onboarding";
 
 /* 
-import { idlFactory } from "./service.did.js";
-export { idlFactory } from "./service.did.js";
-*/
+ERROR WITH GETTING CANISTER ID FROM DECLARATION SO WE DO IT MANUALLY
+Canister ID is required, but received undefined instead. 
+If you are using automatically generated declarations, 
+this may be because your 
+application is not setting the canister ID in process.env correctly. */
+
+//--------DEV----------
+const vdbCanisterId = "br5f7-7uaaa-aaaaa-qaaca-cai";
+const canisterId = "bd3sg-teaaa-aaaaa-qaaba-cai";
+//--------DEV----------
+
+//--------PRODUCTION----------
+// const vdbCanisterId = "fnnlb-hqaaa-aaaao-a2igq-cai";
+// const canisterId = "aol7b-vqaaa-aaaak-aepsq-cai";
+//--------PRODUCTION----------
+const icpLedgerCanisterId = "ryjl3-tyaaa-aaaaa-aaaba-cai";
+const icpIndexCanisterId = "qhbym-qaaaa-aaaaa-aaafq-cai";
 
 export const AuthContext = React.createContext<{
   Auth: any;
   actor: ActorSubclass<_SERVICE> | undefined;
+  vdbActor: ActorSubclass<_vdbSERVICE> | undefined;
+  ICPLedgerActor: ActorSubclass<_ICPLedgerSERVICE> | undefined;
+  ICPIndexActor: ActorSubclass<_ICPIndexSERVICE> | undefined;
   setActor: any;
   iiAuth: boolean;
   setIIAuth: any;
@@ -33,9 +61,20 @@ export const AuthContext = React.createContext<{
   setLlmReply: any;
   useLLM: boolean;
   setUseLLM: any;
+  customerPrincipal: string;
+  setCustomerPrincipal: any;
+  openChat: boolean;
+  setOpenChat: any;
+  connectionId: number;
+  setConnectionId: any;
+  conversationClosed: boolean;
+  setConversationClosed: any;
 }>({
   Auth: undefined,
   actor: undefined,
+  vdbActor: undefined,
+  ICPLedgerActor: undefined,
+  ICPIndexActor: undefined,
   setActor: undefined,
   iiAuth: false,
   setIIAuth: false,
@@ -53,11 +92,25 @@ export const AuthContext = React.createContext<{
   setLlmReply: undefined,
   useLLM: false,
   setUseLLM: undefined,
+  customerPrincipal: "",
+  setCustomerPrincipal: undefined,
+  openChat: false,
+  setOpenChat: undefined,
+  connectionId: undefined,
+  setConnectionId: undefined,
+  conversationClosed: false,
+  setConversationClosed: undefined,
 });
 
 export const AuthProvider = ({ children }) => {
   // const tour_ = useContext(ShepherdTourContext);
   const [actor, setActor] = useState<ActorSubclass<_SERVICE>>();
+  const [vdbActor, setVdbActor] =
+    useState<ActorSubclass<_vdbSERVICE>>();
+  const [ICPLedgerActor, setICPLedgerActor] =
+    useState<ActorSubclass<_ICPLedgerSERVICE>>();
+  const [ICPIndexActor, setICPIndexActor] =
+    useState<ActorSubclass<_ICPIndexSERVICE>>();
   const [iiAuth, setIIAuth] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
   const [pipelineInit, setPipelineInit] = useState(false);
@@ -69,6 +122,12 @@ export const AuthProvider = ({ children }) => {
   const [llmBoolStatus, setLlmBoolStatus] = useState(false);
   const [llmReply, setLlmReply] = useState("");
   const [useLLM, setUseLLM] = useState(false);
+  const [customerPrincipal, setCustomerPrincipal] =
+    React.useState("");
+  const [openChat, setOpenChat] = React.useState(false);
+  const [connectionId, setConnectionId] = React.useState<number>();
+  const [conversationClosed, setConversationClosed] =
+    useState<boolean>(false);
 
   // const { trackEvent } = useMatomo();
 
@@ -87,7 +146,7 @@ export const AuthProvider = ({ children }) => {
     }
 
     const loginButton = document.getElementById(
-      "loginButton"
+      "login"
     ) as HTMLButtonElement;
 
     const days = BigInt(1);
@@ -118,7 +177,8 @@ export const AuthProvider = ({ children }) => {
       identityProvider:
         process.env.DFX_NETWORK === "ic"
           ? "https://nfid.one" + AUTH_PATH
-          : process.env.LOCAL_II_CANISTER,
+          : // : process.env.LOCAL_II_CANISTER,
+            `http://rdmx6-jaaaa-aaaaa-aaadq-cai.localhost:4943`,
       // Maximum authorization expiration is 8 days
       maxTimeToLive: days * hours * nanoseconds,
     });
@@ -133,7 +193,29 @@ export const AuthProvider = ({ children }) => {
         identity,
       },
     });
+
+    const vdb_actor = vdbCreateActor(vdbCanisterId as string, {
+      agentOptions: {
+        identity,
+      },
+    });
+
+    const index_actor = ICPIndexCreateActor(icpIndexCanisterId, {
+      agentOptions: {
+        identity,
+      },
+    });
+
+    const ledger_actor = ICPLedgerCreateActor(icpLedgerCanisterId, {
+      agentOptions: {
+        identity,
+      },
+    });
+
     setActor(whoami_actor);
+    setVdbActor(vdb_actor);
+    setICPIndexActor(index_actor);
+    setICPLedgerActor(ledger_actor);
 
     // Invalidate identity then render login when user goes idle
     authClient.idleManager?.registerCallback(() => {
@@ -167,6 +249,17 @@ export const AuthProvider = ({ children }) => {
         setLlmReply,
         useLLM,
         setUseLLM,
+        customerPrincipal,
+        setCustomerPrincipal,
+        vdbActor,
+        openChat,
+        setOpenChat,
+        connectionId,
+        setConnectionId,
+        conversationClosed,
+        setConversationClosed,
+        ICPLedgerActor,
+        ICPIndexActor,
       }}
     >
       {children}

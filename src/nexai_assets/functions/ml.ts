@@ -11,7 +11,9 @@ import { AuthContext } from "../context/AuthContext";
 
 // Disable the loading of remote models from the Hugging Face Hub:
 
-let extractor: null | Pipeline = null;
+// let extractor: null | Pipeline = null;
+
+let extractor: any = null;
 
 export const useEmbeddQuestion = () => {
   let embeddedText = [];
@@ -76,7 +78,9 @@ export const useEmbeddQ = () => {
 
 const useEmbedder = async (text: string) => {
   if (extractor == null) {
-    toast.error("Downloading Embedding Model, this shouldn't take long");
+    toast.error(
+      "Downloading Embedding Model, this shouldn't take long"
+    );
     return;
   }
 

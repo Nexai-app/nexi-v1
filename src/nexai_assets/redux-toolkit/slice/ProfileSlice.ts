@@ -1,8 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { ProfileT , QuestionAnswerT } from "../types";
-
-
+import { ProfileT, QuestionAnswerT } from "../types";
 
 // Define the initial state using that type
 const initialState: ProfileT = {
@@ -10,7 +8,9 @@ const initialState: ProfileT = {
   email: "",
   name: "",
   description: "",
-  qA:[]
+  principal: "",
+  qA: [],
+  premium: false,
 };
 
 export const profileSlice = createSlice({
@@ -22,10 +22,15 @@ export const profileSlice = createSlice({
       state.email = payload.email;
       state.name = payload.name;
       state.description = payload.description;
+      state.principal = payload.principal;
+      state.premium = payload.premium;
     },
-    addQAPair: (state, { payload }: PayloadAction<QuestionAnswerT>) => {
+    addQAPair: (
+      state,
+      { payload }: PayloadAction<QuestionAnswerT>
+    ) => {
       state.qA.push(payload);
-    }
+    },
   },
 });
 

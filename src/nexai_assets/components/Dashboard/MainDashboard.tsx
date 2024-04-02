@@ -15,15 +15,18 @@ import {
   ModalOverlay,
   IconButton,
   useDisclosure,
+  Grid,
 } from "@chakra-ui/react";
-import LineChart from "./LineChart";
-import BarChart from "./BarChart";
+import LineChart from "../LineChart";
+import BarChart from "../BarChart";
 import { BiLogOut } from "react-icons/bi";
 import { ChatIcon } from "@chakra-ui/icons";
 import { AiOutlineBook } from "react-icons/ai";
-import FirstModal from "./TestBot/FirstModal";
-import { useUpdateProfile } from "../functions";
-import Banner from "./Banner";
+import FirstModal from "../TestBot/FirstModal";
+import Card from "./Card";
+import { useGetAllConnections } from "../../functions/index";
+import { useAppSelector } from "../../redux-toolkit/hooks";
+// import Banner from "./Banner";
 
 const MainDashboard = () => {
   const [isLargerThan991] = useMediaQuery("(max-width: 991px)");
@@ -36,10 +39,15 @@ const MainDashboard = () => {
     />
   );
 
+  const { getEnquires } = useGetAllConnections();
+
+  React.useEffect(() => {
+    getEnquires();
+  }, []);
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
   const [isFirstModalOpen, setIsFirstModalOpen] = useState(false);
-  const { updateProfile } = useUpdateProfile();
 
   const onCloseFirstModal = () => {
     setIsFirstModalOpen(false);
@@ -57,10 +65,15 @@ const MainDashboard = () => {
     setIsSecondModalOpen(true);
   };
 
-  useEffect(() => {
-    updateProfile();
-  }, []);
   const [overlay, setOverlay] = React.useState(<OverlayOne />);
+  const enquiry = useAppSelector((state) => state.enquiry);
+
+  const completedEnq = enquiry?.filter(
+    (enq) => enq.completed === true
+  );
+  const uncompletedEnq = enquiry?.filter(
+    (enq) => enq.completed === false
+  );
 
   const logOut = () => {
     localStorage.clear();
@@ -72,8 +85,8 @@ const MainDashboard = () => {
       <Box bg="#341A41" w={`100%`} minH={`100vh`}>
         {isLargerThan991 ? (
           <>
-            <Banner />
-            <Heading>Home</Heading>
+            {/* <Banner /> */}
+            <Heading>Dashboard</Heading>
 
             <Flex alignItems="center" py="10px">
               <Box fontSize="14px">
@@ -113,6 +126,22 @@ const MainDashboard = () => {
                 />
               </Box>
             </Flex>
+            <Flex justify={"center"} align="center" my={8}>
+              <Grid templateColumns="repeat(2, 1fr)" gap={4}>
+                <Card
+                  name={"Number of Disputes"}
+                  value={enquiry.length}
+                />
+                <Card
+                  name={"Settled Disputes"}
+                  value={completedEnq.length}
+                />
+                <Card
+                  name={"Pending Disputes"}
+                  value={uncompletedEnq.length}
+                />
+              </Grid>
+            </Flex>
             <Box>
               <LineChart />
               <BarChart />
@@ -120,7 +149,7 @@ const MainDashboard = () => {
           </>
         ) : (
           <>
-            <Banner />
+            {/* <Banner /> */}
             <Heading>Home</Heading>
 
             <Flex alignItems="center" py="10px">
@@ -174,6 +203,22 @@ const MainDashboard = () => {
                   onClose={onCloseFirstModal}
                 />
               </Box>
+            </Flex>
+            <Flex justify={"space-evenly"} align={"Center"} my={6}>
+              <Grid templateColumns="repeat(4, 1fr)" gap={8}>
+                <Card
+                  name={"Number of Disputes"}
+                  value={enquiry.length}
+                />
+                <Card
+                  name={"Settled Disputes"}
+                  value={completedEnq.length}
+                />
+                <Card
+                  name={"Pending Disputes"}
+                  value={uncompletedEnq.length}
+                />
+              </Grid>
             </Flex>
             <Box>
               <LineChart />

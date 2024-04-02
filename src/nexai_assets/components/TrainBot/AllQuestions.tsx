@@ -42,7 +42,7 @@ const AllQuestions = () => {
   useEffect(() => {
     const callMe = () => {
       actor
-        .getAllQCards(Number(vdbId))
+        ?.getAllQCards(Number(vdbId))
         .then((v) => {
           console.log(v);
           setArr(v[0]);
@@ -55,7 +55,6 @@ const AllQuestions = () => {
   }, []);
   return (
     <Box color="white">
-      <Navbar />
       <Box>
         <Flex justify="center" direction="column" align="center">
           <Flex

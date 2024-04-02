@@ -7,11 +7,12 @@ import {
   Text,
   Hide,
   Show,
-  AspectRatio,
-  Center,
+  Button,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { AiOutlineCopy } from "react-icons/ai";
-import { useAppSelector } from "../redux-toolkit/hooks";
+import { useAppSelector } from "../../redux-toolkit/hooks";
+import IntegrationModal from "./Modal";
 
 const int = [
   {
@@ -115,7 +116,7 @@ const int = [
   },
   {
     id: 6,
-    desc: "Add Nexai Canister Configuration In the dfx.json file, add a 'canisters' section if it doesn't already exist. This section defines the configuration for your canister",
+    desc: "Add Nexai Canister Configuration In the dfx.json file, add a 'canisters' section if it doesn't already exist. This section defines the configuration for your canister. Please note: You have to be running on ^0.15.0 dfx version",
     code: [
       {
         id: 1,
@@ -201,14 +202,15 @@ const int = [
       },
       {
         id: 3,
-        val: "$ dfx deps deploy"
-      }
+        val: "$ dfx deps deploy",
+      },
     ],
   },
 ];
 
 function Integration() {
   const profile = useAppSelector((state) => state.profile);
+  const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <Box>
       <Heading>Integration</Heading>
@@ -267,7 +269,19 @@ function Integration() {
                   Company Description: {profile?.description}
                 </Text>
                 <Text>Company Email: {profile?.email}</Text>
+                <Text>Principal: {profile?.principal}</Text>
               </Box>
+              <Flex justify={"center"}>
+                <Button
+                  mt={3}
+                  px={3}
+                  py={2}
+                  color="#341A41"
+                  onClick={onOpen}
+                >
+                  Test Integration
+                </Button>
+              </Flex>
             </Show>
           </Box>
         </Box>
@@ -277,16 +291,28 @@ function Integration() {
         </Hide>
         {/* Video */}
         <Hide below="md">
+          {/* TODO: make it flex inverse and ddirection column when screen is average */}
           <Box px={8} w="30%">
-            <Text fontSize="20px" fontWeight="700">
-              Watch Video
-            </Text>
+            <Flex
+              justify={"space-between"}
+              alignItems={"center"}
+              my={3}
+            >
+              <Text fontSize="20px" fontWeight="700" pt={5}>
+                Integration Details
+              </Text>
+              <Button px={4} py={2} onClick={onOpen} color="#341A41">
+                Test Integration
+              </Button>
+            </Flex>
             <Box dir="column">
               <Text>Company Id: {profile?.vdbId}</Text>
               <Text>Company Name: {profile?.name}</Text>
               <Text>Company Description: {profile?.description}</Text>
               <Text>Company Email: {profile?.email}</Text>
+              <Text>Principal: {profile?.principal}</Text>
             </Box>
+
             {/*    <AspectRatio maxW="560px" ratio={1}>
               <iframe
                 title="Introverts for you"
@@ -297,6 +323,14 @@ function Integration() {
           </Box>
         </Hide>
       </Flex>
+      {isOpen && (
+        <IntegrationModal
+          isOpen={isOpen}
+          onOpen={onOpen}
+          onClose={onClose}
+          status={"false"}
+        />
+      )}
     </Box>
   );
 }

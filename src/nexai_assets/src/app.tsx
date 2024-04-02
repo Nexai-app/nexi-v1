@@ -4,24 +4,30 @@ import { AuthClient } from "@dfinity/auth-client";
 import { useToast } from "@chakra-ui/react";
 import { AuthContext } from "../context/AuthContext";
 import LandingPage from "../pages/LandingPage";
+import Lest from "../pages/Lest";
 import Signup from "../pages/Signup";
 import Dashboard from "../pages/Dashboard";
 import TrainBot from "../pages/TrainBot";
-import AllQuestion from "../components/TrainBot/AllQuestions";
+import AllQuestion from "../pages/AllQuestions";
 import IntegrationPage from "../pages/IntegrationPage";
+import Chat from "../pages/ChatPage";
 import { useAppSelector } from "../redux-toolkit/hooks";
 import { useUpdateProfile } from "../functions";
 import { useInitTransformers } from "../functions/ml";
 import { useInitLLM } from "../functions/webLlm";
+import LoadingScreen from "../components/TrainBot/LoadingScreen";
+import WalletPage from "../pages/WalletPage";
+import { Assistant, AssistantProps } from "nexai-assistant";
 
 const App = () => {
-  const { handleAuthenticated, setIIAuth, actor } =
+  const { handleAuthenticated, setIIAuth, actor, vdbActor } =
     useContext(AuthContext);
   const [actorRestated, setActorRestated] = useState<boolean>(false);
   const profile = useAppSelector((state) => state.profile);
   const { updateProfile } = useUpdateProfile();
   const { init } = useInitTransformers();
   const { initLLM } = useInitLLM();
+  // const { updateProfile } = useUpdateProfile();
 
   const toast = useToast({
     containerStyle: {
@@ -31,13 +37,20 @@ const App = () => {
 
   const navigate = useNavigate();
 
+  // const param: AssistantProps = {
+  //   actor: vdbActor,
+  //   color: "red",
+  //   companyId: 1,
+  //   companyName: "nexai",
+  // };
   useEffect(() => {
     // initializes the ml
     //initialize llm
     const call = async () => {
-      await initLLM();
+      // await initLLM();
       await init();
     };
+
     const runOnMounth = async () => {
       const authClient = await AuthClient.create();
       if (await authClient.isAuthenticated()) {
@@ -79,20 +92,39 @@ const App = () => {
       <React.Fragment>
         <Routes>
           <Route path="/" element={<LandingPage />} />
+          <Route path="/we" element={<Lest />} />
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="signup" element={<Signup />} />
           <Route path="train-bot" element={<TrainBot />} />
           <Route path="my-questions" element={<AllQuestion />} />
           <Route path="integration" element={<IntegrationPage />} />
+          <Route path="chat" element={<Chat />} />
+          <Route path="wallet" element={<WalletPage />} />
+          <Route
+            path="loading"
+            element={<LoadingScreen isLoading={false} />}
+          />
         </Routes>
+        {/* <Assistant
+          actor={vdbActor}
+          color="purple"
+          companyName="Nexai"
+          companyId={1}
+        /> */}
       </React.Fragment>
     );
   } else {
     return (
       <React.Fragment>
+        {/* <Assistant
+          actor={vdbActor}
+          color="purple"
+          companyName="Nexai"
+          companyId={1}
+        /> */}
         <Routes>
           <Route path="/" element={<LandingPage />} />
-          {/* <Route path='/signup' element={<Signup />} /> */}
+          <Route path="/we" element={<Lest />} />
         </Routes>
       </React.Fragment>
     );

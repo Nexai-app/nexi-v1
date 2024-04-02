@@ -1,0 +1,4 @@
+[submodule "src/vector-database-icp"]
+	path = src/vector-database-icp
+	url = https://github.com/Nexai-app/vector-database-icp
+	branch = noperm

@@ -61,7 +61,7 @@ const AddQuestions = () => {
     if (embeddedText[0].length == 384) {
       setSubmitting(true);
       actor
-        .createQCard(question, ans, embeddedText, answer_arr)
+        ?.createQCard(question, ans, embeddedText, answer_arr)
         .then(() => {
           setSubmitting(false);
           navigate("/my-questions");
@@ -93,7 +93,7 @@ const AddQuestions = () => {
             fontWeight="700"
             fontFamily="Poppins"
           >
-            Train Your Bot
+            Train Manually
           </Text>
           <Box
             display="flex"
@@ -150,13 +150,6 @@ const AddQuestions = () => {
               </Button>
               <Button
                 onClick={handleSubmit}
-                bg="white"
-                color={`#341A41`}
-                border={`1px white solid`}
-                _hover={{
-                  backgroundColor: "transparent",
-                  color: "white",
-                }}
                 isLoading={submitting}
                 isDisabled={submitting}
               >

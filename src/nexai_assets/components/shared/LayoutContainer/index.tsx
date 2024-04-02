@@ -1,9 +1,16 @@
 /* eslint-disable react/require-default-props */
-import React, { createContext, Dispatch, FC, ReactNode, useState } from "react";
+import React, {
+  createContext,
+  Dispatch,
+  FC,
+  ReactNode,
+  useState,
+} from "react";
 import { Box, Flex } from "@chakra-ui/react";
 import Sidebar from "../Sidebar";
 //   import LayoutHeader from "@components/shared/layout/LayoutHeader";
 import MobileSlider from "../MobileSlider";
+import { useUpdateProfile } from "../../../functions";
 
 type Props = {
   children: ReactNode;
@@ -22,6 +29,15 @@ export const LayoutContext = createContext<LayoutContextProps>({
 //  const base = ['/home']
 const LayoutContainer: FC<Props> = ({ children }) => {
   const [showSidebar, setShowSidebar] = useState(false);
+  const { updateProfile } = useUpdateProfile();
+
+  React.useEffect(() => {
+    const fetchProfile = async () => {
+      await updateProfile();
+      console.debug("[update profile fnc] - i was called");
+    };
+    fetchProfile();
+  }, []);
 
   return (
     <LayoutContext.Provider
@@ -35,13 +51,13 @@ const LayoutContainer: FC<Props> = ({ children }) => {
         <Sidebar />
         <MobileSlider />
         <Box
-          pt={10}
+          mt={12}
           ml={{ md: "15%" }}
           w={{ md: "85%" }}
-          px={{ base: "30px", md: "80px" }}
+          px={{ base: "10px", md: "11px" }}
           bg="#341A41"
           h={{ base: "500px", sm: "100%" }}
-          pb="30px"
+          py="5px"
           pos="relative"
         >
           {children}

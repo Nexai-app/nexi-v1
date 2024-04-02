@@ -16,10 +16,10 @@
     "copy:types": "rsync -avr .dfx/$(echo ${DFX_NETWORK:-'**'})/canisters/** --exclude='assets/' --exclude='idl/' --exclude='*.wasm' --exclude='*.most'"
   },
   "devDependencies": {
-    "@dfinity/agent": "0.15.4",
-    "@dfinity/auth-client": "^0.15.4",
-    "@dfinity/candid": "0.15.4",
-    "@dfinity/principal": "0.15.4",
+    "@dfinity/agent": "^0.20.2",
+    "@dfinity/auth-client": "^0.20.2",
+    "@dfinity/candid": "^0.20.2",
+    "@dfinity/principal": "^0.20.2",
     "@types/react": "^18.0.33",
     "@types/react-dom": "^18.0.11",
     "@vitejs/plugin-react": "^3.1.0",
@@ -51,7 +51,7 @@
     "@chakra-ui/icons": "^2.0.18",
     "@chakra-ui/react": "^2.5.5",
     "@dfinity/authentication": "^0.14.2",
-    "@dfinity/identity": "^0.15.4",
+    "@dfinity/identity": "^0.20.2",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@fontsource/poppins": "^4.5.10",
@@ -61,7 +61,6 @@
     "@fortawesome/free-regular-svg-icons": "^6.4.0",
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
-    "@mlc-ai/web-llm": "^0.2.8",
     "@reach/router": "^1.3.4",
     "@reduxjs/toolkit": "^1.9.5",
     "@xenova/transformers": "^2.6.1",
@@ -69,6 +68,7 @@
     "chart.js": "^4.2.1",
     "file-loader": "^6.2.0",
     "framer-motion": "^10.10.0",
+    "nexai-assistant": "^0.3.19",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.2",
     "react-chartjs-2": "^5.2.0",
@@ -79,6 +79,7 @@
     "react-router-dom": "^6.9.0",
     "react-spinners": "^0.13.8",
     "react-type-animation": "^3.1.0",
+    "svg-loader": "^0.0.2",
     "url-loader": "^4.1.1"
   }
 }
