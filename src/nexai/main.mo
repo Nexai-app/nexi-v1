@@ -23,8 +23,10 @@ import Nat8 "mo:base/Nat8";
 import AccountIdentifier "mo:principal/AccountIdentifier";
 
 import ICPLedger "canister:icp_ledger";
+import CKBTC "canister:ckbtc_ledger";
 // import ICPIndex "canister:icp_index";
 
+import CKBTC_Types "./ckbtc-ledger/ckbtc_types";
 import LedgerTypes "./ledgertypes";
 import Utils "./utils";
 import Types "./types";
@@ -65,6 +67,7 @@ shared ({ caller }) actor class Nexai() = this {
   private stable var messageEntries : [(Nat, MessageEntry)] = [];
   //production vdb
   private var vdbCanisterId: Text = "fnnlb-hqaaa-aaaao-a2igq-cai";
+  private stable var ledgerActor : CkBtcLedgerTypes.Actor = actor ("mxzaz-hqaaa-aaaar-qaada-cai") : CkBtcLedgerTypes.Actor;
 
   //create HashMaps
 
