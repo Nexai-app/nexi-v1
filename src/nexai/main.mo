@@ -32,6 +32,7 @@ import Utils "./utils";
 import Types "./types";
 import VDBTypes "./vdbTypes";
 import Message "message";
+import CkbtcTypes "ckbtc-ledger/ckbtc_types";
 
 shared ({ caller }) actor class Nexai() = this {
 
@@ -67,7 +68,7 @@ shared ({ caller }) actor class Nexai() = this {
   private stable var messageEntries : [(Nat, MessageEntry)] = [];
   //production vdb
   private var vdbCanisterId: Text = "fnnlb-hqaaa-aaaao-a2igq-cai";
-  private stable var ledgerActor : CkBtcLedgerTypes.Actor = actor ("mxzaz-hqaaa-aaaar-qaada-cai") : CkBtcLedgerTypes.Actor;
+  private stable var ledgerActor : CkbtcTypes.Actor = actor ("mxzaz-hqaaa-aaaar-qaada-cai") : CkbtcTypes.Actor;
 
   //create HashMaps
 
