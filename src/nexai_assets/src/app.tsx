@@ -17,7 +17,7 @@ import { useInitTransformers } from "../functions/ml";
 import { useInitLLM } from "../functions/webLlm";
 import LoadingScreen from "../components/TrainBot/LoadingScreen";
 import WalletPage from "../pages/WalletPage";
-import { Assistant, AssistantProps } from "nexai-assistant";
+// import { Assistant, AssistantProps } from "nexai-assistant";
 
 const App = () => {
   const { handleAuthenticated, setIIAuth, actor, vdbActor } =
