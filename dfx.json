@@ -3,7 +3,7 @@
     "nexai": {
       "main": "src/nexai/main.mo",
       "type": "motoko",
-      "dependencies": ["icp_ledger", "icp_index"],
+      "dependencies": ["icp_ledger", "icp_index", "ckbtc_ledger"],
       "pullable": {
         "wasm_url": "https://github.com/Nexai-app/nexi-v1/releases/download/latest/nexai.wasm",
         "dependencies": ["fnnlb-hqaaa-aaaao-a2igq-cai"],
@@ -22,6 +22,28 @@
       "remote": {
         "id": {
           "ic": "ryjl3-tyaaa-aaaaa-aaaba-cai"
+        }
+      }
+    },
+
+    "ckbtc_ledger": {
+      "type": "custom",
+      "candid": "https://raw.githubusercontent.com/dfinity/ic/95787355499f3be929f2ab302ed44cdad7c64061/rs/rosetta-api/icrc1/ledger/ledger.did",
+      "wasm": "https://download.dfinity.systems/ic/95787355499f3be929f2ab302ed44cdad7c64061/canisters/ic-icrc1-ledger.wasm.gz",
+      "remote": {
+        "id": {
+          "ic": "mxzaz-hqaaa-aaaar-qaada-cai"
+        }
+      }
+    },
+
+    "ckbtc_index": {
+      "type": "custom",
+      "candid": "https://raw.githubusercontent.com/dfinity/ic/95787355499f3be929f2ab302ed44cdad7c64061/rs/rosetta-api/icrc1/index/index.did",
+      "wasm": "https://download.dfinity.systems/ic/95787355499f3be929f2ab302ed44cdad7c64061/canisters/ic-icrc1-index.wasm.gz",
+      "remote": {
+        "id": {
+          "ic": "n5wcd-faaaa-aaaar-qaaea-cai"
         }
       }
     },
