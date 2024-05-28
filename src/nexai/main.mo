@@ -58,7 +58,7 @@ shared ({ caller }) actor class Nexai() = this {
 
 
   
-  // private  var vdbCanisterId: Text = "br5f7-7uaaa-aaaaa-qaaca-cai";
+  private  var vdbCanisterId: Text = "avqkn-guaaa-aaaaa-qaaea-cai";
   
   private stable var cardEntries : [(Nat, CardEntry)] = [];
   private stable var companyEntries : [(Principal, CompanyEntry)] = [];
@@ -67,7 +67,7 @@ shared ({ caller }) actor class Nexai() = this {
   private stable var connectionEntries : [(Nat, ConnectionEntry)] = [];
   private stable var messageEntries : [(Nat, MessageEntry)] = [];
   //production vdb
-  private var vdbCanisterId: Text = "fnnlb-hqaaa-aaaao-a2igq-cai";
+  // private var vdbCanisterId: Text = "fnnlb-hqaaa-aaaao-a2igq-cai";
   private stable var ledgerActor : CkbtcTypes.Actor = actor ("mxzaz-hqaaa-aaaar-qaada-cai") : CkbtcTypes.Actor;
 
   //create HashMaps

@@ -1,5 +1,6 @@
 import type { Principal } from '@dfinity/principal';
 import type { ActorMethod } from '@dfinity/agent';
+import type { IDL } from '@dfinity/candid';
 
 export interface Account {
   'owner' : Principal,
@@ -99,3 +100,5 @@ export type Result__1 = { 'Ok' : null } |
 export interface TimeStamp { 'timestamp_nanos' : bigint }
 export interface Tokens { 'e8s' : bigint }
 export interface _SERVICE extends Nexai {}
+export declare const idlFactory: IDL.InterfaceFactory;
+export declare const init: (args: { IDL: typeof IDL }) => IDL.Type[];
