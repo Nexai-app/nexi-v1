@@ -100,7 +100,7 @@ function SecondModal({ isOpen, onClose }) {
             const parsedVal = JSON.parse(val.Ok);
             myMess = {
               sender: "nexai",
-              text: parsedVal.choices[0].message.content,
+              text: parsedVal.message,
             };
             chat.push(myMess);
 

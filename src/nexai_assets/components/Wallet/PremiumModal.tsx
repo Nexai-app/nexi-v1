@@ -109,6 +109,7 @@ function PremiumModal({ isOpen, onClose }) {
             px={8}
             isLoading={withdrawing}
             onClick={handleWithdrawICP}
+            disabled={true}
           >
             Subscribe
           </Button>

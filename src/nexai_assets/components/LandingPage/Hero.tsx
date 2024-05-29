@@ -176,7 +176,7 @@ const Hero: React.FC = () => {
                 fontSize={isLargerThan650 ? `50px` : `25px`}
                 fontWeight={`bold`}
               >
-                Revolutionize Customer Service for Your DAO
+                Revolutionize Customer Service for Your dApp
               </Heading>
               <Text>
                 Unleash Nexai's Powerful Assistance to Prioritize

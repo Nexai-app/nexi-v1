@@ -129,7 +129,8 @@ function TrainWithDocs() {
               {profile.premium ? (
                 <Badge>PREMIUM</Badge>
               ) : (
-                <Badge>GO PREMIUM TO USE</Badge>
+                // <Badge>GO PREMIUM TO USE</Badge>
+                <Badge>YOU ARE ON FREE MODE</Badge>
               )}
               <FormLabel pt={2}>let's have it...</FormLabel>
               <Textarea
@@ -140,7 +141,7 @@ function TrainWithDocs() {
                 }}
                 placeholder="Type your company's info here..."
                 height="200px"
-                isReadOnly={!profile.premium}
+                // isReadOnly={!profile.premium}
                 px={`5`}
               />
             </FormControl>

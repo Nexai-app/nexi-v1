@@ -27,7 +27,7 @@ this may be because your
 application is not setting the canister ID in process.env correctly. */
 
 //--------DEV----------
-const vdbCanisterId = "avqkn-guaaa-aaaaa-qaaea-cai";
+const vdbCanisterId = "b77ix-eeaaa-aaaaa-qaada-cai";
 const canisterId = "br5f7-7uaaa-aaaaa-qaaca-cai";
 //--------DEV----------
 
