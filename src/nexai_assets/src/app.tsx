@@ -17,6 +17,7 @@ import { useInitTransformers } from "../functions/ml";
 import { useInitLLM } from "../functions/webLlm";
 import LoadingScreen from "../components/TrainBot/LoadingScreen";
 import WalletPage from "../pages/WalletPage";
+import { Assistant } from "nexai-assistant";
 // import { Assistant, AssistantProps } from "nexai-assistant";
 
 const App = () => {
@@ -105,23 +106,30 @@ const App = () => {
             element={<LoadingScreen isLoading={false} />}
           />
         </Routes>
-        {/* <Assistant
+        <Assistant
           actor={vdbActor}
           color="purple"
-          companyName="Nexai"
-          companyId={1}
-        /> */}
+          companyName="Nexai Help"
+          companyId={0}
+          companyPrincipal={
+            "343g4-5hs5k-ppkuf-mikuk-2ss5v-xodi5-fy6vh-uc4ag-ayicd-4uxwq-rqe"
+          }
+        />
       </React.Fragment>
     );
   } else {
     return (
       <React.Fragment>
-        {/* <Assistant
+        <Assistant
           actor={vdbActor}
           color="purple"
-          companyName="Nexai"
-          companyId={1}
-        /> */}
+          companyName="Nexai Help"
+          companyId={0}
+          companyPrincipal={
+            "343g4-5hs5k-ppkuf-mikuk-2ss5v-xodi5-fy6vh-uc4ag-ayicd-4uxwq-rqe"
+          }
+        />
+
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/we" element={<Lest />} />

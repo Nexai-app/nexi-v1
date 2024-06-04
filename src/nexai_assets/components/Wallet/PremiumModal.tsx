@@ -108,7 +108,7 @@ function PremiumModal({ isOpen, onClose }) {
             py={5}
             px={8}
             isLoading={withdrawing}
-            onClick={handleWithdrawICP}
+            // onClick={handleWithdrawICP}
             disabled={true}
           >
             Subscribe

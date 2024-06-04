@@ -58,7 +58,7 @@ shared ({ caller }) actor class Nexai() = this {
 
 
   
-  private  var vdbCanisterId: Text = "b77ix-eeaaa-aaaaa-qaada-cai";
+  private  var vdbCanisterId: Text = "be2us-64aaa-aaaaa-qaabq-cai";
   
   private stable var cardEntries : [(Nat, CardEntry)] = [];
   private stable var companyEntries : [(Principal, CompanyEntry)] = [];
