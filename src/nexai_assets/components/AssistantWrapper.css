@@ -1,0 +1,8 @@
+/* Example CSS for the floating assistant icon */
+.assistant-icon {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000; /* Ensure it's above other elements */
+  }
+  

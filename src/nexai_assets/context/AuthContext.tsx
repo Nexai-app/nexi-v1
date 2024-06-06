@@ -27,13 +27,13 @@ this may be because your
 application is not setting the canister ID in process.env correctly. */
 
 //--------DEV----------
-const vdbCanisterId = "be2us-64aaa-aaaaa-qaabq-cai";
-const canisterId = "avqkn-guaaa-aaaaa-qaaea-cai";
+// const vdbCanisterId = "be2us-64aaa-aaaaa-qaabq-cai";
+// const canisterId = "avqkn-guaaa-aaaaa-qaaea-cai";
 //--------DEV----------
 
 //--------PRODUCTION----------
-// const vdbCanisterId = "fnnlb-hqaaa-aaaao-a2igq-cai";
-// const canisterId = "aol7b-vqaaa-aaaak-aepsq-cai";
+const vdbCanisterId = "fnnlb-hqaaa-aaaao-a2igq-cai";
+const canisterId = "aol7b-vqaaa-aaaak-aepsq-cai";
 //--------PRODUCTION----------
 const icpLedgerCanisterId = "ryjl3-tyaaa-aaaaa-aaaba-cai";
 const icpIndexCanisterId = "qhbym-qaaaa-aaaaa-aaafq-cai";

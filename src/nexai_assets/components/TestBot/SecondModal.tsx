@@ -31,6 +31,8 @@ import toast from "react-hot-toast";
 import { removeReply } from "../../redux-toolkit/slice/llmSlice";
 import { useEmbeddQ, useEmbeddQuestion } from "../../functions/ml";
 
+import { loadingMessages } from "../../utils/DateFormatter";
+
 type ChatType = {
   sender: "you" | "nexai";
   text: string;
@@ -48,6 +50,11 @@ function SecondModal({ isOpen, onClose }) {
   const user = useAppSelector((state) => state.profile);
   const dispatch = useAppDispatch();
   const { embeddedQ, call } = useEmbeddQ();
+  let startLoadingMsgInterval:
+    | string
+    | number
+    | NodeJS.Timeout
+    | undefined;
 
   const OverlayOne = () => (
     <ModalOverlay
@@ -110,8 +117,20 @@ function SecondModal({ isOpen, onClose }) {
           })
           .catch((err: any) => {
             setLoading(false);
-            toast.error(err.message);
-            console.error("[nexai-openai", err);
+            console.error("[nexai-package]", err);
+            if (
+              err.Err ===
+              "The http_request resulted into error. RejectionCode: SysTransient, Error: Canister http responses were different across replicas, and no consensus was reached"
+            ) {
+              return handleSendChat();
+            }
+            const message: ChatType = {
+              sender: "nexai",
+              text: err.message,
+            };
+            clearInterval(startLoadingMsgInterval);
+            chat.push(message);
+            setLoading(false);
           });
       }
     } catch (err: any) {
@@ -129,6 +148,13 @@ function SecondModal({ isOpen, onClose }) {
         scrollableRef.current.scrollHeight;
     }
   }, [chat]);
+
+  function showRandomLoadingMessage() {
+    const randomIndex = Math.floor(
+      Math.random() * loadingMessages.length
+    );
+    return loadingMessages[randomIndex];
+  }
 
   return (
     <Modal isCentered isOpen={isOpen} onClose={onClose}>
@@ -173,8 +199,11 @@ function SecondModal({ isOpen, onClose }) {
             </Flex>
           ))}
           {loading && (
-            <Flex justifyContent="flex-start">
-              <BeatLoader size={8} color="#341A41" />
+            <Flex justifyContent="flex-start" align="center">
+              <Text mr={2} color="white">
+                {showRandomLoadingMessage()}
+              </Text>
+              <BeatLoader size={6} color="#341A41" />
             </Flex>
           )}
         </ModalBody>

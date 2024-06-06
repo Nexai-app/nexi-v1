@@ -19,6 +19,7 @@ import LoadingScreen from "../components/TrainBot/LoadingScreen";
 import WalletPage from "../pages/WalletPage";
 import { Assistant } from "nexai-assistant";
 // import { Assistant, AssistantProps } from "nexai-assistant";
+import AssistantWrapper from "../components/AssistantWrapper";
 
 const App = () => {
   const { handleAuthenticated, setIIAuth, actor, vdbActor } =
@@ -112,7 +113,7 @@ const App = () => {
           companyName="Nexai Help"
           companyId={0}
           companyPrincipal={
-            "343g4-5hs5k-ppkuf-mikuk-2ss5v-xodi5-fy6vh-uc4ag-ayicd-4uxwq-rqe"
+            "wkamz-d24me-lajzj-c6hp4-l2c4r-nwcwj-kuvqj-lrwcu-es4w5-k6jbe-bae"
           }
         />
       </React.Fragment>
@@ -120,13 +121,13 @@ const App = () => {
   } else {
     return (
       <React.Fragment>
-        <Assistant
+        <AssistantWrapper
           actor={vdbActor}
           color="purple"
           companyName="Nexai Help"
           companyId={0}
           companyPrincipal={
-            "343g4-5hs5k-ppkuf-mikuk-2ss5v-xodi5-fy6vh-uc4ag-ayicd-4uxwq-rqe"
+            "wkamz-d24me-lajzj-c6hp4-l2c4r-nwcwj-kuvqj-lrwcu-es4w5-k6jbe-bae"
           }
         />
 
