@@ -49,6 +49,7 @@ function SecondModal({ isOpen, onClose }) {
   const reply = useAppSelector((state) => state.llm);
   const user = useAppSelector((state) => state.profile);
   const dispatch = useAppDispatch();
+  const [loadingMsg, setLoadingMsg] = useState(loadingMessages[0]);
   const { embeddedQ, call } = useEmbeddQ();
   let startLoadingMsgInterval:
     | string
@@ -77,21 +78,31 @@ function SecondModal({ isOpen, onClose }) {
   ) => {
     if (event.key === "Enter") {
       event.preventDefault();
-      // userInput = inputMessage
-      // console.log(userInput)
-      handleSendChat();
-    }
-  };
-
-  console.log("loading status", loading);
-  const handleSendChat = async () => {
-    try {
       var myMess: ChatType = {
         sender: "you",
         text: inputMessage,
       };
       chat.push(myMess);
+      handleSendChat();
+    }
+  };
+
+  const handleSendChatButton = () => {
+    var myMess: ChatType = {
+      sender: "you",
+      text: inputMessage,
+    };
+    chat.push(myMess);
+    handleSendChat();
+  };
+
+  const handleSendChat = async () => {
+    try {
       setLoading(true);
+      startLoadingMsgInterval = setInterval(
+        showRandomLoadingMessage,
+        3000
+      );
 
       await call(inputMessage);
       if (embeddedQ[0].length == 384) {
@@ -103,12 +114,21 @@ function SecondModal({ isOpen, onClose }) {
             1
           )
           .then((val: any) => {
-            console.log(val);
+            if (
+              "Err" in val &&
+              val.Err ===
+                "The http_request resulted into error. RejectionCode: SysTransient, Error: Canister http responses were different across replicas, and no consensus was reached"
+            ) {
+              return handleSendChat();
+            } else if ("Err" in val) {
+              console.log("Err in val", val);
+            }
             const parsedVal = JSON.parse(val.Ok);
-            myMess = {
+            var myMess: ChatType = {
               sender: "nexai",
               text: parsedVal.message,
             };
+            clearInterval(startLoadingMsgInterval);
             chat.push(myMess);
 
             console.log("[nexai-openai-parsedVal]", parsedVal);
@@ -116,17 +136,9 @@ function SecondModal({ isOpen, onClose }) {
             setLoading(false);
           })
           .catch((err: any) => {
-            setLoading(false);
-            console.error("[nexai-package]", err);
-            if (
-              err.Err ===
-              "The http_request resulted into error. RejectionCode: SysTransient, Error: Canister http responses were different across replicas, and no consensus was reached"
-            ) {
-              return handleSendChat();
-            }
             const message: ChatType = {
               sender: "nexai",
-              text: err.message,
+              text: "Opps! something went wrong, please try again",
             };
             clearInterval(startLoadingMsgInterval);
             chat.push(message);
@@ -153,6 +165,7 @@ function SecondModal({ isOpen, onClose }) {
     const randomIndex = Math.floor(
       Math.random() * loadingMessages.length
     );
+    setLoadingMsg(loadingMessages[randomIndex]);
     return loadingMessages[randomIndex];
   }
 
@@ -199,11 +212,13 @@ function SecondModal({ isOpen, onClose }) {
             </Flex>
           ))}
           {loading && (
-            <Flex justifyContent="flex-start" align="center">
-              <Text mr={2} color="white">
-                {showRandomLoadingMessage()}
+            <Flex justifyContent="flex-start" alignItems="center">
+              <Text mr={2} color="#341A41">
+                {loadingMsg}
               </Text>
-              <BeatLoader size={6} color="#341A41" />
+              <Flex mt={-2.5}>
+                <BeatLoader size={4} color="#341A41" />
+              </Flex>
             </Flex>
           )}
         </ModalBody>
@@ -226,7 +241,7 @@ function SecondModal({ isOpen, onClose }) {
                 size="sm"
                 bg={`#341A41`}
                 color={`white`}
-                onClick={handleSendChat}
+                onClick={handleSendChatButton}
                 isLoading={loading} // Use isLoading to handle loading state
                 isDisabled={loading} // Disable the button when loading
                 colorScheme="gray" // Change the color scheme to gray for the disabled state

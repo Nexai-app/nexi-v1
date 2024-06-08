@@ -23,6 +23,7 @@ import { useAppSelector } from "../../redux-toolkit/hooks";
 import { EnquiryT } from "../../redux-toolkit/types";
 import { AuthContext } from "../../context/AuthContext";
 import toast from "react-hot-toast";
+import { playNotificationSound } from "../../utils/sound";
 
 function index() {
   const { getEnquires } = useGetAllConnections();
@@ -110,6 +111,7 @@ function ChatArea() {
       return;
     } else {
       handleGetConversation(customerPrincipal);
+      playNotificationSound();
     }
   }, [customerPrincipal]);
 
@@ -122,8 +124,13 @@ function ChatArea() {
 
   const handleSendMessage = () => {
     setSending(true);
+    // Get the current time in milliseconds since 1970-01-01
+    const milliseconds = Date.now();
+
+    // Convert milliseconds to nanoseconds
+    const nanoseconds = milliseconds * 1_000_000;
     vdbActor
-      .send_message(customerPrincipal, message, BigInt(50))
+      .send_message(customerPrincipal, message, BigInt(nanoseconds))
       .then(() => {
         setSending(false);
         setMessage("");

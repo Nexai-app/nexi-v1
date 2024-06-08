@@ -109,10 +109,11 @@ const App = () => {
         </Routes>
         <Assistant
           actor={vdbActor}
-          color="purple"
+          color="green"
           companyName="Nexai Help"
-          companyId={0}
+          companyId={1}
           companyPrincipal={
+            // "qtlty-wkc6r-gvr2k-qejje-y2alj-wvhxi-4xnwh-ar5ie-7257j-knhvx-xae"
             "wkamz-d24me-lajzj-c6hp4-l2c4r-nwcwj-kuvqj-lrwcu-es4w5-k6jbe-bae"
           }
         />
@@ -121,7 +122,7 @@ const App = () => {
   } else {
     return (
       <React.Fragment>
-        <AssistantWrapper
+        {/* <Assistant
           actor={vdbActor}
           color="purple"
           companyName="Nexai Help"
@@ -129,7 +130,7 @@ const App = () => {
           companyPrincipal={
             "wkamz-d24me-lajzj-c6hp4-l2c4r-nwcwj-kuvqj-lrwcu-es4w5-k6jbe-bae"
           }
-        />
+        /> */}
 
         <Routes>
           <Route path="/" element={<LandingPage />} />

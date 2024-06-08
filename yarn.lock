@@ -3877,10 +3877,10 @@ neo-async@^2.6.2:
   resolved "https://registry.npmjs.org/neo-async/-/neo-async-2.6.2.tgz"
   integrity sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==
 
-nexai-assistant@0.4.5:
-  version "0.4.5"
-  resolved "https://registry.yarnpkg.com/nexai-assistant/-/nexai-assistant-0.4.5.tgz#a8b8281713cf2e29e54832b4e2814a07bf36353f"
-  integrity sha512-UCEfPy/UsRz7D5ADxbTWKs7FPW6795AUuaPy4dYKmNioYb4NhFQYbklhyKKRehiJqdHeDjogkMh67dnpB5yyhQ==
+nexai-assistant@0.4.11:
+  version "0.4.11"
+  resolved "https://registry.yarnpkg.com/nexai-assistant/-/nexai-assistant-0.4.11.tgz#92e088d2ec6a7f8a2f41ab93964faef9d7d7a313"
+  integrity sha512-K4bI1zDl6hnV4cbQhMzpmZAuMrA7xz1b3J3qIOnEj53nr6tpG9me8J43uD5efKG3FKz9Mkaxr5xg+arQUGDPZA==
   dependencies:
     "@chakra-ui/react" "^2.8.1"
     "@emotion/react" "^11.11.1"
